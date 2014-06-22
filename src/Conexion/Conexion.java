@@ -1,5 +1,8 @@
 package Conexion;
 
+import Compra;
+import insertDBException;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -412,6 +415,42 @@ public class Conexion {
 		}
 	}
 
+	public void altaCompra(ArrayList<Compra> com) throws insertDBException{
+		
+		try {
+			CallableStatement cs = con.prepareCall("{call sp_insert_log_compras(?,?,?,?,?,?,?,?)}");
+			Iterator<Compra> it = com.iterator();
+			Compra tmp;
+			while (it.hasNext()){
+				tmp = it.next();
+				cs.setString(1, tmp.getTipo_factura());
+				cs.setString(2, String.valueOf(tmp.getIdEmpleado()));
+				cs.setString(3, String.valueOf(tmp.getIdProveedor()));
+				cs.setString(4, String.valueOf(tmp.getIdProducto()));
+				cs.setString(5, String.valueOf(tmp.getPrecio_costo()));
+				cs.setString(6, String.valueOf(tmp.getPrecio_venta()));
+				cs.setString(7, String.valueOf(tmp.getCantidad()));
+				cs.setString(8, tmp.getEstadoOperacion());
+				int i = cs.executeUpdate();
+				if (i<0){
+					throw new insertDBException("Error al querer ingresar un registro");
+				}
+				cs.close();
+				
+				CallableStatement cs_ = con.prepareCall("{call sp_insert_compra_proveedor}");
+				int j = cs_.executeUpdate();
+				if (j<0){
+					throw new insertDBException("Error al querer ingresar un registro");
+				}
+				cs_.close();
+			}
+			
+		} catch (SQLException e){
+			System.out.println(e.getStackTrace());
+			System.out.println(e.getMessage());
+		}
+	}
+	
 	public void cerrarBusqueda() {
 		try {
 			rs.close();
