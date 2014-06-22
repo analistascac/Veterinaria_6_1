@@ -215,9 +215,6 @@ public class frmNuevoCliente extends JFrame {
 							conexion.altaCliente(cliente);
 							conexion.close();
 
-							Main frame = new Main();
-							frame.setVisible(true);
-
 							dispose();
 						}
 
@@ -235,8 +232,7 @@ public class frmNuevoCliente extends JFrame {
 		btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Main frame = new Main();
-				frame.setVisible(true);
+
 				dispose();
 			}
 		});

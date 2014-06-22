@@ -41,7 +41,7 @@ public class frmNuevoProveedor extends JFrame {
 	public frmNuevoProveedor() {
 		addWindowListener(new WindowAdapter() {
 			public void windowClosed(WindowEvent arg0) {
-				Main v=new Main();
+				Main v = new Main();
 				v.setVisible(true);
 				dispose();
 			}
@@ -155,9 +155,6 @@ public class frmNuevoProveedor extends JFrame {
 
 							conexion.close();
 
-							Main frame = new Main();
-							frame.setVisible(true);
-
 							dispose();
 						}
 
@@ -176,8 +173,7 @@ public class frmNuevoProveedor extends JFrame {
 		btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Main frame = new Main();
-				frame.setVisible(true);
+
 				dispose();
 			}
 		});
@@ -207,7 +203,7 @@ public class frmNuevoProveedor extends JFrame {
 		txtEmail.addCaretListener(new CaretListener() {
 			public void caretUpdate(CaretEvent arg0) {
 				estadoDeLosBotones();
-				
+
 				if (Auxiliar.isValidEmail(txtEmail.getText())) {
 					txtEmail.setForeground(Color.black);
 				} else {
@@ -219,13 +215,13 @@ public class frmNuevoProveedor extends JFrame {
 		txtFax.addCaretListener(new CaretListener() {
 			public void caretUpdate(CaretEvent arg0) {
 				estadoDeLosBotones();
-				
+
 				if (Auxiliar.isValidTelephone(txtFax.getText())) {
 					txtFax.setForeground(Color.black);
 				} else {
 					txtFax.setForeground(Color.red);
 				}
-				
+
 			}
 		});
 
@@ -238,7 +234,7 @@ public class frmNuevoProveedor extends JFrame {
 		txtTelefono.addCaretListener(new CaretListener() {
 			public void caretUpdate(CaretEvent arg0) {
 				estadoDeLosBotones();
-				
+
 				if (Auxiliar.isValidTelephone(txtTelefono.getText())) {
 					txtTelefono.setForeground(Color.black);
 				} else {

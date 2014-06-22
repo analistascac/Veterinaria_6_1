@@ -133,9 +133,6 @@ public class frmNuevaMascota extends JFrame {
 
 						conexion.close();
 
-						Main frame = new Main();
-						frame.setVisible(true);
-
 						dispose();
 					}
 
@@ -148,12 +145,11 @@ public class frmNuevaMascota extends JFrame {
 		});
 		btnAgregar.setBounds(43, 127, 89, 23);
 		contentPane.add(btnAgregar);
-		
+
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Main frame = new Main();
-				frame.setVisible(true);
+
 				dispose();
 			}
 		});

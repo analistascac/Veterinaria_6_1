@@ -10,8 +10,8 @@ import Clases.*;
 
 public class Conexion {
 
-	//String url = "jdbc:sqlserver://DIGITALHARDCORE\\SQLEXPRESS2008R;databaseName=db_Veterinaria;integratedSecurity=true;";
-	String url = "jdbc:sqlserver://localhost:1433;databaseName=db_Veterinaria;integratedSecurity=true;";
+	String url = "jdbc:sqlserver://DIGITALHARDCORE\\SQLEXPRESS2008R;databaseName=db_Veterinaria;integratedSecurity=true;";
+	//String url = "jdbc:sqlserver://localhost:1433;databaseName=db_Veterinaria;integratedSecurity=true;";
 	Connection con;
 	Statement select;
 	Statement st;

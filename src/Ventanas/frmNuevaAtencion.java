@@ -163,26 +163,23 @@ public class frmNuevaAtencion extends JFrame {
 
 				item = (Item) cmbVeterinario.getSelectedItem();
 				atencion.setIdVeterinario(item.getId());
-				
+
 				item = (Item) cmbMascota.getSelectedItem();
 				atencion.setIdMascota(item.getId());
 
 				atencion.setTipoConsulta((String) cmbTipoConsulta
 						.getSelectedItem());
-				
+
 				atencion.setDiagnostico(txtDiagnostico.getText());
-				
+
 				atencion.setFecha(fecha.getFechaString());
-				
+
 				try {
 					Conexion conexion = new Conexion();
 					if (conexion.conectarDB()) {
 
 						conexion.altaAtencion(atencion);
 						conexion.close();
-
-						Main frame = new Main();
-						frame.setVisible(true);
 
 						dispose();
 					}
@@ -199,8 +196,7 @@ public class frmNuevaAtencion extends JFrame {
 		btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Main frame = new Main();
-				frame.setVisible(true);
+
 				dispose();
 			}
 		});
@@ -259,8 +255,10 @@ public class frmNuevaAtencion extends JFrame {
 				}
 				cmbMascota.setModel(modeloM);
 
-			}else{
-				JOptionPane.showMessageDialog(null, "Error en la conexion de base de datos.", "Error",JOptionPane.WARNING_MESSAGE);
+			} else {
+				JOptionPane.showMessageDialog(null,
+						"Error en la conexion de base de datos.", "Error",
+						JOptionPane.WARNING_MESSAGE);
 			}
 
 		} catch (Exception e) {

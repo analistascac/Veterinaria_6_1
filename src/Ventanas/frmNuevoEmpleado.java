@@ -221,9 +221,6 @@ public class frmNuevoEmpleado extends JFrame {
 							conexion.altaEmpleado(empleado);
 						}
 
-						Main frame = new Main();
-						frame.setVisible(true);
-
 						dispose();
 
 					} catch (Exception e) {
@@ -265,8 +262,6 @@ public class frmNuevoEmpleado extends JFrame {
 		btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Main frame = new Main();
-				frame.setVisible(true);
 				dispose();
 			}
 		});
