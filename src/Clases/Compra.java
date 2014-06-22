@@ -7,8 +7,8 @@ public class Compra {
 	private int idEmpleado;
 	private int idProveedor;
 	private int idProducto;
-	private Float precio_costo;
-	private Float precio_venta;
+	private Double precio_costo;
+	private Double precio_venta;
 	private int cantidad;
 	private String estadoOperacion;
 
@@ -17,7 +17,7 @@ public class Compra {
 		
 	}
 	
-	public Compra(String tipo_factura, int idEmpleado, int idProveedor, int idProducto, Float precio_costo, Float precio_venta, int cantidad, String estadoOperacion){
+	public Compra(String tipo_factura, int idEmpleado, int idProveedor, int idProducto, Double precio_costo, Double precio_venta, int cantidad, String estadoOperacion){
 		this.tipo_factura = tipo_factura;
 		this.idEmpleado = idEmpleado;
 		this.idProveedor = idProveedor;
@@ -60,11 +60,11 @@ public class Compra {
 		return idProducto;
 	}
 
-	public Float getPrecio_costo() {
+	public Double  getPrecio_costo() {
 		return precio_costo;
 	}
 
-	public Float getPrecio_venta() {
+	public Double getPrecio_venta() {
 		return precio_venta;
 	}
 
@@ -80,11 +80,11 @@ public class Compra {
 		this.idProducto = idProducto;
 	}
 
-	public void setPrecio_costo(Float precio_costo) {
+	public void setPrecio_costo(Double precio_costo) {
 		this.precio_costo = precio_costo;
 	}
 
-	public void setPrecio_venta(Float precio_venta) {
+	public void setPrecio_venta(Double precio_venta) {
 		this.precio_venta = precio_venta;
 	}
 

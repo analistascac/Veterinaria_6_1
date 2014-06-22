@@ -1,8 +1,5 @@
 package Conexion;
 
-import Compra;
-import insertDBException;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Iterator;
