@@ -480,10 +480,17 @@ public class Conexion {
 			System.out.println(e.getMessage());
 		}
 	}
+<<<<<<< HEAD
 
 	public String informeClienteFrecuente(){
 		String cliente = null;
 
+=======
+	
+	public String informeClienteFrecuente(){
+		String cliente = null;
+		
+>>>>>>> origin/master
 		try {
 			CallableStatement cs = con.prepareCall("{call sp_report_cliente_frecuente}");
 			rs = cs.executeQuery();
@@ -496,7 +503,11 @@ public class Conexion {
 		}
 		return cliente;
 	}
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> origin/master
 	public void cerrarBusqueda() {
 		try {
 			rs.close();
