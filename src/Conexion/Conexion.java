@@ -1,9 +1,5 @@
 package Conexion;
 
-
-import Producto;
-import insertDBException;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -226,9 +222,9 @@ public class Conexion {
 	}
 
 	public ArrayList<Producto> devolverProveedorProductos(Proveedor prov){
-		
+
 		ArrayList<Producto> a_Producto = new ArrayList<Producto>();
-		
+
 		try {
 			CallableStatement cs = con.prepareCall("{call sp_return_proveedor_productos(?)}");
 			cs.setString(1, String.valueOf(prov.getId()));
@@ -249,10 +245,10 @@ public class Conexion {
 			System.out.println(e.getStackTrace());
 			System.out.println(e.getMessage());
 		}
-		
+
 		return a_Producto;
 	}
-	
+
 	public void altaEmpleado(Empleado em) throws insertDBException {
 
 		try {
@@ -352,7 +348,7 @@ public class Conexion {
 	// aca había un sp que era instert_articulo. ?
 
 	public void altaProducto(Producto p) throws insertDBException{
-		
+
 		try {
 			CallableStatement cs = con.prepareCall("{call sp_insert_producto(?,?,?,?,?,?)}");
 			cs.setString(1, p.getNombre());
@@ -450,7 +446,7 @@ public class Conexion {
 	}
 
 	public void altaCompra(ArrayList<Compra> com) throws insertDBException{
-		
+
 		try {
 			CallableStatement cs = con.prepareCall("{call sp_insert_log_compras(?,?,?,?,?,?,?,?)}");
 			Iterator<Compra> it = com.iterator();
@@ -470,7 +466,7 @@ public class Conexion {
 					throw new insertDBException("Error al querer ingresar un registro");
 				}
 				cs.close();
-				
+
 				CallableStatement cs_ = con.prepareCall("{call sp_insert_compra_proveedor}");
 				int j = cs_.executeUpdate();
 				if (j<0){
@@ -478,13 +474,29 @@ public class Conexion {
 				}
 				cs_.close();
 			}
-			
+
 		} catch (SQLException e){
 			System.out.println(e.getStackTrace());
 			System.out.println(e.getMessage());
 		}
 	}
-	
+
+	public String informeClienteFrecuente(){
+		String cliente = null;
+
+		try {
+			CallableStatement cs = con.prepareCall("{call sp_report_cliente_frecuente}");
+			rs = cs.executeQuery();
+			while (rs.next()){
+				cliente = rs.getString(1);
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getStackTrace());
+			System.out.println(e.getMessage());
+		}
+		return cliente;
+	}
+
 	public void cerrarBusqueda() {
 		try {
 			rs.close();

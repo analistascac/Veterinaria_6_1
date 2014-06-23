@@ -60,14 +60,9 @@ public class ModificarCliente extends JFrame {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosed(WindowEvent arg0) {
-				int x = JOptionPane.showConfirmDialog(null,
-						"¿Realmente desea cancelar la modificación",
-						"Confirmar", JOptionPane.YES_NO_OPTION);
-				if (x == JOptionPane.YES_OPTION) {
-					Main ven = new Main();
-					ven.setVisible(true);
-					dispose();
-				}
+				Main v = new Main();
+				v.setVisible(true);
+				dispose();
 			}
 		});
 		setTitle("Modificar Cliente - Centro veterinario CAC");

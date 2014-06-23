@@ -54,7 +54,7 @@ public class frmNuevaCompra extends JFrame {
 		});
 		setResizable(false);
 		setTitle("Nueva compra - Veterinaria CAC");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 359, 471);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

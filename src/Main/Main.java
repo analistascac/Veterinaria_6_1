@@ -44,14 +44,12 @@ public class Main extends JFrame {
 	private JMenuItem nueProducto;
 	private JMenuItem nueProveedor;
 	private JMenu mnModificar;
-	private JMenuItem modAtencion;
 	private JMenuItem modCliente;
 	private JMenuItem modEmpleado;
 	private JMenuItem modMascota;
 	private JMenuItem morProducto;
 	private JMenuItem morProveedor;
 	private JMenu mnEliminar;
-	private JMenuItem supAtencion;
 	private JMenuItem supCliente;
 	private JMenuItem supEmpleado;
 	private JMenuItem supMascota;
@@ -174,16 +172,6 @@ public class Main extends JFrame {
 		mnModificar = new JMenu("Modificar");
 		menu.add(mnModificar);
 		
-		modAtencion = new JMenuItem("Atencion");
-		modAtencion.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				ModificarAtencion ventana = new ModificarAtencion();
-				ventana.setVisible(true);
-				dispose();
-			}
-		});
-		mnModificar.add(modAtencion);
-		
 		modCliente = new JMenuItem("Cliente");
 		modCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -236,9 +224,6 @@ public class Main extends JFrame {
 		
 		mnEliminar = new JMenu("Eliminar");
 		menu.add(mnEliminar);
-		
-		supAtencion = new JMenuItem("Atencion");
-		mnEliminar.add(supAtencion);
 		
 		supCliente = new JMenuItem("Cliente");
 		mnEliminar.add(supCliente);

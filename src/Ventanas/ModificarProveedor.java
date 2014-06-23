@@ -15,9 +15,12 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 
 import Clases.Proveedor;
+import Main.Main;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class ModificarProveedor extends JFrame {
 	private JPanel panelPrincipal;
@@ -32,6 +35,13 @@ public class ModificarProveedor extends JFrame {
 	private DefaultComboBoxModel<String> id = new DefaultComboBoxModel();
 
 	public ModificarProveedor() {
+		addWindowListener(new WindowAdapter() {
+			public void windowClosed(WindowEvent arg0) {
+				Main v = new Main();
+				v.setVisible(true);
+				dispose();
+			}
+		});
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setTitle("Modificar proveedor - Veterinaria CAC");
 		setBounds(100, 100, 315, 260);

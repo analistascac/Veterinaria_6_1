@@ -47,17 +47,10 @@ public class ModificarEmpleado extends JFrame {
 	public ModificarEmpleado() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {
-			@Override
 			public void windowClosed(WindowEvent arg0) {
-				int x = JOptionPane.showConfirmDialog(null, "¿Realmente desea salir del panel de modificaciones?","Confirmar",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
-				if(x == JOptionPane.YES_OPTION){
-					Main ventana = new Main();
-					ventana.setVisible(true);
-					dispose();
-				}else{
-					ModificarEmpleado ventana = new ModificarEmpleado();
-					ventana.setVisible(true);
-				}
+				Main v = new Main();
+				v.setVisible(true);
+				dispose();
 			}
 		});
 		setTitle("Modificar empleado - Veterinaria CAC");

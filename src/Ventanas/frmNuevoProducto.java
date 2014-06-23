@@ -64,7 +64,7 @@ public class frmNuevoProducto extends JFrame {
 			}
 		});
 		setTitle("Nuevo Producto - Veterinaria CAC");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 412, 297);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -87,21 +87,25 @@ public class frmNuevoProducto extends JFrame {
 					JOptionPane.showMessageDialog(null, "Error al conectar con la base de datos","Error",JOptionPane.ERROR_MESSAGE);
 				}
 				
-				p.setNombre(txtNombre.getText());
+				
 				
 				if(cbxEsMascota.isSelected()){
 					p.setNombreCientifico(txtNombreCientifico.getText());
 					p.setNombreVulgar(txtNombreVulgar.getText());
-					p.setDescripcion("NULL");
-					p.setMedida("NULL");					
+					p.setDescripcion(txtDescirpcion.getText());
+					p.setNombre(null);
+					p.setMedida(null);					
 				}else{
+					p.setNombre(txtNombre.getText());
 					p.setDescripcion(txtDescirpcion.getText());
 					p.setMedida(txtMedida.getText());
-					p.setNombreCientifico("NULL");
-					p.setNombreVulgar("NULL");
+					p.setNombreCientifico(null);
+					p.setNombreVulgar(null);
 				}
-				System.out.println(p.toString());
+				
 				agregarProducto(p);
+				
+				JOptionPane.showMessageDialog(null, "Producto correctamente agregado","Información",JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 		btnAceptar.setBounds(298, 227, 89, 23);
@@ -112,11 +116,13 @@ public class frmNuevoProducto extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				if(cbxEsMascota.isSelected()){
 					txtMedida.setEnabled(false);
-					txtDescirpcion.setEnabled(false);
+					txtNombre.setEnabled(false);
+					txtDescirpcion.setEnabled(true);
 					txtNombreCientifico.setEnabled(true);
 					txtNombreVulgar.setEnabled(true);
 				}else{
 					txtMedida.setEnabled(true);
+					txtNombre.setEnabled(true);
 					txtDescirpcion.setEnabled(true);
 					txtNombreCientifico.setEnabled(false);
 					txtNombreVulgar.setEnabled(false);
