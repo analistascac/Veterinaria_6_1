@@ -1,11 +1,6 @@
 package Conexion;
 
-import Cliente;
-import Empleado;
-import Mascota;
-import Producto;
-import Proveedor;
-import insertDBException;
+import Clases.*;
 
 import java.sql.*;
 import java.util.ArrayList;
