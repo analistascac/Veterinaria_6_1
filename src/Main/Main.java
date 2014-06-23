@@ -20,6 +20,7 @@ import Ventanas.ModificarMascota;
 import Ventanas.ModificarProducto;
 import Ventanas.ModificarProveedor;
 import Ventanas.frmNuevaAtencion;
+import Ventanas.frmNuevaCompra;
 import Ventanas.frmNuevaMascota;
 import Ventanas.frmNuevaVenta;
 import Ventanas.frmNuevoCliente;
@@ -69,6 +70,7 @@ public class Main extends JFrame {
 	private JMenuBar menu;
 	private JMenu mnNuevo;
 	private JMenuItem nueVenta;
+	private JMenuItem mntmCompra;
 
 
 	public Main() {
@@ -117,6 +119,16 @@ public class Main extends JFrame {
 				dispose();
 			}
 		});
+		
+		mntmCompra = new JMenuItem("Compra");
+		mntmCompra.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				frmNuevaCompra ventana = new frmNuevaCompra();
+				ventana.setVisible(true);
+				dispose();
+			}
+		});
+		mnNuevo.add(mntmCompra);
 		mnNuevo.add(nueEmpleado);
 		
 		nueMascota = new JMenuItem("Mascota");
