@@ -53,28 +53,12 @@ public class MejorVendedor extends JFrame {
 		txtNombre.setEditable(false);
 		Conexion cn = new Conexion();
 		if(cn.conectarDB()){
-			txtNombre.setText("Vendedor de prueba");
+			txtNombre.setText(cn.informeClienteFrecuente());
 		}else{
 			JOptionPane.showMessageDialog(null, "Error en la conexion de base de datos","Error",JOptionPane.ERROR_MESSAGE);
 		}
 		txtNombre.setBounds(10, 36, 357, 20);
 		contentPane.add(txtNombre);
-	}
-
-	private Empleado obtenerElMejor() {
-		
-		Empleado este = new Empleado();
-		
-		este.setNombre("Juanito");
-		este.setApellido("Prueba");
-		este.setDomicilio("Prueba 1234");
-		este.setId("0001");
-		este.setTelefono("42Prueba19");
-		return este;
-	}
-
-	private String obtenerVentas() {
-		return "123012390";
 	}
 
 }
