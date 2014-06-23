@@ -1,5 +1,8 @@
 package Conexion;
 
+import Producto;
+import Proveedor;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -221,6 +224,34 @@ public class Conexion {
 		return a_ClienteMascota;
 	}
 
+	public ArrayList<Producto> devolverProveedorProductos(Proveedor prov){
+		
+		ArrayList<Producto> a_Producto = new ArrayList<Producto>();
+		
+		try {
+			CallableStatement cs = con.prepareCall("{call sp_return_proveedor_productos(?)}");
+			cs.setString(1, String.valueOf(prov.getId()));
+			rs = cs.executeQuery();
+			while (rs.next()){
+				Producto p = new Producto();
+				p.setId(rs.getString(1));
+				p.setNombre(rs.getString(2));
+				p.setMedida(rs.getString(3));
+				p.setNombreCientifico(rs.getString(4));
+				p.setNombreVulgar(rs.getString(5));
+				p.setDescripcion(rs.getString(6));
+				p.setPrecioVenta(Float.valueOf(rs.getString(7)));
+				p.setCantidad(Integer.valueOf(rs.getString(8)));
+				a_Producto.add(p);
+			}
+		} catch(SQLException e) {
+			System.out.println(e.getStackTrace());
+			System.out.println(e.getMessage());
+		}
+		
+		return a_Producto;
+	}
+	
 	public void altaEmpleado(Empleado em) throws insertDBException {
 
 		try {
