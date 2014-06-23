@@ -485,6 +485,22 @@ public class Conexion {
 		}
 	}
 	
+	public String informeClienteFrecuente(){
+		String cliente = null;
+		
+		try {
+			CallableStatement cs = con.prepareCall("{call sp_report_cliente_frecuente}");
+			rs = cs.executeQuery();
+			while (rs.next()){
+				cliente = rs.getString(1);
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getStackTrace());
+			System.out.println(e.getMessage());
+		}
+		return cliente;
+	}
+	
 	public void cerrarBusqueda() {
 		try {
 			rs.close();
