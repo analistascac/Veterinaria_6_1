@@ -1,5 +1,12 @@
 package Conexion;
 
+import Cliente;
+import Empleado;
+import Mascota;
+import Producto;
+import Proveedor;
+import insertDBException;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -481,8 +488,110 @@ public class Conexion {
 		}
 	}
 
-
-
+	public void modificacionCliente(Cliente clie) throws insertDBException{
+		
+		try {
+			CallableStatement cs = con.prepareCall("{call sp_update_cliente(?,?,?,?,?,?,?,?,?,?)}");
+			cs.setString(1, clie.getIdCliente());
+			cs.setString(2, clie.getNombre());
+			cs.setString(3, clie.getApellido());
+			cs.setString(4, clie.getTipoDocumento());
+			cs.setString(5, clie.getDocumento());
+			cs.setString(6, clie.getDireccionCompleta());
+			cs.setString(7, clie.getOcupacion());
+			cs.setString(8, clie.getTelefono());
+			cs.setString(9, clie.getDireccionMail());
+			cs.setString(10, clie.getTipoCuenta());
+			int i = cs.executeUpdate();
+			if(i<=0){
+				throw new insertDBException("Error al hacer update en tabla dbo.Cliente. ");
+			}
+		} catch (SQLException e){
+			System.out.println(e.getStackTrace());
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public void modificacionProveedor(Proveedor prov) throws insertDBException{
+		
+		try {
+			CallableStatement cs = con.prepareCall("{call sp_update_proveedor(?,?,?,?,?,?,?)}");
+			cs.setString(1, String.valueOf(prov.getIdProveedor()));
+			cs.setString(2, prov.getRazonSocial());
+			cs.setString(3, prov.getCuit());
+			cs.setString(4, prov.getDireccion());
+			cs.setString(5, prov.getTelefono());
+			cs.setString(6, prov.getFax());
+			cs.setString(7, prov.getEmail());
+			int i = cs.executeUpdate();
+			if(i<=0){
+				throw new insertDBException("Error al hacer update en tabla dbo.Proveedor. ");
+			}
+		} catch(SQLException e){
+			System.out.println(e.getStackTrace());
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public void modificacionEmpleado(Empleado emp) throws insertDBException{
+		
+		try {
+			CallableStatement cs = con.prepareCall("{call sp_update_empleado(?,?,?,?,?,?,?,?,?)}");
+			cs.setString(1, String.valueOf(emp.getIdEmpleado()));
+			cs.setString(2, emp.getNombre());
+			cs.setString(3, emp.getApellido());
+			cs.setString(4, emp.getTipoDocumento());
+			cs.setString(5, emp.getDocumento());
+			cs.setString(6, emp.getDireccionCompleta());
+			cs.setString(7, emp.getTelefono());
+			cs.setString(8, emp.getFechaNacimiento());
+			cs.setString(9, emp.getMatricula());
+			int i = cs.executeUpdate();
+			if(i<=0){
+				throw new insertDBException("Error al hacer update en tabla dbo.Empleado. ");
+			}
+		} catch(SQLException e){
+			System.out.println(e.getStackTrace());
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public void modificacionMascota(Mascota m) throws insertDBException{
+		
+		try {
+			CallableStatement cs = con.prepareCall("{call sp_update_mascota(?,?,?)}");
+			cs.setString(1, String.valueOf(m.getIdMascota()));
+			cs.setString(2, m.getNombreVulgar());
+			cs.setString(3, m.getDescripcion());
+			int i = cs.executeUpdate();
+			if(i<=0){
+				throw new insertDBException("Error al hacer update en tabla dbo.Mascota. ");
+			}
+		} catch (SQLException e){
+			System.out.println(e.getStackTrace());
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public void modificacionProducto(Producto p) throws insertDBException{
+		
+		try {
+			CallableStatement cs = con.prepareCall("{call sp_update_producto(?,?,?,?,?,?)}");
+			cs.setString(1, p.getId());
+			cs.setString(2, p.getNombre());
+			cs.setString(3, p.getMedida());
+			cs.setString(4, p.getNombreCientifico());
+			cs.setString(5, p.getNombreVulgar());
+			cs.setString(6, p.getDescripcion());
+			int i = cs.executeUpdate();
+			if(i<=0){
+				throw new insertDBException("Error al hacer update en tabla dbo.Mascota. ");
+			}
+		} catch(SQLException e){
+			System.out.println(e.getStackTrace());
+			System.out.println(e.getMessage());
+		}
+	}
 	
 	public String informeClienteFrecuente(){
 		String cliente = null;
@@ -500,6 +609,24 @@ public class Conexion {
 		return cliente;
 	}
 
+	public int informeMascotasPorVeterinario(Empleado emp){
+		int cantidad = 0;
+		
+		try {
+			CallableStatement cs = con.prepareCall("{call sp_report_mascotas_atendidas_por_veterinario(?)}");
+			cs.setString(1, emp.getDocumento());
+			rs = cs.executeQuery();
+			while (rs.next()){
+				cantidad = Integer.valueOf(rs.getString(1));
+			}
+		} catch(SQLException e){
+			System.out.println(e.getStackTrace());
+			System.out.println(e.getMessage());
+		}
+		
+		return cantidad;
+	}
+	
 	public void cerrarBusqueda() {
 		try {
 			rs.close();
