@@ -1,6 +1,9 @@
 package Conexion;
 
 
+import Producto;
+import insertDBException;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -348,19 +351,23 @@ public class Conexion {
 	// TODO
 	// aca había un sp que era instert_articulo. ?
 
-	public void altaProducto(Producto p) throws insertDBException {
-
+	public void altaProducto(Producto p) throws insertDBException{
+		
 		try {
-			CallableStatement cs = con
-					.prepareCall("{call sp_insert_producto(?,?,?,?,?)}");
-
+			CallableStatement cs = con.prepareCall("{call sp_insert_producto(?,?,?,?,?,?)}");
 			cs.setString(1, p.getNombre());
 			cs.setString(2, p.getMedida());
 			cs.setString(3, p.getNombreCientifico());
 			cs.setString(4, p.getNombreVulgar());
 			cs.setString(5, p.getDescripcion());
-		} catch (SQLException e) {
+			cs.setString(6, p.getIdProveedor());
+			int i = cs.executeUpdate();
+			if(i<=0){
+				throw new insertDBException("Error al hacer update en tabla dbo.Producto. ");
+			}
+		} catch(SQLException e){
 			System.out.println(e.getStackTrace());
+			System.out.println(e.getMessage());
 		}
 	}
 
