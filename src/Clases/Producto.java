@@ -1,7 +1,5 @@
 package Clases;
 
-import java.util.ArrayList;
-
 public class Producto {
 	private String id;
 	private String nombre;
@@ -13,19 +11,9 @@ public class Producto {
 	private float precioVenta;
 	private int limiteInferior;
 	private int cantidad;
-	private ArrayList<String> proveedores = null;
+	private String idProveedor;
 
 	public Producto() {
-		id = "";
-		nombre = "";
-		medida = "";
-		nombreCientifico = "";
-		nombreVulgar = "";
-		descripcion = "";
-		precioCosto = 0;
-		precioVenta = 0;
-		limiteInferior = 0;
-		proveedores = new ArrayList<String>();
 
 	}
 
@@ -109,12 +97,12 @@ public class Producto {
 		this.cantidad = cantidad;
 	}
 
-	public ArrayList<String> getProveedores() {
-		return proveedores;
+	public String getIdProveedor() {
+		return idProveedor;
 	}
 
-	public void setProveedores(ArrayList<String> proveedores) {
-		this.proveedores = proveedores;
+	public void setIdProveedor(String idProveedor) {
+		this.idProveedor = idProveedor;
 	}
 
 	@Override
@@ -124,7 +112,7 @@ public class Producto {
 				+ ", \nnombre_vulgar=" + nombreVulgar + ", \ndescripcion="
 				+ descripcion + ", \nprecio_costo=" + precioCosto
 				+ ", \nprecio_venta=" + precioVenta + ", \nlimite_inferior="
-				+ limiteInferior + ", \nproveedores=" + proveedores + "]";
+				+ limiteInferior + ", \nid del proveedor=" + idProveedor + "]";
 	}
 
 }

@@ -11,7 +11,8 @@ import Clases.*;
 public class Conexion {
 
 	String url = "jdbc:sqlserver://DIGITALHARDCORE\\SQLEXPRESS2008R;databaseName=db_Veterinaria;integratedSecurity=true;";
-	//String url = "jdbc:sqlserver://localhost:1433;databaseName=db_Veterinaria;integratedSecurity=true;";
+	// String url =
+	// "jdbc:sqlserver://localhost:1433;databaseName=db_Veterinaria;integratedSecurity=true;";
 	Connection con;
 	Statement select;
 	Statement st;
@@ -27,8 +28,11 @@ public class Conexion {
 
 		try {
 			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-			//con = DriverManager.getConnection(url);
-			con = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=db_Veterinaria;integratedSecurity=true;","","");
+			// con = DriverManager.getConnection(url);
+			con = DriverManager
+					.getConnection(
+							"jdbc:sqlserver://localhost:1433;databaseName=db_Veterinaria;integratedSecurity=true;",
+							"", "");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 			return false;
@@ -101,8 +105,7 @@ public class Conexion {
 		return a_Proveedor;
 	}
 
-	@SuppressWarnings("rawtypes")
-	public ArrayList devolverProductos() {
+	public ArrayList<Producto> devolverProductos() {
 
 		ArrayList<Producto> a_Producto = new ArrayList<Producto>();
 
@@ -117,9 +120,10 @@ public class Conexion {
 				a.setMedida(rs.getString(3));
 				a.setNombreCientifico(rs.getString(4));
 				a.setNombreVulgar(rs.getString(5));
-				a.setDescripcion(rs.getString(6));
-				a.setPrecioVenta(Float.valueOf(rs.getString(7)));
-				a.setCantidad(Integer.valueOf(rs.getString(8)));
+				//TOODO 
+				a.setIdProveedor("0");
+				a.setPrecioVenta(Float.valueOf(rs.getString(8)));
+				a.setCantidad(Integer.valueOf(rs.getString(9)));
 				a_Producto.add(a);
 			}
 		} catch (SQLException e) {
@@ -158,8 +162,7 @@ public class Conexion {
 		return a_Veterinario;
 	}
 
-	@SuppressWarnings("rawtypes")
-	public ArrayList devolverEmpleados() {
+	public ArrayList<Empleado> devolverEmpleados() {
 
 		ArrayList<Empleado> a_Empleado = new ArrayList<Empleado>();
 
@@ -287,7 +290,7 @@ public class Conexion {
 			}
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
-			
+
 		}
 	}
 
@@ -333,12 +336,11 @@ public class Conexion {
 	}
 
 	public void altaAtencion(Atencion a) throws insertDBException {
-		
-		
+
 		try {
 			CallableStatement cs = con
 					.prepareCall("{call sp_insert_atencion(?,?,?,?)}");
-			//cs.setString(1, a.getFecha());
+			// cs.setString(1, a.getFecha());
 			cs.setString(1, a.getIdVeterinario());
 			cs.setString(2, a.getIdMascota());
 			cs.setString(3, a.getTipoConsulta());
@@ -349,7 +351,7 @@ public class Conexion {
 				throw new insertDBException(
 						"Error al querer ingresar un registro");
 			}
-			
+
 		} catch (SQLException e) {
 			System.out.println("Error en alta atencion");
 			System.out.println(e.getStackTrace());
@@ -365,20 +367,19 @@ public class Conexion {
 		try {
 
 			CallableStatement cs_ = con
-					.prepareCall("{call sp_insert_log_ventas(?,?,?,?,?,?,?,?,?)}");
+					.prepareCall("{call sp_insert_log_ventas(?,?,?,?,?,?,?,?)}");
 			Iterator<Venta> it = v.iterator();
 			Venta tmp;
 			while (it.hasNext()) {
 				tmp = it.next();
-				cs_.setString(1, tmp.getTipo_factura());
-				cs_.setString(2, String.valueOf(tmp.getCliente()));
-				//cs_.setString(3, String.valueOf(tmp.getIdEmpleado()));
-				//cs_.setString(4, String.valueOf(tmp.getIdArticulo()));
-				//cs_.setString(5, String.valueOf(tmp.getIdProveedor()));
-				//cs_.setString(6, String.valueOf(tmp.getCantidad()));
-				//cs_.setString(7, String.valueOf(tmp.getPrecio()));
-				//cs_.setString(8, tmp.getFecha());
-				//cs_.setString(9, tmp.getEstadoOperacion());
+				cs_.setString(1, tmp.getTipoFactura());
+				cs_.setString(2, tmp.getIdCliente());
+				cs_.setString(3, tmp.getIdVendedor());
+				cs_.setString(4, tmp.getIdProducto());
+				cs_.setString(5, tmp.getIdProveedor());
+				cs_.setString(6, tmp.getCantidad());
+				cs_.setString(7, tmp.getPrecio());
+				cs_.setString(8, tmp.getEstadoOperacion());
 				int j = cs_.executeUpdate();
 				if (j <= 0) {
 					throw new insertDBException(
