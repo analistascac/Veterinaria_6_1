@@ -1,7 +1,5 @@
 package Conexion;
 
-import Producto;
-import Proveedor;
 
 import java.sql.*;
 import java.util.ArrayList;

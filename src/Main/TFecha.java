@@ -60,66 +60,70 @@ public class TFecha {
 
 		anio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (esBisiesto((int) anio.getSelectedItem())) {
-					if (m.getIndexOf(mes.getSelectedItem()) == 1) {
+				int year = Integer.parseInt(anio.getSelectedItem()+"");
+				
+				if(esBisiesto(year)){
+					if(m.getIndexOf(mes.getSelectedItem()) == 1){
 						dia.setModel(dias29);
 						dia.setSelectedIndex(0);
 					}
-				} else {
-					if (m.getIndexOf(mes.getSelectedItem()) == 1) {
+				}else{
+					if(m.getIndexOf(mes.getSelectedItem()) == 1){
 						dia.setModel(dias28);
-						if (mes.getSelectedIndex() + 1 > 28) {
+						if(mes.getSelectedIndex()+1 > 28){
 							dia.setSelectedIndex(0);
 						}
 					}
 				}
-				annio = (int) y.getElementAt(anio.getSelectedIndex());
+								
+				annio = Integer.parseInt(y.getElementAt(anio.getSelectedIndex())+"");
 			}
 		});
 
 		mes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				switch (m.getIndexOf(mes.getSelectedItem()) + 1) {
-				case 1:
-					dia.setModel(dias31);
-					break;
-				case 2:
-					if (esBisiesto((int) anio.getSelectedItem())) {
-						dia.setModel(dias29);
-					} else {
-						dia.setModel(dias28);
-					}
-					break;
-				case 3:
-					dia.setModel(dias31);
-					break;
-				case 4:
-					dia.setModel(dias30);
-					break;
-				case 5:
-					dia.setModel(dias31);
-					break;
-				case 6:
-					dia.setModel(dias30);
-					break;
-				case 7:
-					dia.setModel(dias31);
-					break;
-				case 8:
-					dia.setModel(dias31);
-					break;
-				case 9:
-					dia.setModel(dias30);
-					break;
-				case 10:
-					dia.setModel(dias31);
-					break;
-				case 11:
-					dia.setModel(dias30);
-					break;
-				case 12:
-					dia.setModel(dias31);
-					break;
+				switch(m.getIndexOf(mes.getSelectedItem())+1){
+					case 1:
+						dia.setModel(dias31);
+						break;
+					case 2:
+						
+						if(esBisiesto(Integer.parseInt(anio.getSelectedItem()+""))){
+							dia.setModel(dias29);
+						}else{
+							dia.setModel(dias28);
+						}
+						break;
+					case 3:
+						dia.setModel(dias31);
+						break;
+					case 4:
+						dia.setModel(dias30);
+						break;
+					case 5:
+						dia.setModel(dias31);
+						break;
+					case 6:
+						dia.setModel(dias30);
+						break;
+					case 7:
+						dia.setModel(dias31);
+						break;
+					case 8:
+						dia.setModel(dias31);
+						break;
+					case 9:
+						dia.setModel(dias30);
+						break;
+					case 10:
+						dia.setModel(dias31);
+						break;
+					case 11:
+						dia.setModel(dias30);
+						break;
+					case 12:
+						dia.setModel(dias31);
+						break;
 				}
 				dia.setSelectedIndex(0);
 				mees = mes.getSelectedIndex() + 1;

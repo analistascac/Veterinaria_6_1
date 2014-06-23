@@ -122,7 +122,6 @@ public class frmNuevaVenta extends JFrame {
 
 		txtCantidad.addCaretListener(new CaretListener() {
 
-			@Override
 			public void caretUpdate(CaretEvent arg0) {
 
 				if (Auxiliar.isInteger(txtCantidad.getText())) {
@@ -143,7 +142,6 @@ public class frmNuevaVenta extends JFrame {
 		lstArticulos = new JList<Item>();
 		lstArticulos.addListSelectionListener(new ListSelectionListener() {
 
-			@Override
 			public void valueChanged(ListSelectionEvent arg0) {
 
 				chequearEstadoBotones();
@@ -230,7 +228,6 @@ public class frmNuevaVenta extends JFrame {
 		lstArticulosEnCarrito
 				.addListSelectionListener(new ListSelectionListener() {
 
-					@Override
 					public void valueChanged(ListSelectionEvent arg0) {
 
 						chequearEstadoBotones();
@@ -240,7 +237,6 @@ public class frmNuevaVenta extends JFrame {
 		lstArticulosEnCarrito
 				.addListSelectionListener(new ListSelectionListener() {
 
-					@Override
 					public void valueChanged(ListSelectionEvent arg0) {
 
 						lstArticulos.setSelectedValue(null, true);
