@@ -219,6 +219,7 @@ public class frmNuevoEmpleado extends JFrame {
 						Conexion conexion = new Conexion();
 						if (conexion.conectarDB()) {
 							conexion.altaEmpleado(empleado);
+							JOptionPane.showMessageDialog(null, "Empleado agregado correctamente","Informacion",JOptionPane.INFORMATION_MESSAGE);
 						}
 
 						dispose();

@@ -4,6 +4,7 @@ import javax.swing.*;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import javax.swing.JTextArea;
@@ -15,6 +16,7 @@ import Clases.*;
 import Conexion.Conexion;
 import Main.Main;
 import Main.TFecha;
+
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -24,20 +26,17 @@ public class frmNuevaAtencion extends JFrame {
 	private JPanel contentPane;
 	private JLabel lblTipoConsulta;
 	private JLabel lblDiagnostico;
-	private JLabel lblFecha;
-	private JLabel lblDia;
-	private JLabel lblMes;
-	private JLabel lblAnio;
-	private JComboBox<String> cmbDia;
-	private JComboBox<String> cmbMes;
-	private JComboBox<String> cmbAnio;
 	private JComboBox<String> cmbTipoConsulta;
 	private JButton btnCancelar;
 	private JButton btnAceptar;
 	private TFecha fecha;
-	private JComboBox<Item> cmbCliente;
-	private JComboBox<Item> cmbVeterinario;
-	private JComboBox<Item> cmbMascota;
+	private JComboBox cmbCliente;
+	private JComboBox cmbVeterinario;
+	private JComboBox cmbMascota;
+	private DefaultComboBoxModel clientes = new DefaultComboBoxModel();
+	private DefaultComboBoxModel veterinarios = new DefaultComboBoxModel();
+	private DefaultComboBoxModel mascotas = new DefaultComboBoxModel();
+			
 
 	private JTextArea txtDiagnostico;
 
@@ -53,7 +52,7 @@ public class frmNuevaAtencion extends JFrame {
 		setResizable(false);
 		setTitle("Nueva Atencion - Veterinaria CAC");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 422, 319);
+		setBounds(100, 100, 422, 263);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -85,27 +84,35 @@ public class frmNuevaAtencion extends JFrame {
 		lblDiagnostico.setBounds(-8, 134, 141, 24);
 		contentPane.add(lblDiagnostico);
 
-		lblFecha = new JLabel("Fecha");
-		lblFecha.setBounds(10, 181, 131, 21);
-		contentPane.add(lblFecha);
-
-		lblDia = new JLabel("Dia");
-		lblDia.setBounds(10, 212, 23, 21);
-		contentPane.add(lblDia);
-
-		lblMes = new JLabel("Mes");
-		lblMes.setBounds(139, 213, 23, 21);
-		contentPane.add(lblMes);
-
-		lblAnio = new JLabel("AÃ±o");
-		lblAnio.setBounds(282, 213, 23, 21);
-		contentPane.add(lblAnio);
-
-		cmbCliente = new JComboBox<Item>();
+		cmbCliente = new JComboBox();
+		cmbCliente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Conexion cn = new Conexion();
+				
+				if(cn.conectarDB()){
+					Cliente clie = new Cliente();
+					clie = (Cliente) cn.devolverClientes().get(cmbCliente.getSelectedIndex());
+					
+					ArrayList<Mascota> mas = new ArrayList();
+					mas = cn.devolverClienteMascotas(clie);
+					mascotas.removeAllElements();
+					
+					for(int i = 0; i < mas.size(); i++){
+						mascotas.addElement(mas.get(i).getNombreVulgar());
+					}
+						
+					
+				}else{
+					JOptionPane.showMessageDialog(null, "Error al conectar con la base de datos","Error",JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+		cmbCliente.setModel(clientes);
 		cmbCliente.setBounds(150, 11, 247, 21);
 		contentPane.add(cmbCliente);
 
-		cmbVeterinario = new JComboBox<Item>();
+		cmbVeterinario = new JComboBox();
+		cmbVeterinario.setModel(veterinarios);
 		cmbVeterinario.setBounds(150, 43, 247, 21);
 		contentPane.add(cmbVeterinario);
 
@@ -117,7 +124,8 @@ public class frmNuevaAtencion extends JFrame {
 		cmbTipoConsulta.setBounds(151, 75, 246, 21);
 		contentPane.add(cmbTipoConsulta);
 
-		cmbMascota = new JComboBox<Item>();
+		cmbMascota = new JComboBox();
+		cmbMascota.setModel(mascotas);
 		cmbMascota.setBounds(151, 104, 246, 21);
 		contentPane.add(cmbMascota);
 
@@ -137,60 +145,39 @@ public class frmNuevaAtencion extends JFrame {
 		txtDiagnostico.setBounds(151, 134, 246, 53);
 		contentPane.add(txtDiagnostico);
 
-		cmbDia = new JComboBox<String>();
-		cmbDia.setBounds(35, 213, 82, 21);
-		contentPane.add(cmbDia);
-
-		cmbMes = new JComboBox<String>();
-		cmbMes.setBounds(172, 213, 82, 21);
-		contentPane.add(cmbMes);
-
-		cmbAnio = new JComboBox<String>();
-		cmbAnio.setBounds(315, 213, 82, 21);
-		contentPane.add(cmbAnio);
-
-		fecha = new TFecha(cmbDia, cmbMes, cmbAnio);
-
 		btnAceptar = new JButton("Aceptar");
 		btnAceptar.setEnabled(false);
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Item item;
-				Atencion atencion = new Atencion();
-
-				item = (Item) cmbCliente.getSelectedItem();
-				atencion.setIdCliente(item.getId());
-
-				item = (Item) cmbVeterinario.getSelectedItem();
-				atencion.setIdVeterinario(item.getId());
-
-				item = (Item) cmbMascota.getSelectedItem();
-				atencion.setIdMascota(item.getId());
-
-				atencion.setTipoConsulta((String) cmbTipoConsulta
-						.getSelectedItem());
-
-				atencion.setDiagnostico(txtDiagnostico.getText());
-
-				atencion.setFecha(fecha.getFechaString());
-
-				try {
-					Conexion conexion = new Conexion();
-					if (conexion.conectarDB()) {
-
-						conexion.altaAtencion(atencion);
-						conexion.close();
-
-						dispose();
+				Conexion cn = new Conexion();
+				if(cn.conectarDB()){
+					Atencion ate = new Atencion();
+					String clie = cn.devolverClientes().get(cmbCliente.getSelectedIndex()).getId();
+					String mascota = cn.devolverClienteMascotas(cn.devolverClientes().get(cmbCliente.getSelectedIndex()))
+							.get(cmbMascota.getSelectedIndex()).
+							getId();
+					
+					
+					ate.setDiagnostico(txtDiagnostico.getText());
+					ate.setIdCliente(clie);
+					ate.setIdMascota(mascota);
+					ate.setIdVeterinario(cn.devolverVeterinarios().get(cmbVeterinario.getSelectedIndex()).getId());
+					ate.setTipoConsulta(cmbTipoConsulta.getSelectedItem()+"");
+					
+					try {
+						cn.altaAtencion(ate);
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(null, "Error al dar de alta una atencion","Error",JOptionPane.ERROR_MESSAGE);
 					}
-				} catch (Exception e) {
-					JOptionPane.showMessageDialog(null, e, "ERROR",
-							JOptionPane.ERROR_MESSAGE);
+					
+					JOptionPane.showMessageDialog(null, "El alta ha sido dado correctamente.","Información",JOptionPane.INFORMATION_MESSAGE);
+					
+				}else{
+					JOptionPane.showMessageDialog(null, "Error al conectar con la base de datos","Error",JOptionPane.ERROR_MESSAGE);
 				}
-
 			}
 		});
-		btnAceptar.setBounds(308, 245, 89, 23);
+		btnAceptar.setBounds(308, 198, 89, 23);
 		contentPane.add(btnAceptar);
 
 		btnCancelar = new JButton("Cancelar");
@@ -200,7 +187,7 @@ public class frmNuevaAtencion extends JFrame {
 				dispose();
 			}
 		});
-		btnCancelar.setBounds(209, 245, 89, 23);
+		btnCancelar.setBounds(209, 198, 89, 23);
 		contentPane.add(btnCancelar);
 
 		llenarCombos();
@@ -208,66 +195,24 @@ public class frmNuevaAtencion extends JFrame {
 	}
 
 	private void llenarCombos() {
-
-		try {
-
-			Conexion conexion = new Conexion();
-
-			if (conexion.conectarDB()) {
-				String temp;
-				Cliente cliente;
-				Empleado empleado;
-				Mascota mascota;
-
-				DefaultComboBoxModel<Item> modeloC = new DefaultComboBoxModel<Item>();
-				DefaultComboBoxModel<Item> modeloE = new DefaultComboBoxModel<Item>();
-				DefaultComboBoxModel<Item> modeloM = new DefaultComboBoxModel<Item>();
-
-				Iterator<Cliente> itC = conexion.devolverClientes().iterator();
-
-				while (itC.hasNext()) {
-					cliente = itC.next();
-					modeloC.addElement(new Item(cliente.getId(), cliente
-							.getApellido() + " " + cliente.getNombre()));
-				}
-				cmbCliente.setModel(modeloC);
-
-				Iterator<Empleado> itE = conexion.devolverVeterinarios()
-						.iterator();
-
-				while (itE.hasNext()) {
-					empleado = itE.next();
-					modeloE.addElement(new Item(empleado.getId(), empleado
-							.getApellido() + " " + empleado.getNombre()));
-				}
-				cmbVeterinario.setModel(modeloE);
-
-				Iterator<Mascota> itM = conexion.devolverClienteMascotas()
-						.iterator();
-
-				while (itM.hasNext()) {
-					mascota = itM.next();
-
-					temp = "Id: " + mascota.getId() + ", Nombre: "
-							+ mascota.getDescripcion();
-
-					modeloM.addElement(new Item(mascota.getId(), temp));
-				}
-				cmbMascota.setModel(modeloM);
-
-			} else {
-				JOptionPane.showMessageDialog(null,
-						"Error en la conexion de base de datos.", "Error",
-						JOptionPane.WARNING_MESSAGE);
-			}
-
-		} catch (Exception e) {
-
-			System.out.println(e.getStackTrace());
-
-			JOptionPane.showMessageDialog(null, e, "ERROR",
-					JOptionPane.ERROR_MESSAGE);
+		Conexion cn = new Conexion();
+		if(cn.conectarDB()){
+			ArrayList<Cliente> clie = new ArrayList();
+			ArrayList<Empleado> vete = new ArrayList();
+			
+			
+			clie = cn.devolverClientes();
+			vete = cn.devolverVeterinarios();
+			
+			for(int i = 0; i < clie.size();i++) clientes.addElement(clie.get(i).getNombre() + " " + clie.get(i).getApellido());
+			for(int i = 0; i < vete.size();i++) veterinarios.addElement(vete.get(i).getNombre() + " " + vete.get(i).getApellido());
+			
+			
+		}else{
+			JOptionPane.showMessageDialog(null, "Error en la conexion de base de datos", "Error",JOptionPane.ERROR_MESSAGE);
 		}
-
+		
+		cn.close();
+		
 	}
 }

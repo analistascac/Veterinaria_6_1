@@ -17,6 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JScrollPane;
 
 import Clases.Compra;
+import Clases.Empleado;
 import Clases.Producto;
 import Clases.Proveedor;
 import Conexion.Conexion;
@@ -29,6 +30,8 @@ import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
+
+import jdk.nashorn.internal.scripts.JO;
 
 public class frmNuevaCompra extends JFrame {
 
@@ -43,7 +46,15 @@ public class frmNuevaCompra extends JFrame {
 	private DefaultComboBoxModel productos = new DefaultComboBoxModel();
 	private JComboBox cmbTipoFactura;
 	private JComboBox cmbProducto;
-
+	private JComboBox cmbEmpleado;
+	private DefaultComboBoxModel empleados = new DefaultComboBoxModel();
+	private JTextField txtPrecioCompra;
+	private JTextField txtPrecioVenta;
+	
+	private ArrayList<Compra> compra = new ArrayList();
+	private JComboBox cmbEstadoOperacion;
+	private DefaultComboBoxModel estadooperacion = new DefaultComboBoxModel();
+	private JButton btnAceptar;
 
 	public frmNuevaCompra() {
 		addWindowListener(new WindowAdapter() {
@@ -57,7 +68,7 @@ public class frmNuevaCompra extends JFrame {
 		setResizable(false);
 		setTitle("Nueva compra - Veterinaria CAC");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 359, 471);
+		setBounds(100, 100, 359, 517);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -91,43 +102,79 @@ public class frmNuevaCompra extends JFrame {
 		cmbTipoFactura.setBounds(127, 38, 205, 21);
 		contentPane.add(cmbTipoFactura);
 		
+		cmbEmpleado = new JComboBox();
+		cmbEmpleado.setModel(empleados);
+		llenarEmpleados();
+		cmbEmpleado.setBounds(127, 63, 205, 21);
+		contentPane.add(cmbEmpleado);
+		
 		JLabel lblProducto = new JLabel("Producto");
 		lblProducto.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblProducto.setBounds(19, 150, 107, 21);
+		lblProducto.setBounds(10, 95, 107, 21);
 		contentPane.add(lblProducto);
 		
 		cmbProducto = new JComboBox();
 		cmbProducto.setModel(productos);
-		cmbProducto.setBounds(136, 154, 205, 21);
+		cmbProducto.setBounds(127, 95, 205, 21);
 		contentPane.add(cmbProducto);
 		
 		JLabel label_2 = new JLabel("Cantidad");
 		label_2.setHorizontalAlignment(SwingConstants.RIGHT);
-		label_2.setBounds(19, 182, 107, 15);
+		label_2.setBounds(10, 127, 107, 15);
 		contentPane.add(label_2);
 		
 		txtCantidad = new JTextField();
 		txtCantidad.setColumns(10);
-		txtCantidad.setBounds(136, 179, 205, 21);
+		txtCantidad.setBounds(127, 124, 205, 21);
 		contentPane.add(txtCantidad);
 		
 		btnAgregarAlCanasto = new JButton("Agregar al canasto");
 		btnAgregarAlCanasto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Conexion cn = new Conexion();
 				
-				
-				cmbProveedor.setEnabled(false);
-				
-				
-				if(cn.conectarDB()){
-					try{
-						canasto.addElement(cn.devolverProveedorProductos((Proveedor)cn.devolverProveedores().get(cmbProveedor.getSelectedIndex())).get(cmbProducto.getSelectedIndex()).getNombre().toString());
-					}catch(Exception e){
-						canasto.addElement(cn.devolverProveedorProductos((Proveedor)cn.devolverProveedores().get(cmbProveedor.getSelectedIndex())).get(cmbProducto.getSelectedIndex()).getNombreCientifico().toString());	
+				if(!txtPrecioCompra.getText().trim().isEmpty() && !txtPrecioVenta.getText().trim().isEmpty() && !txtCantidad.getText().trim().isEmpty()){
+					Conexion cn = new Conexion();
+					cmbProveedor.setEnabled(false);
+
+					if(cn.conectarDB()){
+						btnQuitarDelCanasto.setEnabled(true);
+						btnAceptar.setEnabled(true);
+						
+						Compra com = new Compra();
+						Proveedor p = new Proveedor();
+						Empleado e = new Empleado();
+						Producto prod = new Producto();
+						boolean error = false;
+						
+						p = (Proveedor) cn.devolverProveedores().get(cmbProveedor.getSelectedIndex());
+						e = (Empleado) cn.devolverEmpleados().get(cmbEmpleado.getSelectedIndex());
+						prod = (Producto) cn.devolverProveedorProductos(p).get(cmbProducto.getSelectedIndex());
+
+						try{
+							com.setCantidad(Integer.parseInt(txtCantidad.getText()));
+							com.setPrecio_costo(Double.parseDouble(txtPrecioCompra.getText()));
+							com.setPrecio_venta(Double.parseDouble(txtPrecioVenta.getText()));
+							if(prod.getNombre() != null){
+								canasto.addElement(prod.getNombre() + " x " + txtCantidad.getText());
+							}else{
+								canasto.addElement(prod.getNombreCientifico() + " x " + txtCantidad.getText());
+							}
+							com.setIdProveedor(p.getId());
+							com.setIdProducto(prod.getId());
+							com.setIdEmpleado(e.getId());
+							com.setTipo_factura(cmbTipoFactura.getSelectedItem().toString());
+							com.setEstadoOperacion(cmbEstadoOperacion.getSelectedItem()+"");
+							txtCantidad.setText("");
+							if(!error) compra.add(com);
+						}catch (Exception e1){
+							error = true;
+							JOptionPane.showMessageDialog(null, "Error en la carga de datos.","Error",JOptionPane.ERROR_MESSAGE);
+						}
 					}
+				}else{
+					JOptionPane.showMessageDialog(null, "Error en la carga de datos.","Error",JOptionPane.ERROR_MESSAGE);
 				}
-				
+				 
 				
 			}
 		});
@@ -135,6 +182,19 @@ public class frmNuevaCompra extends JFrame {
 		contentPane.add(btnAgregarAlCanasto);
 		
 		btnQuitarDelCanasto = new JButton("Quitar del canasto");
+		btnQuitarDelCanasto.setEnabled(false);
+		btnQuitarDelCanasto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				compra.remove(lstProductos.getSelectedIndex());
+				canasto.remove(lstProductos.getSelectedIndex());
+				
+				if(canasto.isEmpty()){
+					btnQuitarDelCanasto.setEnabled(false);
+					btnAceptar.setEnabled(false);
+				}
+			}
+		});
 		btnQuitarDelCanasto.setBounds(19, 211, 138, 34);
 		contentPane.add(btnQuitarDelCanasto);
 		
@@ -146,47 +206,70 @@ public class frmNuevaCompra extends JFrame {
 		lstProductos.setModel(canasto);
 		scrollPane.setViewportView(lstProductos);
 		
-		JButton btnAceptar = new JButton("Aceptar");
-		btnAceptar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				Conexion c = new Conexion();
-				
-				
-				if(c.conectarDB()){
-					ArrayList<Compra> compras = new ArrayList<Compra>();
-					Compra compra = new Compra();
-					
-					compra.setCantidad(10);
-					compra.setEstadoOperacion("PRUEBA");
-					compra.setIdEmpleado(1);
-					compra.setIdProducto(3);
-					compra.setIdProveedor(1);
-					compra.setPrecio_costo(100.0);
-					compra.setPrecio_venta(100.0);
-					compra.setTipo_factura("B");
-									
-					compras.add(compra);
-					
-					try {
-						c.altaCompra(compras);
-					} catch (Exception e) {
-						System.out.println("Error en alta compra");
-						e.printStackTrace();
-					}
-				}else{
-					System.out.println("Error de conexion.");
-				}
-				
-			}
-		});
-		btnAceptar.setBounds(252, 409, 89, 23);
+		btnAceptar = new JButton("Aceptar");
+		btnAceptar.setEnabled(false);
+		btnAceptar.setBounds(252, 455, 89, 23);
 		contentPane.add(btnAceptar);
 		
 		JLabel lblTipoFactura = new JLabel("Tipo factura:");
 		lblTipoFactura.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblTipoFactura.setBounds(10, 38, 107, 21);
 		contentPane.add(lblTipoFactura);
+		
+		JLabel lblEmpleado = new JLabel("Empleado:");
+		lblEmpleado.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblEmpleado.setBounds(10, 63, 107, 21);
+		contentPane.add(lblEmpleado);
+		
+		JLabel lblPrecioCompra = new JLabel("Precio compra:");
+		lblPrecioCompra.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblPrecioCompra.setBounds(10, 156, 107, 15);
+		contentPane.add(lblPrecioCompra);
+		
+		txtPrecioCompra = new JTextField();
+		txtPrecioCompra.setColumns(10);
+		txtPrecioCompra.setBounds(127, 153, 205, 21);
+		contentPane.add(txtPrecioCompra);
+		
+		JLabel lblPrecioventa = new JLabel("Precio venta");
+		lblPrecioventa.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblPrecioventa.setBounds(10, 185, 107, 15);
+		contentPane.add(lblPrecioventa);
+		
+		txtPrecioVenta = new JTextField();
+		txtPrecioVenta.setColumns(10);
+		txtPrecioVenta.setBounds(127, 182, 205, 21);
+		contentPane.add(txtPrecioVenta);
+		
+		JLabel lblEstadoOperacion = new JLabel("Estado operacion:");
+		lblEstadoOperacion.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblEstadoOperacion.setBounds(10, 409, 107, 15);
+		contentPane.add(lblEstadoOperacion);
+		
+		cmbEstadoOperacion = new JComboBox();
+		estadooperacion.addElement("Abonado");
+		estadooperacion.addElement("Pendiente de pago");
+		cmbEstadoOperacion.setModel(estadooperacion);
+		cmbEstadoOperacion.setBounds(127, 409, 205, 21);
+		contentPane.add(cmbEstadoOperacion);
+		
+		btnAceptar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Conexion cn = new Conexion();
+				
+				if(cn.conectarDB()){
+					try {
+						cn.altaCompra(compra);
+						JOptionPane.showMessageDialog(null, "Compra cargada exitosamente","Información",JOptionPane.INFORMATION_MESSAGE);
+						dispose();
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(null, "Error en la alta de la compra.","Error",JOptionPane.ERROR_MESSAGE);
+					}
+				}else{
+					JOptionPane.showMessageDialog(null, "Error en la conexion de la base de datos","Error",JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
 	}
 	
 	private void llenarProveedores(){
@@ -224,8 +307,20 @@ public class frmNuevaCompra extends JFrame {
 		}else{
 			JOptionPane.showMessageDialog(null, "Error en la conexion de base de datos","Error",JOptionPane.ERROR_MESSAGE);
 		}
-		
-		
 	}
 	
+	private void llenarEmpleados(){
+		Conexion cn = new Conexion();
+		empleados.removeAllElements();
+		if(cn.conectarDB()){
+			ArrayList<Empleado> empleaados = new ArrayList();
+			empleaados = cn.devolverEmpleados();
+			
+			for(int i = 0; i<empleaados.size();i++){
+				empleados.addElement(empleaados.get(i).getNombre() + " " + empleaados.get(i).getApellido() + " ~ " + empleaados.get(i).getId());
+			}
+		}else{
+			JOptionPane.showMessageDialog(null, "Error en la conexion de base de datos","Error",JOptionPane.ERROR_MESSAGE);
+		}
+	}
 }

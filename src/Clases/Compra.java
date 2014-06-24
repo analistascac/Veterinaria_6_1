@@ -4,9 +4,9 @@ package Clases;
 public class Compra {
 
 	private String tipo_factura;
-	private int idEmpleado;
-	private int idProveedor;
-	private int idProducto;
+	private String idEmpleado;
+	private String idProveedor;
+	private String idProducto;
 	private Double precio_costo;
 	private Double precio_venta;
 	private int cantidad;
@@ -17,7 +17,7 @@ public class Compra {
 		
 	}
 	
-	public Compra(String tipo_factura, int idEmpleado, int idProveedor, int idProducto, Double precio_costo, Double precio_venta, int cantidad, String estadoOperacion){
+	public Compra(String tipo_factura, String idEmpleado, String idProveedor, String idProducto, Double precio_costo, Double precio_venta, int cantidad, String estadoOperacion){
 		this.tipo_factura = tipo_factura;
 		this.idEmpleado = idEmpleado;
 		this.idProveedor = idProveedor;
@@ -32,7 +32,7 @@ public class Compra {
 		return tipo_factura;
 	}
 
-	public int getIdEmpleado() {
+	public String getIdEmpleado() {
 		return idEmpleado;
 	}
 
@@ -44,7 +44,7 @@ public class Compra {
 		this.tipo_factura = tipo_factura;
 	}
 
-	public void setIdEmpleado(int idEmpleado) {
+	public void setIdEmpleado(String idEmpleado) {
 		this.idEmpleado = idEmpleado;
 	}
 
@@ -52,11 +52,11 @@ public class Compra {
 		this.estadoOperacion = estadoOperacion;
 	}
 
-	public int getIdProveedor() {
+	public String getIdProveedor() {
 		return idProveedor;
 	}
 
-	public int getIdProducto() {
+	public String getIdProducto() {
 		return idProducto;
 	}
 
@@ -72,11 +72,11 @@ public class Compra {
 		return cantidad;
 	}
 
-	public void setIdProveedor(int idProveedor) {
+	public void setIdProveedor(String idProveedor) {
 		this.idProveedor = idProveedor;
 	}
 
-	public void setIdProducto(int idProducto) {
+	public void setIdProducto(String idProducto) {
 		this.idProducto = idProducto;
 	}
 
@@ -91,6 +91,17 @@ public class Compra {
 	public void setCantidad(int cantidad) {
 		this.cantidad = cantidad;
 	}
+
+	@Override
+	public String toString() {
+		return "Compra [tipo_factura=" + tipo_factura + ", \nidEmpleado="
+				+ idEmpleado + ", \nidProveedor=" + idProveedor + ", \nidProducto="
+				+ idProducto + ", \nprecio_costo=" + precio_costo
+				+ ", \nprecio_venta=" + precio_venta + ", \ncantidad=" + cantidad
+				+ ", \nestadoOperacion=" + estadoOperacion + "]";
+	}
+	
+	
 	
 }
 

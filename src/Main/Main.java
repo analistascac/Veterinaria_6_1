@@ -10,9 +10,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
-import Ventanas.AtencionesPorVeterinario;
-import Ventanas.ClienteMasAtendido;
-import Ventanas.MejorVendedor;
 import Ventanas.ModificarAtencion;
 import Ventanas.ModificarCliente;
 import Ventanas.ModificarEmpleado;
@@ -27,6 +24,10 @@ import Ventanas.frmNuevoCliente;
 import Ventanas.frmNuevoEmpleado;
 import Ventanas.frmNuevoProducto;
 import Ventanas.frmNuevoProveedor;
+import Ventanas.winInformeAnimalesPorRaza;
+import Ventanas.winInformeAtencionesPorVeterinario;
+import Ventanas.winInformeClienteMasAtendido;
+import Ventanas.winInformeMejorVendedor;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -261,7 +262,7 @@ public class Main extends JFrame {
 		mntmAtencionesDeUn = new JMenuItem("Atenciones de un veterinario");
 		mntmAtencionesDeUn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				AtencionesPorVeterinario ventana = new AtencionesPorVeterinario();
+				winInformeAtencionesPorVeterinario ventana = new winInformeAtencionesPorVeterinario();
 				ventana.setVisible(true);
 				dispose();
 			}
@@ -271,7 +272,7 @@ public class Main extends JFrame {
 		mntmVendedorConMas = new JMenuItem("Vendedor con mas ventas realizadas");
 		mntmVendedorConMas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				MejorVendedor ventana = new MejorVendedor();
+				winInformeMejorVendedor ventana = new winInformeMejorVendedor();
 				ventana.setVisible(true);
 				dispose();
 			}
@@ -279,12 +280,19 @@ public class Main extends JFrame {
 		mnInformes.add(mntmVendedorConMas);
 		
 		mntmAnimalesPorRaza = new JMenuItem("Animales por raza existentes en el centro");
+		mntmAnimalesPorRaza.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				winInformeAnimalesPorRaza ventana = new winInformeAnimalesPorRaza();
+				ventana.setVisible(true);
+				dispose();
+			}
+		});
 		mnInformes.add(mntmAnimalesPorRaza);
 		
 		mntmClienteMasAtendido = new JMenuItem("Cliente m\u00E1s atendido en la veterinaria");
 		mntmClienteMasAtendido.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ClienteMasAtendido c = new ClienteMasAtendido();
+				winInformeClienteMasAtendido c = new winInformeClienteMasAtendido();
 				c.setVisible(true);
 				dispose();
 			}
