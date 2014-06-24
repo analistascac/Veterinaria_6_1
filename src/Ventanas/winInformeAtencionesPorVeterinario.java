@@ -83,16 +83,9 @@ public class winInformeAtencionesPorVeterinario extends JFrame {
 				fechas.clear();
 				int cantidad;
 
-				cantidad = pedirAtenciones((String) cmbVeterinarios.getSelectedItem());
+				cantidad = pedirAtenciones(cmbVeterinarios.getSelectedIndex());
 			
 				textFieldCantidad.setText(String.valueOf(cantidad));
-				/*for (int i = 0; i < atenciones.size(); i++) {
-					fechas.addElement(atenciones.get(i).getFecha());
-					tipoconsultas.addElement(atenciones.get(i)
-							.getTipoConsulta());
-					clientes.addElement(atenciones.get(i).getIdCliente());
-					ides.addElement(atenciones.get(i).getId());
-				}*/
 			}
 		});
 		cmbVeterinarios.setModel(veterinarios);
@@ -102,11 +95,6 @@ public class winInformeAtencionesPorVeterinario extends JFrame {
 	}
 
 	private void llenarVeterinarios() {
-		/*veterinarios.addElement("Veterinario prueba 1");
-		veterinarios.addElement("Veterinario prueba 2");
-		veterinarios.addElement("Veterinario prueba 3");
-		veterinarios.addElement("Veterinario prueba 4");
-		veterinarios.addElement("Veterinario prueba 5");*/
 		Conexion cn = new Conexion();
 		if(cn.conectarDB()){
 			ArrayList<Empleado> aVeterinario = new ArrayList<Empleado>();
@@ -115,7 +103,7 @@ public class winInformeAtencionesPorVeterinario extends JFrame {
 			Empleado tmp = new Empleado();
 			while(it.hasNext()){
 				tmp = it.next();
-				veterinarios.addElement(tmp.getDocumento());//tmp.getNombre()+' '+tmp.getApellido());
+				veterinarios.addElement(tmp.getDocumento());
 			}
 		}else{
 			JOptionPane.showMessageDialog(null, "Error en la conexion de base de datos","Error",JOptionPane.ERROR_MESSAGE);
@@ -123,22 +111,13 @@ public class winInformeAtencionesPorVeterinario extends JFrame {
 		
 	}
 
-	private int pedirAtenciones(String emp) {
-		//ArrayList<Atencion> atenciones = new ArrayList();
-		/*for (int i = 0; i < 5; i++) {
-			Atencion ate = new Atencion();
-			ate.setIdCliente("Cliente prueba " + i + 1);
-			ate.setDiagnostico("Diagnostico prueba " + i + 1);
-			ate.setFecha("1/1/2014");
-			ate.setId(i + "");
-			ate.setIdMascota("Mascota prueba" + i + 1);
-			ate.setTipoConsulta("Tipo consulta prueba");
-			atenciones.add(ate);
-		}*/
+	private int pedirAtenciones(int idVeterinario) {
 		int cantidad = 0;
 		Conexion cn = new Conexion();
 		if(cn.conectarDB()){
-			cantidad = cn.informeMascotasPorVeterinario(emp);
+			Empleado este = new Empleado();
+			este = cn.devolverVeterinarios().get(idVeterinario);
+			cantidad = cn.informeMascotasPorVeterinario(este);
 		}
 
 		return cantidad;
