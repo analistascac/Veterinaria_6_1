@@ -149,7 +149,6 @@ public class winEliminarCliente extends JFrame {
 					try {
 						Cliente clie = new Cliente();
 						clie = (Cliente) cn.devolverClientes().get(comboBoxCliente.getSelectedIndex());
-						cn.bajaCliente(clie);
 						int i = JOptionPane.showConfirmDialog(null, "Confirma la baja ?", "Baja Cliente",JOptionPane.YES_NO_OPTION);
 						if (i == JOptionPane.YES_OPTION){
 							cn.bajaCliente(clie);
