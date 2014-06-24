@@ -77,8 +77,6 @@ public class Conexion {
 		return a_Cliente;
 	}
 
-
-
 	public ArrayList<Proveedor> devolverProveedores (){
 		
 		ArrayList<Proveedor> a_Proveedor = new ArrayList<Proveedor>();
@@ -176,7 +174,7 @@ public class Conexion {
 				e.setDomicilio(rs.getString(6));
 				e.setTelefono(rs.getString(7));
 				e.setFechaNacimiento(rs.getString(8));
-				e.setEmail(rs.getString(9));
+				e.setMatricula(rs.getString(9));
 				a_Empleado.add(e);
 			}
 		} catch (SQLException e){
