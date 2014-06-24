@@ -6,6 +6,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -34,6 +35,7 @@ public class frmNuevaCompra extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtCantidad;
 	private JList lstProductos;
+	private DefaultListModel canasto = new DefaultListModel();
 	private JButton btnAgregarAlCanasto;
 	private JButton btnQuitarDelCanasto;
 	private JComboBox cmbProveedor;
@@ -110,6 +112,25 @@ public class frmNuevaCompra extends JFrame {
 		contentPane.add(txtCantidad);
 		
 		btnAgregarAlCanasto = new JButton("Agregar al canasto");
+		btnAgregarAlCanasto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Conexion cn = new Conexion();
+				
+				
+				cmbProveedor.setEnabled(false);
+				
+				
+				if(cn.conectarDB()){
+					try{
+						canasto.addElement(cn.devolverProveedorProductos((Proveedor)cn.devolverProveedores().get(cmbProveedor.getSelectedIndex())).get(cmbProducto.getSelectedIndex()).getNombre().toString());
+					}catch(Exception e){
+						canasto.addElement(cn.devolverProveedorProductos((Proveedor)cn.devolverProveedores().get(cmbProveedor.getSelectedIndex())).get(cmbProducto.getSelectedIndex()).getNombreCientifico().toString());	
+					}
+				}
+				
+				
+			}
+		});
 		btnAgregarAlCanasto.setBounds(188, 211, 153, 34);
 		contentPane.add(btnAgregarAlCanasto);
 		
@@ -122,6 +143,7 @@ public class frmNuevaCompra extends JFrame {
 		contentPane.add(scrollPane);
 		
 		lstProductos = new JList();
+		lstProductos.setModel(canasto);
 		scrollPane.setViewportView(lstProductos);
 		
 		JButton btnAceptar = new JButton("Aceptar");
@@ -197,7 +219,7 @@ public class frmNuevaCompra extends JFrame {
 				}
 				
 			}
-			
+			cn.close();
 			
 		}else{
 			JOptionPane.showMessageDialog(null, "Error en la conexion de base de datos","Error",JOptionPane.ERROR_MESSAGE);
