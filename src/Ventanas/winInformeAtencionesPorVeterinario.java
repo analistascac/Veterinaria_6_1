@@ -28,6 +28,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
+
 import javax.swing.JTextField;
 
 public class winInformeAtencionesPorVeterinario extends JFrame {
@@ -77,15 +78,19 @@ public class winInformeAtencionesPorVeterinario extends JFrame {
 		cmbVeterinarios.addActionListener(new ActionListener() {
 			@SuppressWarnings("unchecked")
 			public void actionPerformed(ActionEvent arg0) {
-				ides.clear();
-				clientes.clear();
-				tipoconsultas.clear();
-				fechas.clear();
 				int cantidad;
 
-				cantidad = pedirAtenciones(cmbVeterinarios.getSelectedIndex());
+				Empleado emp = new Empleado();
+				Conexion cn = new Conexion();
+				if (cn.conectarDB()){
+					emp = cn.devolverEmpleados().get(cmbVeterinarios.getSelectedIndex());
+					cantidad = pedirAtenciones(emp);
+					textFieldCantidad.setText(String.valueOf(cantidad));
+					cn.close();
+				} else {
+					JOptionPane.showMessageDialog(null, "Error en la conexion de base de datos","Error",JOptionPane.ERROR_MESSAGE);
+				}
 			
-				textFieldCantidad.setText(String.valueOf(cantidad));
 			}
 		});
 		cmbVeterinarios.setModel(veterinarios);
@@ -111,13 +116,11 @@ public class winInformeAtencionesPorVeterinario extends JFrame {
 		
 	}
 
-	private int pedirAtenciones(int idVeterinario) {
+	private int pedirAtenciones(Empleado emp) {
 		int cantidad = 0;
 		Conexion cn = new Conexion();
 		if(cn.conectarDB()){
-			Empleado este = new Empleado();
-			este = cn.devolverVeterinarios().get(idVeterinario);
-			cantidad = cn.informeMascotasPorVeterinario(este);
+			cantidad = cn.informeMascotasPorVeterinario(emp);
 		}
 
 		return cantidad;
