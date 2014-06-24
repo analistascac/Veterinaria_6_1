@@ -55,7 +55,7 @@ public class winEliminarCliente extends JFrame {
 		});
 		setTitle("Veterinaria CAC - Baja - Cliente");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 407, 391);
+		setBounds(100, 100, 407, 419);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -68,77 +68,77 @@ public class winEliminarCliente extends JFrame {
 		
 		JLabel labelNombre = new JLabel("Nombre:");
 		labelNombre.setHorizontalAlignment(SwingConstants.RIGHT);
-		labelNombre.setBounds(1, 54, 106, 21);
+		labelNombre.setBounds(-9, 82, 106, 21);
 		contentPane.add(labelNombre);
 		
 		textFieldNombre = new JTextField();
 		textFieldNombre.setColumns(10);
-		textFieldNombre.setBounds(120, 54, 246, 21);
+		textFieldNombre.setBounds(110, 82, 246, 21);
 		contentPane.add(textFieldNombre);
 		
 		JLabel labelApellido = new JLabel("Apellido:");
 		labelApellido.setHorizontalAlignment(SwingConstants.RIGHT);
-		labelApellido.setBounds(1, 86, 106, 21);
+		labelApellido.setBounds(-9, 114, 106, 21);
 		contentPane.add(labelApellido);
 		
 		textFieldApellido = new JTextField();
 		textFieldApellido.setColumns(10);
-		textFieldApellido.setBounds(120, 86, 246, 21);
+		textFieldApellido.setBounds(110, 114, 246, 21);
 		contentPane.add(textFieldApellido);
 		
 		JLabel labelTipoDoc = new JLabel("Tipo documento:");
 		labelTipoDoc.setHorizontalAlignment(SwingConstants.RIGHT);
-		labelTipoDoc.setBounds(1, 118, 106, 21);
+		labelTipoDoc.setBounds(-9, 146, 106, 21);
 		contentPane.add(labelTipoDoc);
 		
 		JLabel labelDoc = new JLabel("Documento:");
 		labelDoc.setHorizontalAlignment(SwingConstants.RIGHT);
-		labelDoc.setBounds(-24, 150, 131, 24);
+		labelDoc.setBounds(-34, 178, 131, 24);
 		contentPane.add(labelDoc);
 		
 		textFieldDoc = new JTextField();
 		textFieldDoc.setColumns(10);
-		textFieldDoc.setBounds(120, 147, 246, 21);
+		textFieldDoc.setBounds(110, 175, 246, 21);
 		contentPane.add(textFieldDoc);
 		
 		JLabel labelDireccion = new JLabel("Direccion:");
 		labelDireccion.setHorizontalAlignment(SwingConstants.RIGHT);
-		labelDireccion.setBounds(11, 179, 96, 21);
+		labelDireccion.setBounds(1, 207, 96, 21);
 		contentPane.add(labelDireccion);
 		
 		textFieldDireccion = new JTextField();
 		textFieldDireccion.setColumns(10);
-		textFieldDireccion.setBounds(120, 179, 246, 21);
+		textFieldDireccion.setBounds(110, 207, 246, 21);
 		contentPane.add(textFieldDireccion);
 		
 		JLabel labelOcupacion = new JLabel("Ocupacion:");
 		labelOcupacion.setHorizontalAlignment(SwingConstants.RIGHT);
-		labelOcupacion.setBounds(1, 213, 106, 21);
+		labelOcupacion.setBounds(-9, 241, 106, 21);
 		contentPane.add(labelOcupacion);
 		
 		textFieldOcupacion = new JTextField();
 		textFieldOcupacion.setColumns(10);
-		textFieldOcupacion.setBounds(120, 213, 246, 21);
+		textFieldOcupacion.setBounds(110, 241, 246, 21);
 		contentPane.add(textFieldOcupacion);
 		
 		JLabel labelTelefono = new JLabel("Telefono:");
 		labelTelefono.setHorizontalAlignment(SwingConstants.RIGHT);
-		labelTelefono.setBounds(11, 252, 96, 21);
+		labelTelefono.setBounds(1, 280, 96, 21);
 		contentPane.add(labelTelefono);
 		
 		textFieldTelefono = new JTextField();
 		textFieldTelefono.setColumns(10);
-		textFieldTelefono.setBounds(120, 252, 246, 21);
+		textFieldTelefono.setBounds(110, 280, 246, 21);
 		contentPane.add(textFieldTelefono);
 		
 		JLabel labelEmail = new JLabel("E-Mail:");
 		labelEmail.setHorizontalAlignment(SwingConstants.RIGHT);
-		labelEmail.setBounds(61, 291, 46, 14);
+		labelEmail.setBounds(51, 319, 46, 14);
 		contentPane.add(labelEmail);
 		
 		textFieldEmail = new JTextField();
 		textFieldEmail.setColumns(10);
-		textFieldEmail.setBounds(120, 288, 246, 20);
+		textFieldEmail.setBounds(110, 316, 246, 20);
 		contentPane.add(textFieldEmail);
 		
 		btnEliminar = new JButton("Eliminar");
@@ -176,18 +176,18 @@ public class winEliminarCliente extends JFrame {
 			}
 		});
 		btnEliminar.setEnabled(false);
-		btnEliminar.setBounds(277, 319, 89, 23);
+		btnEliminar.setBounds(267, 347, 89, 23);
 		contentPane.add(btnEliminar);
 		
 		textFieldTipoDoc = new JTextField();
 		textFieldTipoDoc.setColumns(10);
-		textFieldTipoDoc.setBounds(120, 118, 246, 21);
+		textFieldTipoDoc.setBounds(110, 146, 246, 21);
 		contentPane.add(textFieldTipoDoc);
 		
 		JLabel lblNewLabel = new JLabel("Baja de Cliente");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(124, -1, 162, 21);
+		lblNewLabel.setBounds(125, 11, 162, 21);
 		contentPane.add(lblNewLabel);
 		
 		comboBoxCliente = new JComboBox();
@@ -215,13 +215,13 @@ public class winEliminarCliente extends JFrame {
 				
 			}
 		});
-		comboBoxCliente.setBounds(120, 24, 246, 20);
+		comboBoxCliente.setBounds(110, 52, 246, 20);
 		comboBoxCliente.setModel(clientes);
 		contentPane.add(comboBoxCliente);
 		
 		JLabel lblCliente = new JLabel("Cliente:");
 		lblCliente.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblCliente.setBounds(61, 27, 46, 14);
+		lblCliente.setBounds(51, 55, 46, 14);
 		contentPane.add(lblCliente);
 		
 	}
