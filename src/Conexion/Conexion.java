@@ -1,5 +1,14 @@
 package Conexion;
 
+import Atencion;
+import Cliente;
+import Compra;
+import Empleado;
+import Mascota;
+import Producto;
+import Proveedor;
+import Ventas;
+import insertDBException;
 import Clases.*;
 
 import java.sql.*;
@@ -53,7 +62,7 @@ public class Conexion {
 	public ArrayList<Cliente> devolverClientes (){
 
 		ArrayList<Cliente> a_Cliente = new ArrayList<Cliente>();
-
+		
 		try {
 			CallableStatement cs = con.prepareCall("{call sp_return_clientes()}");
 			rs = cs.executeQuery();
@@ -75,13 +84,21 @@ public class Conexion {
 			System.out.println(e.getStackTrace());
 		}
 		return a_Cliente;
+<<<<<<< HEAD
 
 	}
 
 	public ArrayList<Proveedor> devolverProveedores (){
 
-		ArrayList<Proveedor> a_Proveedor = new ArrayList<Proveedor>();
+=======
+		
+	}
 
+	public ArrayList<Proveedor> devolverProveedores (){
+		
+>>>>>>> origin/master
+		ArrayList<Proveedor> a_Proveedor = new ArrayList<Proveedor>();
+		
 		try {
 			CallableStatement cs = con.prepareCall("{call sp_return_proveedores}");
 			rs = cs.executeQuery();
@@ -100,14 +117,18 @@ public class Conexion {
 		} catch (SQLException e){
 			System.out.println(e.getStackTrace());
 		}
-
+		
 		return a_Proveedor;
 	}
 
 	public ArrayList<Producto> devolverProductos (){
+<<<<<<< HEAD
 
+=======
+		
+>>>>>>> origin/master
 		ArrayList<Producto> a_Producto = new ArrayList<Producto>();
-
+		
 		try {
 			CallableStatement cs = con.prepareCall("{call sp_return_productos}");
 			rs = cs.executeQuery();
@@ -127,14 +148,18 @@ public class Conexion {
 		} catch (SQLException e) {
 			System.out.println(e.getStackTrace());
 		}
-
+		
 		return a_Producto;
 	}
 
 	public ArrayList<Empleado> devolverVeterinarios (){
+<<<<<<< HEAD
 
+=======
+		
+>>>>>>> origin/master
 		ArrayList<Empleado> a_Veterinario = new ArrayList<Empleado>();
-
+		
 		try {
 			CallableStatement cs = con.prepareCall("{call sp_return_veterinarios}");
 			rs = cs.executeQuery();
@@ -154,14 +179,18 @@ public class Conexion {
 		} catch (SQLException e) {
 			System.out.println(e.getStackTrace());
 		}
-
+		
 		return a_Veterinario;
 	}
 
 	public ArrayList<Empleado> devolverEmpleados(){
+<<<<<<< HEAD
 
+=======
+		
+>>>>>>> origin/master
 		ArrayList<Empleado> a_Empleado = new ArrayList<Empleado>();
-
+		
 		try {
 			CallableStatement cs = con.prepareCall("{call sp_return_empleados}");
 			rs = cs.executeQuery();
@@ -181,14 +210,20 @@ public class Conexion {
 		} catch (SQLException e){
 			System.out.println(e.getStackTrace());
 		}
-
+		
 		return a_Empleado;
 	}
 
 	public ArrayList<Mascota> devolverClienteMascotas(Cliente clie){
+<<<<<<< HEAD
 
 		ArrayList<Mascota> a_ClienteMascota = new ArrayList<Mascota>();
 
+=======
+		
+		ArrayList<Mascota> a_ClienteMascota = new ArrayList<Mascota>();
+		
+>>>>>>> origin/master
 		try{
 			CallableStatement cs = con.prepareCall("{call sp_return_cliente_mascotas(?)}");
 			cs.setString(1, clie.getId());
@@ -206,14 +241,14 @@ public class Conexion {
 			System.out.println(e.getStackTrace());
 			System.out.println(e.getMessage());
 		}
-
+		
 		return a_ClienteMascota;
 	}
 
 	public ArrayList<Producto> devolverProveedorProductos(Proveedor prov){
-
+		
 		ArrayList<Producto> a_Producto = new ArrayList<Producto>();
-
+		
 		try {
 			CallableStatement cs = con.prepareCall("{call sp_return_proveedor_productos(?)}");
 			cs.setString(1, String.valueOf(prov.getId()));
@@ -234,12 +269,16 @@ public class Conexion {
 			System.out.println(e.getStackTrace());
 			System.out.println(e.getMessage());
 		}
-
+		
 		return a_Producto;
 	}
 
 	public void altaEmpleado(Empleado em) throws insertDBException{
+<<<<<<< HEAD
 
+=======
+		
+>>>>>>> origin/master
 		try {
 			CallableStatement cs = con.prepareCall("{call sp_insert_empleado(?,?,?,?,?,?,?,?)}");
 			cs.setString(1, em.getNombre());
@@ -260,7 +299,11 @@ public class Conexion {
 	}
 
 	public void altaCliente(Cliente c) throws insertDBException{
+<<<<<<< HEAD
 
+=======
+		
+>>>>>>> origin/master
 		try{
 			CallableStatement cs = con.prepareCall("{call sp_insert_cliente(?,?,?,?,?,?,?,?,?)}");
 			cs.setString(1, c.getNombre());
@@ -276,15 +319,19 @@ public class Conexion {
 			if(i<0){
 				throw new insertDBException("Error al querer ingresar un registro");
 			}
-
+			
 		} catch (SQLException e) {
 			System.out.println( e.getMessage());
 		}
-
+		
 	}
 
 	public void altaClienteMascota(Mascota m) throws insertDBException{
+<<<<<<< HEAD
 
+=======
+		
+>>>>>>> origin/master
 		try {
 			CallableStatement cs = con.prepareCall("{call sp_insert_mascota(?,?,?,?)}");
 			cs.setString(1, m.getNombreCientifico());
@@ -301,7 +348,11 @@ public class Conexion {
 	}
 
 	public void altaProveedor(Proveedor p) throws insertDBException{
+<<<<<<< HEAD
 
+=======
+		
+>>>>>>> origin/master
 		try {
 			CallableStatement cs = con.prepareCall("{call sp_insert_proveedor(?,?,?,?,?,?,?)}");
 			cs.setString(1, p.getRazonSocial());
@@ -321,7 +372,7 @@ public class Conexion {
 	}
 
 	public void altaProducto(Producto p) throws insertDBException{
-
+		
 		try {
 			CallableStatement cs = con.prepareCall("{call sp_insert_producto(?,?,?,?,?,?)}");
 			cs.setString(1, p.getNombre());
@@ -341,7 +392,11 @@ public class Conexion {
 	}
 
 	public void altaAtencion(Atencion at) throws insertDBException{
+<<<<<<< HEAD
 
+=======
+		
+>>>>>>> origin/master
 		try {
 			CallableStatement cs = con.prepareCall("{call sp_insert_atencion(?,?,?,?)}");
 			cs.setString(1, String.valueOf(at.getIdVeterinario()));
@@ -358,9 +413,15 @@ public class Conexion {
 	}
 
 	public void altaVenta(ArrayList<Venta> v) throws insertDBException{
+<<<<<<< HEAD
 
 		try {
 
+=======
+		
+		try {
+			
+>>>>>>> origin/master
 			CallableStatement cs_ = con.prepareCall("{call sp_insert_log_ventas(?,?,?,?,?,?,?,?)}");
 			Iterator<Venta> it = v.iterator();
 			Venta tmp;
@@ -380,24 +441,32 @@ public class Conexion {
 				}
 			}
 			cs_.close();
+<<<<<<< HEAD
 
+=======
+			
+>>>>>>> origin/master
 			CallableStatement cs = con.prepareCall("{call sp_insert_compra_cliente}");
 			int i = cs.executeUpdate();
 			if(i<=0){
 				throw new insertDBException("Error al querer ingresar un registro");
 			}
 			cs.close();
+<<<<<<< HEAD
 
+=======
+			
+>>>>>>> origin/master
 		} catch (SQLException e){
 			System.out.println(e.getStackTrace());
 			System.out.println(e.getMessage());
 			System.out.println(e.getErrorCode());
 			System.out.println(e.getNextException());
-		}
+			}
 	}
 
 	public void altaCompra(ArrayList<Compra> com) throws insertDBException{
-
+		
 		try {
 			CallableStatement cs = con.prepareCall("{call sp_insert_log_compras(?,?,?,?,?,?,?,?)}");
 			Iterator<Compra> it = com.iterator();
@@ -416,6 +485,7 @@ public class Conexion {
 				if (i<0){
 					throw new insertDBException("Error al querer ingresar un registro");
 				}
+<<<<<<< HEAD
 			}
 			cs.close();
 
@@ -426,6 +496,18 @@ public class Conexion {
 			}
 			cs_.close();
 
+=======
+			}
+			cs.close();
+				
+			CallableStatement cs_ = con.prepareCall("{call sp_insert_compra_proveedor}");
+			int j = cs_.executeUpdate();
+			if (j<0){
+				throw new insertDBException("Error al querer ingresar un registro");
+			}
+			cs_.close();
+							
+>>>>>>> origin/master
 		} catch (SQLException e){
 			System.out.println(e.getStackTrace());
 			System.out.println(e.getMessage());
@@ -530,6 +612,70 @@ public class Conexion {
 			int i = cs.executeUpdate();
 			if(i<0){
 				throw new insertDBException("Error al hacer update en tabla dbo.Producto. ");
+<<<<<<< HEAD
+=======
+			}
+		} catch(SQLException e){
+			System.out.println(e.getStackTrace());
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public void bajaProveedor(Proveedor prov) throws insertDBException{
+		
+		try{
+			CallableStatement cs = con.prepareCall("{call sp_delete_proveedor(?)}");
+			cs.setString(1, String.valueOf(prov.getId()));
+			int i = cs.executeUpdate();
+			if(i<0){
+				throw new insertDBException("Error al hacer update en tabla dbo.Proveedor. ");
+			}
+		} catch (SQLException e){
+			System.out.println(e.getStackTrace());
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public void bajaCliente(Cliente clie) throws insertDBException{
+		
+		try {
+			CallableStatement cs = con.prepareCall("{call sp_delete_cliente(?)}");
+			cs.setString(1, clie.getId());
+			int i = cs.executeUpdate();
+			if(i<0){
+				throw new insertDBException("Error al hacer update en tabla dbo.Proveedor. ");
+			}
+		} catch(SQLException e){
+			System.out.println(e.getStackTrace());
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public void bajaEmpleado(Empleado emp) throws insertDBException{
+		
+		try{
+			CallableStatement cs = con.prepareCall("{call sp_delete_empleado(?)}");
+			cs.setString(1, String.valueOf(emp.getId()));
+			int i = cs.executeUpdate();
+			if(i<0){
+				throw new insertDBException("Error al hacer update en tabla dbo.Proveedor. ");
+			}
+		} catch(SQLException e){
+			System.out.println(e.getStackTrace());
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public void bajaMascotaCliente(Mascota m) throws insertDBException{
+		
+		try {
+			CallableStatement cs = con.prepareCall("{call sp_delete_mascota_cliente(?,?)}");
+			cs.setString(1, m.getId());
+			cs.setString(2, String.valueOf(m.getIdCliente()));
+			int i = cs.executeUpdate();
+			if(i<0){
+				throw new insertDBException("Error al hacer update en tabla dbo.Proveedor. ");
+>>>>>>> origin/master
 			}
 		} catch(SQLException e){
 			System.out.println(e.getStackTrace());
@@ -600,7 +746,7 @@ public class Conexion {
 
 	public String informeClienteFrecuente(){
 		String cliente = null;
-
+		
 		try {
 			CallableStatement cs = con.prepareCall("{call sp_report_cliente_frecuente}");
 			rs = cs.executeQuery();
@@ -631,10 +777,17 @@ public class Conexion {
 
 		return cantidad;
 	}
+<<<<<<< HEAD
 
 	public String informeMejorVendedor(){
 		String nombyape = null;
 
+=======
+	
+	public String informeMejorVendedor(){
+		String nombyape = null;
+		
+>>>>>>> origin/master
 		try {
 			CallableStatement cs = con.prepareCall("{call sp_report_mejor_vendedor}");
 			rs = cs.executeQuery();
@@ -645,6 +798,7 @@ public class Conexion {
 			System.out.println(e.getStackTrace());
 			System.out.println(e.getMessage());
 		}
+<<<<<<< HEAD
 
 		return nombyape;
 	}
@@ -652,6 +806,15 @@ public class Conexion {
 	public ArrayList<Producto> informeAnimalesPorRaza(){
 		ArrayList<Producto> a_Producto = new ArrayList<Producto>();
 
+=======
+		
+		return nombyape;
+	}
+	
+	public ArrayList<Producto> informeAnimalesPorRaza(){
+		ArrayList<Producto> a_Producto = new ArrayList<Producto>();
+		
+>>>>>>> origin/master
 		try {
 			CallableStatement cs = con.prepareCall("{call sp_report_animales_por_raza}");
 			rs = cs.executeQuery();
@@ -667,7 +830,11 @@ public class Conexion {
 		}
 		return a_Producto;
 	}
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> origin/master
 	public void cerrarBusqueda() {
 		try {
 			rs.close();
