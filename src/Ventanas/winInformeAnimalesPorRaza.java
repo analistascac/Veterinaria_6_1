@@ -31,8 +31,6 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JList;
 
-import jdk.nashorn.internal.scripts.JO;
-
 public class winInformeAnimalesPorRaza extends JFrame {
 
 	private JPanel contentPane;
