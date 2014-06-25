@@ -171,12 +171,11 @@ public class frmNuevaAtencion extends JFrame {
 						
 						try {
 							cn.altaAtencion(ate);
+							JOptionPane.showMessageDialog(null, "El alta ha sido dado correctamente.","Información",JOptionPane.INFORMATION_MESSAGE);
+							dispose();
 						} catch (Exception e) {
 							JOptionPane.showMessageDialog(null, "Error al dar de alta una atencion","Error",JOptionPane.ERROR_MESSAGE);
 						}
-						
-						JOptionPane.showMessageDialog(null, "El alta ha sido dado correctamente.","Información",JOptionPane.INFORMATION_MESSAGE);
-						
 					}else{
 						JOptionPane.showMessageDialog(null, "Error al conectar con la base de datos","Error",JOptionPane.ERROR_MESSAGE);
 					}
