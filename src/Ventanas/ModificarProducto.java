@@ -1,380 +1,236 @@
 package Ventanas;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+
+
+
+
+
+
 import Clases.Producto;
+import Clases.Proveedor;
+import Conexion.Conexion;
 import Main.Main;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 
-import javax.swing.JButton;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
+import javax.swing.JComboBox;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;
 
-import javax.swing.ButtonGroup;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListModel;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-import javax.swing.JRadioButton;
-import javax.swing.JComboBox;
 import javax.swing.JTextField;
-import javax.swing.JScrollPane;
-import javax.swing.JList;
+import javax.swing.JButton;
 
 public class ModificarProducto extends JFrame {
 
+
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private DefaultComboBoxModel idproductos = new DefaultComboBoxModel();
-	private DefaultComboBoxModel idpmascotas = new DefaultComboBoxModel();
-	private JComboBox cmbId;
+	private DefaultComboBoxModel<String> productos = new DefaultComboBoxModel<String>();
+	private DefaultComboBoxModel<String> proveedores = new DefaultComboBoxModel<String>();
 	private JTextField txtNombre;
 	private JTextField txtMedida;
+	private JTextField txtDescripcion;
 	private JTextField txtNombreCientifico;
 	private JTextField txtNombreVulgar;
-	private JTextField txtDescripcion;
-	private JTextField txtPrecioCosto;
-	private JTextField txtPrecioVenta;
-	private JTextField txtLimiteInferior;
-	private JList lstProveedores;
-	private DefaultListModel listaProvedores = new DefaultListModel();
-	private JRadioButton rdbtnMascota;
-	private JRadioButton rdbtnArticulo;
-	private JButton btnAgregar;
-	private JButton btnQuitar;
-	private JButton btnModificar;
-	private Producto prod = new Producto();
-	private JComboBox cmbProveedores;
-	private DefaultComboBoxModel listaProveedores = new DefaultComboBoxModel();
-
+	private JComboBox<String> cmbProducto;
+	
 	public ModificarProducto() {
 		setResizable(false);
-		setTitle("Modificar un producto - Veterinaria CAC");
 		addWindowListener(new WindowAdapter() {
 			public void windowClosed(WindowEvent arg0) {
-				Main v = new Main();
-				v.setVisible(true);
+				Main m = new Main ();
+				m.setVisible(true);
 				dispose();
 			}
 		});
-
-		llenaridmascotas();
-		llenaridproductos();
-		llenarproveedores();
-
+		setTitle("Modificar Producto - Veterinaria CAC");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 339, 443);
+		setBounds(100, 100, 381, 260);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-
-		JLabel lblIdentificador = new JLabel("Identificador:");
-		lblIdentificador.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblIdentificador.setBounds(10, 36, 140, 14);
-		contentPane.add(lblIdentificador);
-
-		JLabel lblNombre = new JLabel("Nombre:");
-		lblNombre.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNombre.setBounds(10, 61, 140, 14);
-		contentPane.add(lblNombre);
-
-		JLabel lblMedida = new JLabel("Medida:");
-		lblMedida.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblMedida.setBounds(10, 86, 140, 14);
-		contentPane.add(lblMedida);
-
-		JLabel lblNombreCientifico = new JLabel("Nombre Cientifico:");
-		lblNombreCientifico.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNombreCientifico.setBounds(10, 111, 140, 14);
-		contentPane.add(lblNombreCientifico);
-
-		JLabel lblNombreVulgar = new JLabel("Nombre vulgar:");
-		lblNombreVulgar.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNombreVulgar.setBounds(10, 136, 140, 14);
-		contentPane.add(lblNombreVulgar);
-
-		JLabel lblDescripcion = new JLabel("Descripcion:");
-		lblDescripcion.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblDescripcion.setBounds(10, 161, 140, 14);
-		contentPane.add(lblDescripcion);
-
-		JLabel lblPrecioCosto = new JLabel("Precio costo:");
-		lblPrecioCosto.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblPrecioCosto.setBounds(10, 186, 140, 14);
-		contentPane.add(lblPrecioCosto);
-
-		JLabel lblPrecioVenta = new JLabel("Precio venta:");
-		lblPrecioVenta.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblPrecioVenta.setBounds(10, 211, 140, 14);
-		contentPane.add(lblPrecioVenta);
-
-		JLabel lblLimiteInferior = new JLabel("Limite inferior:");
-		lblLimiteInferior.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblLimiteInferior.setBounds(10, 236, 140, 14);
-		contentPane.add(lblLimiteInferior);
-
-		JLabel lblProveedores = new JLabel("Proveedores:");
-		lblProveedores.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblProveedores.setBounds(10, 261, 140, 14);
-		contentPane.add(lblProveedores);
-
-		JLabel lblTipoProducto = new JLabel("Tipo Producto:");
-		lblTipoProducto.setBounds(25, 11, 70, 14);
-		contentPane.add(lblTipoProducto);
-
-		ButtonGroup botonesradio = new ButtonGroup();
-
-		rdbtnArticulo = new JRadioButton("Articulo");
-		rdbtnArticulo.addActionListener(new ActionListener() {
+		
+		JLabel label = new JLabel("Productos:");
+		label.setHorizontalAlignment(SwingConstants.RIGHT);
+		label.setBounds(10, 39, 122, 14);
+		contentPane.add(label);
+		
+		cmbProducto = new JComboBox<String>();
+		cmbProducto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				cmbId.setEnabled(true);
-				llenarProductoCombo();
-				txtNombre.setEnabled(true);
-				txtMedida.setEnabled(true);
-				txtNombreCientifico.setEnabled(false);
-				txtNombreVulgar.setEnabled(false);
-				txtDescripcion.setEnabled(true);
-				txtPrecioCosto.setEnabled(true);
-				txtPrecioVenta.setEnabled(true);
-				txtLimiteInferior.setEnabled(true);
+				int index = cmbProducto.getSelectedIndex();
+				Conexion cn = new Conexion();
+				
+				if(cn.conectarDB()){
+					if(index > -1){
+						Producto prod = new Producto();
 
-			}
+						prod = cn.devolverProductos().get(cmbProducto.getSelectedIndex());
+						
+						txtNombre.setText(prod.getNombre());
+						txtDescripcion.setText(prod.getDescripcion());
+						txtMedida.setText(prod.getMedida());
+						txtNombreCientifico.setText(prod.getNombreCientifico());
+						txtNombreVulgar.setText(prod.getNombreVulgar());
+						
+						if(prod.getNombre() == null){
+							txtNombre.setEnabled(false);
+							txtMedida.setEnabled(false);
+							txtDescripcion.setEnabled(true);
+							txtNombreCientifico.setEnabled(true);
+							txtNombreVulgar.setEnabled(true);
+						}else{
+							txtNombre.setEnabled(true);
+							txtMedida.setEnabled(true);
+							txtDescripcion.setEnabled(true);
+							txtNombreCientifico.setEnabled(false);
+							txtNombreVulgar.setEnabled(false);
+						}
+					}
+					
+						
+				}else{
+					JOptionPane.showMessageDialog(null, "Error al conectar con la base de datos","Error",JOptionPane.ERROR_MESSAGE);
+				}
+				
+				
+				}
 		});
-		rdbtnArticulo.setBounds(107, 7, 89, 23);
-		botonesradio.add(rdbtnArticulo);
-		contentPane.add(rdbtnArticulo);
-
-		rdbtnMascota = new JRadioButton("Mascota");
-		rdbtnMascota.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				cmbId.setEnabled(true);
-				llenarMascotaCombo();
-				txtNombre.setEnabled(true);
-				txtMedida.setEnabled(false);
-				txtNombreCientifico.setEnabled(true);
-				txtNombreVulgar.setEnabled(true);
-				txtDescripcion.setEnabled(false);
-				txtPrecioCosto.setEnabled(true);
-				txtPrecioVenta.setEnabled(true);
-				txtLimiteInferior.setEnabled(true);
-
-			}
-		});
-		rdbtnMascota.setBounds(198, 7, 89, 23);
-		botonesradio.add(rdbtnMascota);
-		contentPane.add(rdbtnMascota);
-
-		cmbId = new JComboBox();
-		cmbId.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				btnModificar.setEnabled(true);
-				btnAgregar.setEnabled(true);
-				btnQuitar.setEnabled(true);
-
-				prod = pedirProducto((String) cmbId.getSelectedItem());
-				txtNombre.setText(prod.getNombre());
-				txtMedida.setText(prod.getMedida());
-				txtNombreCientifico.setText(prod.getNombreCientifico());
-				txtNombreVulgar.setText(prod.getNombreVulgar());
-				txtDescripcion.setText(prod.getDescripcion());
-				txtPrecioCosto.setText(prod.getPrecioCosto() + "");
-				txtPrecioVenta.setText(prod.getPrecioVenta() + "");
-				txtLimiteInferior.setText(prod.getLimiteInferior() + "");
-
-				listaProvedores.clear();
-				for (int i = 0; i < prod.getProveedores().size() - 1; i++)
-					listaProvedores.addElement(prod.getProveedores().get(i));
-			}
-		});
-		cmbId.setEnabled(false);
-		cmbId.setBounds(160, 36, 156, 17);
-		contentPane.add(cmbId);
-
+		llenarProductos();
+		cmbProducto.setModel(productos);
+		cmbProducto.setBounds(142, 38, 213, 17);
+		contentPane.add(cmbProducto);
+		
+		JLabel label_2 = new JLabel("Nombre:");
+		label_2.setHorizontalAlignment(SwingConstants.RIGHT);
+		label_2.setBounds(10, 64, 122, 14);
+		contentPane.add(label_2);
+		
+		JLabel label_3 = new JLabel("Medida:");
+		label_3.setHorizontalAlignment(SwingConstants.RIGHT);
+		label_3.setBounds(10, 89, 122, 14);
+		contentPane.add(label_3);
+		
+		JLabel label_4 = new JLabel("Descripcion:");
+		label_4.setHorizontalAlignment(SwingConstants.RIGHT);
+		label_4.setBounds(10, 114, 122, 14);
+		contentPane.add(label_4);
+		
+		JLabel label_5 = new JLabel("Nombre cientifico:");
+		label_5.setHorizontalAlignment(SwingConstants.RIGHT);
+		label_5.setBounds(10, 139, 122, 14);
+		contentPane.add(label_5);
+		
+		JLabel label_6 = new JLabel("Nombre vulgar:");
+		label_6.setHorizontalAlignment(SwingConstants.RIGHT);
+		label_6.setBounds(10, 164, 122, 14);
+		contentPane.add(label_6);
+		
 		txtNombre = new JTextField();
 		txtNombre.setEnabled(false);
-		txtNombre.setBounds(160, 59, 156, 17);
-		contentPane.add(txtNombre);
 		txtNombre.setColumns(10);
-
+		txtNombre.setBounds(142, 61, 213, 17);
+		contentPane.add(txtNombre);
+		
 		txtMedida = new JTextField();
 		txtMedida.setEnabled(false);
 		txtMedida.setColumns(10);
-		txtMedida.setBounds(160, 83, 156, 17);
+		txtMedida.setBounds(142, 86, 213, 17);
 		contentPane.add(txtMedida);
-
-		txtNombreCientifico = new JTextField();
-		txtNombreCientifico.setEnabled(false);
-		txtNombreCientifico.setColumns(10);
-		txtNombreCientifico.setBounds(160, 108, 156, 17);
-		contentPane.add(txtNombreCientifico);
-
-		txtNombreVulgar = new JTextField();
-		txtNombreVulgar.setEnabled(false);
-		txtNombreVulgar.setColumns(10);
-		txtNombreVulgar.setBounds(160, 133, 156, 17);
-		contentPane.add(txtNombreVulgar);
-
+		
 		txtDescripcion = new JTextField();
 		txtDescripcion.setEnabled(false);
 		txtDescripcion.setColumns(10);
-		txtDescripcion.setBounds(160, 158, 156, 17);
+		txtDescripcion.setBounds(142, 111, 213, 17);
 		contentPane.add(txtDescripcion);
-
-		txtPrecioCosto = new JTextField();
-		txtPrecioCosto.setEnabled(false);
-		txtPrecioCosto.setColumns(10);
-		txtPrecioCosto.setBounds(160, 183, 156, 17);
-		contentPane.add(txtPrecioCosto);
-
-		txtPrecioVenta = new JTextField();
-		txtPrecioVenta.setEnabled(false);
-		txtPrecioVenta.setColumns(10);
-		txtPrecioVenta.setBounds(160, 208, 156, 17);
-		contentPane.add(txtPrecioVenta);
-
-		txtLimiteInferior = new JTextField();
-		txtLimiteInferior.setEnabled(false);
-		txtLimiteInferior.setColumns(10);
-		txtLimiteInferior.setBounds(160, 233, 156, 17);
-		contentPane.add(txtLimiteInferior);
-
-		cmbProveedores = new JComboBox();
-		cmbProveedores.setBounds(10, 278, 140, 23);
-		cmbProveedores.setModel(listaProveedores);
-		contentPane.add(cmbProveedores);
-
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(160, 261, 156, 108);
-		contentPane.add(scrollPane);
-
-		lstProveedores = new JList();
-		lstProveedores.setModel(listaProvedores);
-		scrollPane.setViewportView(lstProveedores);
-
-		btnAgregar = new JButton("Agregar");
-		btnAgregar.addActionListener(new ActionListener() {
+		
+		txtNombreCientifico = new JTextField();
+		txtNombreCientifico.setEnabled(false);
+		txtNombreCientifico.setColumns(10);
+		txtNombreCientifico.setBounds(142, 137, 213, 17);
+		contentPane.add(txtNombreCientifico);
+		
+		txtNombreVulgar = new JTextField();
+		txtNombreVulgar.setEnabled(false);
+		txtNombreVulgar.setColumns(10);
+		txtNombreVulgar.setBounds(142, 161, 213, 17);
+		contentPane.add(txtNombreVulgar);
+		
+		JButton bynModificar = new JButton("Modificar");
+		bynModificar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (!listaProvedores.contains(listaProveedores
-						.getSelectedItem())) {
-					listaProvedores.addElement(listaProveedores
-							.getSelectedItem());
-				}
-			}
-		});
-		btnAgregar.setEnabled(false);
-		btnAgregar.setBounds(61, 312, 89, 23);
-		contentPane.add(btnAgregar);
-
-		btnQuitar = new JButton("Quitar");
-		btnQuitar.setEnabled(false);
-		btnQuitar.setBounds(61, 346, 89, 23);
-		btnQuitar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if (listaProvedores.getSize() > 0
-						&& lstProveedores.getSelectedIndex() > -1) {
-					listaProvedores.remove(lstProveedores.getSelectedIndex());
-				}
-			}
-		});
-		contentPane.add(btnQuitar);
-
-		btnModificar = new JButton("Modificar");
-		btnModificar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				Producto prod = new Producto();
-				ArrayList prov = new ArrayList();
-				try {
-
-					prod.setNombre(txtNombre.getText());
-					prod.setId((String) cmbId.getSelectedItem());
-					if (rdbtnArticulo.isSelected()) {
-						prod.setDescripcion(txtDescripcion.getText());
-						prod.setMedida(txtMedida.getText());
-					} else {
-						prod.setNombreCientifico(txtNombreCientifico.getText());
-						prod.setNombreVulgar(txtNombreVulgar.getText());
+				Conexion cn = new Conexion();
+				if(cn.conectarDB()){
+					Producto este = new Producto();
+					este = cn.devolverProductos().get(cmbProducto.getSelectedIndex());
+					
+					este.setDescripcion(txtDescripcion.getText());
+					
+					if(txtNombreCientifico.getText() != ""){
+						este.setNombreCientifico(txtNombreCientifico.getText());
+						este.setNombreVulgar(txtNombreVulgar.getText());
+					}else{
+						este.setNombreCientifico(null);
+						este.setNombreVulgar(null);
 					}
-
-					prod.setLimiteInferior(Integer.parseInt(txtLimiteInferior
-							.getText()));
-					prod.setPrecioCosto(Integer.parseInt(txtPrecioCosto
-							.getText()));
-					prod.setPrecioVenta(Integer.parseInt(txtPrecioVenta
-							.getText()));
-
-					for (int i = 0; i < listaProvedores.size(); i++) {
-						prov.add(listaProvedores.get(i));
+					
+					if(txtNombre.getText() != ""){
+						este.setMedida(txtMedida.getText());
+						este.setNombre(txtNombre.getText());
+					}else{
+						este.setMedida(null);
+						este.setNombre(null);
 					}
-					prod.setProveedores(prov);
-
-					JOptionPane.showMessageDialog(null, prod.toString());
-				} catch (Exception e) {
-					JOptionPane.showMessageDialog(null,
-							"Error en la carga de datos", "Error",
-							JOptionPane.ERROR_MESSAGE);
+					
+					
+					try {
+						cn.modificacionProducto(este);
+						JOptionPane.showMessageDialog(null, "Modificación realizada correctamente","Información",JOptionPane.INFORMATION_MESSAGE);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					
+					
+				}else{
+					JOptionPane.showMessageDialog(null,"Error al conectar con la base de datos","Error",JOptionPane.ERROR_MESSAGE);
 				}
-
+				
 			}
 		});
-		btnModificar.setEnabled(false);
-		btnModificar.setBounds(227, 380, 89, 23);
-		contentPane.add(btnModificar);
+		bynModificar.setBounds(266, 189, 89, 23);
+		contentPane.add(bynModificar);
 	}
-
-	private void llenarProductoCombo() {
-		cmbId.setModel(idproductos);
+	
+	private void llenarProductos(){
+		Conexion cn = new Conexion();
+		if(cn.conectarDB()){
+			ArrayList<Producto> prods = new ArrayList<Producto>();
+			prods = cn.devolverProductos();
+			
+			for(int i = 0; i < prods.size();i++){
+				if(prods.get(i).getNombre() != null){
+					productos.addElement(prods.get(i).getNombre());
+				}else{
+					productos.addElement(prods.get(i).getNombreCientifico());
+				}
+			}
+			
+		}else{
+			JOptionPane.showMessageDialog(null,"Error al conectar con la base de datos","Error",JOptionPane.ERROR_MESSAGE);
+		}
 	}
+		
 
-	private void llenarMascotaCombo() {
-		cmbId.setModel(idpmascotas);
-	}
-
-	private void llenaridmascotas() {
-		for (int i = 0; i < 5; i++)
-			idpmascotas.addElement("Mascota venta prueba" + i);
-	}
-
-	private void llenaridproductos() {
-		for (int i = 0; i < 5; i++)
-			idproductos.addElement("producto venta prueba" + i);
-	}
-
-	private void llenarproveedores() {
-		listaProveedores.addElement("Proveedor prueba 1");
-		listaProveedores.addElement("Proveedor prueba 2");
-		listaProveedores.addElement("Proveedor prueba 3");
-	}
-
-	private Producto pedirProducto(String id) {
-		Producto prod = new Producto();
-		ArrayList<String> proveedores = new ArrayList();
-
-		// pedirle a la base de datos
-		prod.setDescripcion("Descripcion prueba");
-		prod.setId("Campo prueba");
-		prod.setNombre("Campo prueba");
-		prod.setMedida("Campo prueba");
-		prod.setNombreCientifico("Campo prueba");
-		prod.setNombreVulgar("Campo prueba");
-		prod.setDescripcion("Campo prueba");
-		prod.setPrecioCosto(12);
-		prod.setPrecioVenta(12);
-		prod.setLimiteInferior(5);
-		proveedores.add("Provedor prueba 1");
-		proveedores.add("Provedor prueba 2");
-		proveedores.add("Provedor prueba 3");
-		prod.setProveedores(proveedores);
-
-		return prod;
-	}
 }

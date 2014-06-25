@@ -15,7 +15,10 @@ import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
+
+
 import Clases.Empleado;
+import Conexion.Conexion;
 import Main.Main;
 import Main.TFecha;
 
@@ -23,6 +26,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 public class ModificarEmpleado extends JFrame {
 
@@ -42,7 +47,7 @@ public class ModificarEmpleado extends JFrame {
 	private JComboBox cmbAnio;
 	private JComboBox cmbMes;
 	private JComboBox cmbDia;
-	
+	private TFecha fecha;
 
 	public ModificarEmpleado() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -118,11 +123,6 @@ public class ModificarEmpleado extends JFrame {
 				cmbAnio.setEnabled(true);
 				btnModificar.setEnabled(true);
 				
-				/*
-				 * QUE RECIBA LOS ELEMENTOS
-				 * Y LOS PONGA EN LOS TEXT BOX 
-				 * 
-				 */
 				llenarCampos();
 			}
 		});
@@ -180,7 +180,7 @@ public class ModificarEmpleado extends JFrame {
 		cmbAnio.setBounds(250, 189, 75, 18);
 		contentPane.add(cmbAnio);
 		
-		TFecha fecha = new TFecha(cmbDia,cmbMes,cmbAnio);
+		fecha = new TFecha(cmbDia,cmbMes,cmbAnio);
 		
 		chkbxMatricula = new JCheckBox("Matricula:");
 		chkbxMatricula.addActionListener(new ActionListener() {
@@ -211,31 +211,40 @@ public class ModificarEmpleado extends JFrame {
 				!txtDocumento.getText().trim().isEmpty() &&
 				!txtDomicilio.getText().trim().isEmpty() &&
 				!txtTelefono.getText().trim().isEmpty()){
-					Empleado empl = new Empleado();
-					empl.setApellido(txtApellido.getText());
-					empl.setDocumento(txtDocumento.getText());
-					empl.setDomicilio(txtDomicilio.getText());
-					empl.setFechaNacimiento(cmbDia.getSelectedItem()+"/"+cmbMes.getSelectedItem()+"/"+cmbAnio.getSelectedItem());
-					empl.setId(cmbIdentificador.getSelectedItem()+"");
-					empl.setNombre(txtNombre.getText());
-					empl.setTelefono(txtTelefono.getText());
 					
-					empl.setTipoDoc(cmbTipoDocumento.getSelectedItem()+"");
-					
-					if(chkbxMatricula.isSelected()){
-						if(txtMatricula.getText().trim().isEmpty()){
-							empl.setMatricula(null);
+					Conexion cn = new Conexion();
+					if(cn.conectarDB()){
+						Empleado empl = new Empleado();
+						empl.setApellido(txtApellido.getText());
+						empl.setDocumento(txtDocumento.getText());
+						empl.setDomicilio(txtDomicilio.getText());
+						empl.setFechaNacimiento(fecha.getFechaString());
+						empl.setId(cn.devolverEmpleados().get(cmbIdentificador.getSelectedIndex()).getId());
+						empl.setNombre(txtNombre.getText());
+						empl.setTelefono(txtTelefono.getText());
+						empl.setTipoDoc(cmbTipoDocumento.getSelectedItem()+"");
+						
+						if(chkbxMatricula.isSelected()){
+							if(txtMatricula.getText().trim().isEmpty()){
+								empl.setMatricula(null);
+							}else{
+								empl.setMatricula(txtMatricula.getText());
+							}
 						}else{
-							empl.setMatricula(txtMatricula.getText());
+							empl.setMatricula(null);
 						}
+
+						try {
+							cn.modificacionEmpleado(empl);
+							JOptionPane.showMessageDialog(null, "Empleado modificado correctamente","Información",JOptionPane.INFORMATION_MESSAGE);
+							dispose();
+						} catch (Exception e) {
+							JOptionPane.showMessageDialog(null, "Error al tratar de hacer la modificacion en la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
+						}
+					
 					}else{
-						empl.setMatricula(null);
+						JOptionPane.showMessageDialog(null, "Error al conectar con la base de datos","Error",JOptionPane.ERROR_MESSAGE);
 					}
-					
-					
-					System.out.println(empl.toString());
-					
-					// Pasar el objeto a la capa de datos
 				}else{
 					JOptionPane.showMessageDialog(null, "Datos incompletos.","Error",JOptionPane.ERROR_MESSAGE);
 				}
@@ -248,43 +257,63 @@ public class ModificarEmpleado extends JFrame {
 	}
 	
 	public void llenarCombos(){
-		id.addElement("Prueba");
-		id.addElement("Prueba2");
-		id.addElement("Prueba3");
+		Conexion cn = new Conexion();
+		if(cn.conectarDB()){
+			ArrayList<Empleado> empl = new ArrayList();
+			empl = cn.devolverEmpleados();
+			
+			for(int i = 0; i<empl.size();i++) id.addElement(empl.get(i).getId() + " - ("+empl.get(i).getNombre()+" "+empl.get(i).getApellido()+")");
+			
+			cn.close();
+		}else{
+			JOptionPane.showMessageDialog(null, "Error al conectar con la base de datos","Error",JOptionPane.ERROR_MESSAGE);
+		}
 		
 		tipodoc.addElement("DNI");
-		tipodoc.addElement("Carta d'Identità");
-		tipodoc.addElement("Cartão de Cidadão");
-		tipodoc.addElement("Carte d'identité");
-		tipodoc.addElement("Carte nationale d'identité");
-		tipodoc.addElement("CC");
-		tipodoc.addElement("Cedula de identidad civil");
-		tipodoc.addElement("Cedula de identidad personal");
 		tipodoc.addElement("CI");
-		tipodoc.addElement("CIE");
-		tipodoc.addElement("CURP");
-		tipodoc.addElement("Dowód osobisty");
-		tipodoc.addElement("DPI");
-		tipodoc.addElement("DUI");
-		tipodoc.addElement("Personalausweis");
-		tipodoc.addElement("RG");
-		tipodoc.addElement("Tarjeta de identidad");
+		tipodoc.addElement("LC");
 	}
 	
 	private void llenarCampos(){
-		txtNombre.setText("Nombre prueba");
-		txtApellido.setText("Apellido prueba");
-		txtDomicilio.setText("Domicilio prueba");
-		txtTelefono.setText("Telefono prueba");
-		cmbTipoDocumento.setSelectedIndex(0);
-		txtDocumento.setText("Documento prueba");
-		chkbxMatricula.setSelected(true);
-		if(chkbxMatricula.isSelected()){
-			txtMatricula.setEnabled(true);
+		
+		Conexion cn = new Conexion();
+		if(cn.conectarDB()){
+			Empleado este = new Empleado();
+			este = cn.devolverEmpleados().get(cmbIdentificador.getSelectedIndex());
+			String fecha_nac = este.getFechaNacimiento();
+			int dia, mes, anio;
+			
+			txtNombre.setText(este.getNombre());
+			txtApellido.setText(este.getApellido());
+			txtDomicilio.setText(este.getDocumento());
+			txtTelefono.setText(este.getTelefono());
+			cmbTipoDocumento.setSelectedItem(este.getTipoDoc());
+			txtDocumento.setText(este.getDocumento());		
+			if(este.getMatricula()==null){
+				chkbxMatricula.setSelected(false);
+				txtMatricula.setEnabled(false);
+				txtMatricula.setText("");
+			}else{
+				chkbxMatricula.setSelected(true);
+				txtMatricula.setEnabled(true);
+				txtMatricula.setText(este.getMatricula());
+			}
+			
+			fecha_nac = fecha_nac.replace(" 00:00:00.0","");
+			
+			StringTokenizer tokens = new StringTokenizer(fecha_nac,"-");
+			anio = Integer.parseInt(tokens.nextToken());
+			mes = Integer.parseInt(tokens.nextToken());
+			dia = Integer.parseInt(tokens.nextToken());
+			
+			cmbAnio.setSelectedItem(anio);
+			cmbMes.setSelectedIndex(mes-1);
+			cmbDia.setSelectedIndex(dia-1);
+			
+			
+		}else{
+			JOptionPane.showMessageDialog(null, "Error al conectar con la base de datos","Error",JOptionPane.ERROR_MESSAGE);
 		}
-		txtMatricula.setText("Matricula prueba");
-		cmbMes.setSelectedIndex(11);
-		cmbDia.setSelectedIndex(23);
-		cmbAnio.setSelectedIndex(0);
+
 	}
 }

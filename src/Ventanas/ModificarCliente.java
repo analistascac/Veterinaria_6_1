@@ -16,6 +16,7 @@ import javax.swing.JComboBox;
 import java.awt.FlowLayout;
 
 import Clases.Cliente;
+import Conexion.Conexion;
 import Main.Main;
 
 import java.awt.CardLayout;
@@ -31,8 +32,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 
 import javax.swing.JRadioButton;
+
+import com.sun.org.apache.xerces.internal.impl.dtd.models.CMBinOp;
 
 public class ModificarCliente extends JFrame {
 
@@ -49,9 +53,9 @@ public class ModificarCliente extends JFrame {
 	private JComboBox cmdId;
 	private DefaultComboBoxModel tipodoc = new DefaultComboBoxModel();
 	private DefaultComboBoxModel id = new DefaultComboBoxModel();
-	private JRadioButton rdbtnCuentaCorriente;
 	private ButtonGroup radio = new ButtonGroup();
-	private JRadioButton rdbtnAlContado;
+	private JComboBox cmbTipoPago;
+	private DefaultComboBoxModel tipopago = new DefaultComboBoxModel();
 
 	public ModificarCliente() {
 
@@ -138,8 +142,30 @@ public class ModificarCliente extends JFrame {
 				txtTelefono.setEnabled(true);
 				txtEmail.setEnabled(true);
 				cmbTipoDoc.setEnabled(true);
-				rdbtnCuentaCorriente.setEnabled(true);
-				rdbtnAlContado.setEnabled(true);
+				cmbTipoPago.setEnabled(true);
+				btnModificar.setEnabled(true);
+				
+				Conexion cn = new Conexion();
+				if(cn.conectarDB()){
+					Cliente este = new Cliente();
+					este = cn.devolverClientes().get(cmdId.getSelectedIndex());
+					
+					txtNombre.setText(este.getNombre());
+					txtApellido.setText(este.getApellido());
+					txtNumDoc.setText(este.getDocumento());
+					txtDireccion.setText(este.getDireccion());
+					txtOcupacion.setText(este.getOcupacion());
+					txtTelefono.setText(este.getTelefono());
+					txtEmail.setText(este.getEmail());
+					cmbTipoDoc.setSelectedItem(este.getTipoDocumento().toString());
+					cmbTipoPago.setSelectedItem(este.getTipoPago().toString());
+					
+					cn.close();
+					
+				}else{
+					JOptionPane.showMessageDialog(null, "Error al conectar con la base de datos","Error",JOptionPane.ERROR_MESSAGE);
+				}
+				
 			}
 		});
 
@@ -154,6 +180,12 @@ public class ModificarCliente extends JFrame {
 		txtApellido.setColumns(10);
 		txtApellido.setBounds(135, 51, 150, 17);
 		contentPane.add(txtApellido);
+		
+				cmbTipoDoc = new JComboBox();
+				cmbTipoDoc.setEnabled(false);
+				cmbTipoDoc.setModel(tipodoc);
+				cmbTipoDoc.setBounds(135, 71, 150, 17);
+				contentPane.add(cmbTipoDoc);
 
 		txtNumDoc = new JTextField();
 		txtNumDoc.setEnabled(false);
@@ -185,90 +217,75 @@ public class ModificarCliente extends JFrame {
 		txtEmail.setBounds(135, 171, 150, 17);
 		contentPane.add(txtEmail);
 
-		cmbTipoDoc = new JComboBox();
-		cmbTipoDoc.setEnabled(false);
-		cmbTipoDoc.setModel(tipodoc);
-		cmbTipoDoc.setBounds(135, 71, 150, 17);
-		contentPane.add(cmbTipoDoc);
-
 		btnModificar = new JButton("Modificar");
+		btnModificar.setEnabled(false);
 		btnModificar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
-				if (!txtNombre.getText().trim().isEmpty()
-						&& !txtApellido.getText().trim().isEmpty()
-						&& !txtNumDoc.getText().trim().isEmpty()
-						&& !txtDireccion.getText().trim().isEmpty()
-						&& !txtOcupacion.getText().trim().isEmpty()
-						&& !txtTelefono.getText().trim().isEmpty()
-						&& !txtEmail.getText().trim().isEmpty()
-						&& (rdbtnAlContado.isSelected() || rdbtnCuentaCorriente
-								.isSelected())) {
-					Cliente clie = new Cliente();
-					clie.setId((String) cmdId.getSelectedItem());
-					clie.setNombre(txtNombre.getText());
-					clie.setApellido(txtApellido.getText());
-					clie.setTipoDocumento((String) cmbTipoDoc.getSelectedItem());
-					clie.setDocumento(txtNumDoc.getText());
-					clie.setDireccion(txtDireccion.getText());
-					clie.setOcupacion(txtOcupacion.getText());
-					clie.setTelefono(txtTelefono.getText());
-					clie.setEmail(txtEmail.getText());
-
-					if (rdbtnCuentaCorriente.isSelected()) {
-						clie.setTipoPago("Cuenta corriente");
-					} else {
-
-						clie.setTipoPago("Al contado");
-					}
-
-					JOptionPane.showMessageDialog(null, clie.toString());
-				} else {
-					JOptionPane.showMessageDialog(null,
-							"Algún campo está incompleto", "Error",
-							JOptionPane.WARNING_MESSAGE);
+				Conexion cn = new Conexion();
+				if(cn.conectarDB()){
+					Cliente nuevo = new Cliente();
+					
+					nuevo.setId(cn.devolverClientes().get(cmdId.getSelectedIndex()).getId());
+					nuevo.setNombre(txtNombre.getText());
+					nuevo.setApellido(txtApellido.getText());
+					nuevo.setDocumento(txtNumDoc.getText());
+					nuevo.setDireccion(txtDireccion.getText());
+					nuevo.setOcupacion(txtOcupacion.getText());
+					nuevo.setTelefono(txtTelefono.getText());
+					nuevo.setEmail(txtEmail.getText());
+					nuevo.setTipoDocumento(cmbTipoDoc.getSelectedItem()+"");
+					nuevo.setTipoPago(cmbTipoPago.getSelectedItem()+"");
+					
+					int X = JOptionPane.showConfirmDialog(null,"¿Confirma modificar el cliente? Los datos son los siguientes:\n"+nuevo.toString(),"Confirmar",JOptionPane.YES_NO_OPTION);
+					if(X == JOptionPane.YES_OPTION){
+						try{
+							cn.modificacionCliente(nuevo);
+							JOptionPane.showMessageDialog(null, "Cliente correctamente modificado");
+							cn.close();
+							dispose();
+						}catch(Exception e){
+							JOptionPane.showMessageDialog(null, "Error al intentar modificar un cliente.","Error",JOptionPane.ERROR_MESSAGE);
+						}
+					}			
+					
+					
+				}else{
+					JOptionPane.showMessageDialog(null, "Error al conectar con la base de datos","Error",JOptionPane.ERROR_MESSAGE);
 				}
-
+					
 			}
 		});
+		
+		cmbTipoPago = new JComboBox();
+		tipopago.addElement("Efectivo");
+		tipopago.addElement("Tarjeta de credito");
+		tipopago.addElement("Tarjeta de debito");
+		cmbTipoPago.setModel(tipopago);
+		cmbTipoPago.setEnabled(false);
+		cmbTipoPago.setBounds(135, 190, 150, 17);
+		contentPane.add(cmbTipoPago);
 		btnModificar.setBounds(196, 245, 89, 23);
 		contentPane.add(btnModificar);
-
-		rdbtnCuentaCorriente = new JRadioButton("Cuenta Corriente");
-		rdbtnCuentaCorriente.setEnabled(false);
-		radio.add(rdbtnCuentaCorriente);
-		rdbtnCuentaCorriente.setBounds(135, 191, 150, 17);
-		contentPane.add(rdbtnCuentaCorriente);
-
-		rdbtnAlContado = new JRadioButton("Al contado");
-		rdbtnAlContado.setEnabled(false);
-		radio.add(rdbtnAlContado);
-		rdbtnAlContado.setBounds(135, 211, 150, 17);
-		contentPane.add(rdbtnAlContado);
 
 	}
 
 	public void llenarcombos() {
-		id.addElement("Prueba");
-		id.addElement("Prueba2");
-		id.addElement("Prueba3");
+		Conexion cn = new Conexion();
+		if(cn.conectarDB()){
+			ArrayList<Cliente> clis = new ArrayList();
+			clis = cn.devolverClientes();
+			
+			for(int i = 0; i < clis.size(); i++){
+				id.addElement(clis.get(i).getId() + " : ("+ clis.get(i).getNombre()+" "+clis.get(i).getApellido()+")");
+			}
+			
+			cn.close();
+		}else{
+			JOptionPane.showMessageDialog(null, "Error al conectar con la base de datos","Error",JOptionPane.ERROR_MESSAGE);
+		}
 
 		tipodoc.addElement("DNI");
-		tipodoc.addElement("Carta d'Identità");
-		tipodoc.addElement("Cartão de Cidadão");
-		tipodoc.addElement("Carte d'identité");
-		tipodoc.addElement("Carte nationale d'identité");
-		tipodoc.addElement("CC");
-		tipodoc.addElement("Cedula de identidad civil");
-		tipodoc.addElement("Cedula de identidad personal");
 		tipodoc.addElement("CI");
-		tipodoc.addElement("CIE");
-		tipodoc.addElement("CURP");
-		tipodoc.addElement("Dowód osobisty");
-		tipodoc.addElement("DPI");
-		tipodoc.addElement("DUI");
-		tipodoc.addElement("Personalausweis");
-		tipodoc.addElement("RG");
-		tipodoc.addElement("Tarjeta de identidad");
+		tipodoc.addElement("LC");
 	}
 }

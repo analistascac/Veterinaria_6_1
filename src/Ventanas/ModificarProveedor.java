@@ -2,6 +2,7 @@ package Ventanas;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.JobAttributes;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -15,12 +16,14 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 
 import Clases.Proveedor;
+import Conexion.Conexion;
 import Main.Main;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 
 public class ModificarProveedor extends JFrame {
 	private JPanel panelPrincipal;
@@ -150,27 +153,33 @@ public class ModificarProveedor extends JFrame {
 						&& !txtTelefono.getText().trim().isEmpty()
 						&& !txtFax.getText().trim().isEmpty()
 						&& !txtEmail.getText().trim().isEmpty()) {
-					Proveedor prov = new Proveedor();
-					prov.setCuit(txtCuit.getText());
-					prov.setRazonSocial(txtRazonSOcial.getText());
-					prov.setDireccion(txtDireccion.getText());
-					prov.setTelefono(txtTelefono.getText());
-					prov.setFax(txtFax.getText());
-					prov.setEmail(txtEmail.getText());
-					prov.setId(cmbId.getSelectedItem() + "");
+					
+					
+					Conexion cn = new Conexion();
+					if(cn.conectarDB()){
+						Proveedor prov = new Proveedor();
+						prov.setCuit(txtCuit.getText());
+						prov.setRazonSocial(txtRazonSOcial.getText());
+						prov.setDireccion(txtDireccion.getText());
+						prov.setTelefono(txtTelefono.getText());
+						prov.setFax(txtFax.getText());
+						prov.setEmail(txtEmail.getText());
+						prov.setId(cn.devolverProveedores().get(cmbId.getSelectedIndex()).getId());
 
-					JOptionPane.showMessageDialog(null, prov.toString(),
-							"Información", JOptionPane.INFORMATION_MESSAGE);
-					// pasarle el objeto a la capa de datos
+						try{
+							cn.modificacionProveedor(prov);
+						}catch(Exception e){
+							JOptionPane.showMessageDialog(null, "Error al tratar de modificar un proveedor","Error",JOptionPane.ERROR_MESSAGE);
+						}
 
-					JOptionPane.showMessageDialog(null,
-							"Proveedor correctamente modificado.",
-							"Información", JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(null,"Proveedor correctamente modificado.","Información", JOptionPane.INFORMATION_MESSAGE);
+					}else{
+						JOptionPane.showMessageDialog(null, "Error al conectar con la base de datos","Error",JOptionPane.ERROR_MESSAGE);
+					}
+					
 
 				} else {
-					JOptionPane.showMessageDialog(null,
-							"Error, algún campo está vacio.", "Error",
-							JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(null,"Error, algún campo está vacio.", "Error",JOptionPane.WARNING_MESSAGE);
 				}
 
 			}
@@ -181,17 +190,34 @@ public class ModificarProveedor extends JFrame {
 	}
 
 	private void cargarId() {
-		id.addElement("Prueba proveedor 1");
-		id.addElement("Prueba proveedor 2");
-		id.addElement("Prueba proveedor 3");
+		Conexion cn = new Conexion();
+		if(cn.conectarDB()){
+			ArrayList<Proveedor> estos = new ArrayList();
+			estos = cn.devolverProveedores();
+			
+			for(int i = 0; i < estos.size(); i++) id.addElement(estos.get(i).getCuit() +" ("+ estos.get(i).getRazonSocial()+")");
+			cn.close();
+		}else{
+			JOptionPane.showMessageDialog(null, "Error al conectar con la base de datos","Error",JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
 	public void cargarDatos() {
-		txtRazonSOcial.setText("Razon social prueba");
-		txtCuit.setText("Cuit prueba");
-		txtDireccion.setText("Direccion prueba");
-		txtTelefono.setText("Telefono prueba");
-		txtFax.setText("Fax prueba");
-		txtEmail.setText("Email prueba");
+		Conexion cn = new Conexion();
+		if(cn.conectarDB()){
+			Proveedor este = new Proveedor();
+			este = cn.devolverProveedores().get(cmbId.getSelectedIndex());
+			
+			txtRazonSOcial.setText(este.getRazonSocial());
+			txtCuit.setText(este.getCuit());
+			txtDireccion.setText(este.getDireccion());
+			txtTelefono.setText(este.getTelefono());
+			txtFax.setText(este.getFax());
+			txtEmail.setText(este.getEmail());
+		}else{
+			JOptionPane.showMessageDialog(null, "Error al conectar con la base de datos","Error",JOptionPane.ERROR_MESSAGE);
+		}
+		
+		
 	}
 }
