@@ -75,7 +75,7 @@ public class frmNuevoEmpleado extends JFrame {
 		});
 
 		setResizable(false);
-		setTitle("Nuevo Empleado - Veterinaria CAC");
+		setTitle("Veterinaria Godzilla - Alta - Empleado");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 417, 379);
 		setLocationRelativeTo(null);
@@ -190,45 +190,47 @@ public class frmNuevoEmpleado extends JFrame {
 		btnAceptar.setEnabled(false);
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
-				ArrayList<String> errores = new ArrayList<String>();
-				if (!Auxiliar.isValidDNI(txtNumDoc.getText()))
-					errores.add("Numero de documento invalido.");
-				if (!Auxiliar.isValidDNI(txtMatricula.getText())
-						&& chkVeterinario.isSelected())
-					errores.add("Numero de Matricula invalido.");
-
-				if (errores.size() > 0) {
-					JOptionPane.showMessageDialog(null,
-							Auxiliar.contenarArrayList(errores));
-				} else {
-					Empleado empleado = new Empleado();
-					empleado.setApellido(txtApellido.getText());
-					empleado.setDocumento(txtNumDoc.getText());
-					empleado.setDomicilio(txtDomicilio.getText());
-					empleado.setEmail(txtEmail.getText());
-					empleado.setFechaNacimiento(fecha.getFechaString());
-					empleado.setNombre(txtNombre.getText());
-					empleado.setTelefono(txtTelefono.getText());
-					empleado.setTipoDoc((String) cmbTipoDoc.getSelectedItem());
-
-					if (chkVeterinario.isSelected())
-						empleado.setMatricula(txtMatricula.getText());
-
-					try {
-						Conexion conexion = new Conexion();
-						if (conexion.conectarDB()) {
-							conexion.altaEmpleado(empleado);
-							JOptionPane.showMessageDialog(null, "Empleado agregado correctamente","Informacion",JOptionPane.INFORMATION_MESSAGE);
+				int x = JOptionPane.showConfirmDialog(null, "¿Confirma dar de alta el nuevo empleado?", "Confirmación",JOptionPane.YES_NO_OPTION);
+				if(x == JOptionPane.YES_OPTION){
+					ArrayList<String> errores = new ArrayList<String>();
+					if (!Auxiliar.isValidDNI(txtNumDoc.getText()))
+						errores.add("Numero de documento invalido.");
+					if (!Auxiliar.isValidDNI(txtMatricula.getText())
+							&& chkVeterinario.isSelected())
+						errores.add("Numero de Matricula invalido.");
+	
+					if (errores.size() > 0) {
+						JOptionPane.showMessageDialog(null,
+								Auxiliar.contenarArrayList(errores));
+					} else {
+						Empleado empleado = new Empleado();
+						empleado.setApellido(txtApellido.getText());
+						empleado.setDocumento(txtNumDoc.getText());
+						empleado.setDomicilio(txtDomicilio.getText());
+						empleado.setEmail(txtEmail.getText());
+						empleado.setFechaNacimiento(fecha.getFechaString());
+						empleado.setNombre(txtNombre.getText());
+						empleado.setTelefono(txtTelefono.getText());
+						empleado.setTipoDoc((String) cmbTipoDoc.getSelectedItem());
+	
+						if (chkVeterinario.isSelected())
+							empleado.setMatricula(txtMatricula.getText());
+	
+						try {
+							Conexion conexion = new Conexion();
+							if (conexion.conectarDB()) {
+								conexion.altaEmpleado(empleado);
+								JOptionPane.showMessageDialog(null, "Empleado agregado correctamente","Informacion",JOptionPane.INFORMATION_MESSAGE);
+							}
+	
+							dispose();
+	
+						} catch (Exception e) {
+							JOptionPane.showMessageDialog(null, e, "ERROR",
+									JOptionPane.ERROR_MESSAGE);
 						}
-
-						dispose();
-
-					} catch (Exception e) {
-						JOptionPane.showMessageDialog(null, e, "ERROR",
-								JOptionPane.ERROR_MESSAGE);
+	
 					}
-
 				}
 			}
 		});

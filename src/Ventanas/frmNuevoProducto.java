@@ -63,7 +63,7 @@ public class frmNuevoProducto extends JFrame {
 				dispose();
 			}
 		});
-		setTitle("Nuevo Producto - Veterinaria CAC");
+		setTitle("Veterinaria Godzilla - Alta - Producto");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 412, 297);
 		contentPane = new JPanel();
@@ -76,36 +76,37 @@ public class frmNuevoProducto extends JFrame {
 		btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Producto p = new Producto();
-				Conexion cn = new Conexion();
-				Proveedor prov = new Proveedor();
-				
-				if(cn.conectarDB()){
-					prov = (Proveedor) cn.devolverProveedores().get(cmbProveedores.getSelectedIndex());
-					p.setIdProveedor(prov.getId());
-				}else{
-					JOptionPane.showMessageDialog(null, "Error al conectar con la base de datos","Error",JOptionPane.ERROR_MESSAGE);
+				int x = JOptionPane.showConfirmDialog(null, "¿Confirma dar de alta el nuevo producto?", "Confirmación",JOptionPane.YES_NO_OPTION);
+				if(x == JOptionPane.YES_OPTION){
+					Producto p = new Producto();
+					Conexion cn = new Conexion();
+					Proveedor prov = new Proveedor();
+					
+					if(cn.conectarDB()){
+						prov = (Proveedor) cn.devolverProveedores().get(cmbProveedores.getSelectedIndex());
+						p.setIdProveedor(prov.getId());
+					}else{
+						JOptionPane.showMessageDialog(null, "Error al conectar con la base de datos","Error",JOptionPane.ERROR_MESSAGE);
+					}
+	
+					if(cbxEsMascota.isSelected()){
+						p.setNombreCientifico(txtNombreCientifico.getText());
+						p.setNombreVulgar(txtNombreVulgar.getText());
+						p.setDescripcion(txtDescirpcion.getText());
+						p.setNombre(null);
+						p.setMedida(null);					
+					}else{
+						p.setNombre(txtNombre.getText());
+						p.setDescripcion(txtDescirpcion.getText());
+						p.setMedida(txtMedida.getText());
+						p.setNombreCientifico(null);
+						p.setNombreVulgar(null);
+					}
+					
+					agregarProducto(p);
+					
+					JOptionPane.showMessageDialog(null, "Producto correctamente agregado","Información",JOptionPane.INFORMATION_MESSAGE);
 				}
-				
-				
-				
-				if(cbxEsMascota.isSelected()){
-					p.setNombreCientifico(txtNombreCientifico.getText());
-					p.setNombreVulgar(txtNombreVulgar.getText());
-					p.setDescripcion(txtDescirpcion.getText());
-					p.setNombre(null);
-					p.setMedida(null);					
-				}else{
-					p.setNombre(txtNombre.getText());
-					p.setDescripcion(txtDescirpcion.getText());
-					p.setMedida(txtMedida.getText());
-					p.setNombreCientifico(null);
-					p.setNombreVulgar(null);
-				}
-				
-				agregarProducto(p);
-				
-				JOptionPane.showMessageDialog(null, "Producto correctamente agregado","Información",JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 		btnAceptar.setBounds(298, 227, 89, 23);
@@ -167,6 +168,11 @@ public class frmNuevoProducto extends JFrame {
 		
 		
 		btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dispose();
+			}
+		});
 		btnCancelar.setBounds(199, 227, 89, 23);
 		contentPane.add(btnCancelar);
 		

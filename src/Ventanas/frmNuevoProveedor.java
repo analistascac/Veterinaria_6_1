@@ -1,6 +1,3 @@
-// 
-// Envia  a la otra capa  : Obejto Proveedor
-
 package Ventanas;
 
 import javax.swing.*;
@@ -47,7 +44,7 @@ public class frmNuevoProveedor extends JFrame {
 			}
 		});
 
-		setTitle("Nuevo Proveedor - Veterinaria CAC");
+		setTitle("Veterinaria Godzilla - Alta - Proveedor");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 419, 305);
 		setLocationRelativeTo(null);
@@ -119,51 +116,49 @@ public class frmNuevoProveedor extends JFrame {
 		btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				// validaciones
-
-				ArrayList<String> errores = new ArrayList<String>();
-				if (!Auxiliar.isValidCUIT(txtCUIT.getText()))
-					errores.add("Numero de CUIT invalido.");
-				if (!Auxiliar.isValidTelephone(txtTelefono.getText()))
-					errores.add("Numero de Telefono invalido.");
-				if (!Auxiliar.isValidTelephone(txtFax.getText()))
-					errores.add("Numero de Fax invalido.");
-				if (!Auxiliar.isValidEmail(txtEmail.getText()))
-					errores.add("Email invalido.");
-				// si hay errores los muestra
-				if (errores.size() > 0)
-					JOptionPane.showMessageDialog(null,
-							Auxiliar.contenarArrayList(errores));
-				else {
-					// si no hubo errores,crea el objeto proveedor
-
-					Proveedor proveedor = new Proveedor();
-					proveedor.setCuit(txtCUIT.getText());
-					proveedor.setEmail(txtEmail.getText());
-					proveedor.setDireccion(txtDireccion.getText());
-					proveedor.setFax(txtFax.getText());
-					proveedor.setTelefono(txtTelefono.getText());
-					proveedor.setRazonSocial(txtRazonSocial.getText());
-
-					try {
-
-						Conexion conexion = new Conexion();
-
-						if (conexion.conectarDB()) {
-
-							conexion.altaProveedor(proveedor);
-
-							conexion.close();
-
-							dispose();
+				int x = JOptionPane.showConfirmDialog(null, "¿Confirma dar de alta el nuevo proveedor?", "Confirmación",JOptionPane.YES_NO_OPTION);
+				if(x == JOptionPane.YES_OPTION){
+					ArrayList<String> errores = new ArrayList<String>();
+					if (!Auxiliar.isValidCUIT(txtCUIT.getText()))
+						errores.add("Numero de CUIT invalido.");
+					if (!Auxiliar.isValidTelephone(txtTelefono.getText()))
+						errores.add("Numero de Telefono invalido.");
+					if (!Auxiliar.isValidTelephone(txtFax.getText()))
+						errores.add("Numero de Fax invalido.");
+					if (!Auxiliar.isValidEmail(txtEmail.getText()))
+						errores.add("Email invalido.");
+					if (errores.size() > 0)
+						JOptionPane.showMessageDialog(null,
+								Auxiliar.contenarArrayList(errores));
+					else {
+	
+						Proveedor proveedor = new Proveedor();
+						proveedor.setCuit(txtCUIT.getText());
+						proveedor.setEmail(txtEmail.getText());
+						proveedor.setDireccion(txtDireccion.getText());
+						proveedor.setFax(txtFax.getText());
+						proveedor.setTelefono(txtTelefono.getText());
+						proveedor.setRazonSocial(txtRazonSocial.getText());
+	
+						try {
+	
+							Conexion conexion = new Conexion();
+	
+							if (conexion.conectarDB()) {
+	
+								conexion.altaProveedor(proveedor);
+	
+								conexion.close();
+								JOptionPane.showMessageDialog(null, "El alta al proveedor neuvo ha sido exitosa","Información",JOptionPane.INFORMATION_MESSAGE);
+								dispose();
+							}
+	
+						} catch (Exception e) {
+							JOptionPane.showMessageDialog(null, e, "ERROR",
+									JOptionPane.ERROR_MESSAGE);
 						}
-
-					} catch (Exception e) {
-						JOptionPane.showMessageDialog(null, e, "ERROR",
-								JOptionPane.ERROR_MESSAGE);
 					}
 				}
-
 			}
 		});
 		btnAceptar.setBounds(267, 233, 89, 23);

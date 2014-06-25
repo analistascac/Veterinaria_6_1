@@ -48,7 +48,7 @@ public class frmNuevaMascota extends JFrame {
 		});
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setTitle("Nueva mascota - Veterinaria CAC");
+		setTitle("Veterinaria Godzilla - Alta - Mascota");
 		setBounds(100, 100, 317, 199);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
@@ -116,31 +116,33 @@ public class frmNuevaMascota extends JFrame {
 		btnAgregar.setEnabled(false);
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
-				Item item = (Item) cmbClientes.getSelectedItem();
-				Mascota mascota = new Mascota();
-
-				mascota.setIdCliente(item.getId());
-				mascota.setNombreCientifico(txtNombreCientifico.getText());
-				mascota.setNombreVulgar(txtNombreVulgar.getText());
-				mascota.setDescripcion(txtDescripcion.getText());
-
-				try {
-
-					Conexion conexion = new Conexion();
-					if (conexion.conectarDB()) {
-						conexion.altaClienteMascota(mascota);
-
-						conexion.close();
-
-						dispose();
+				int x = JOptionPane.showConfirmDialog(null, "¿Confirma dar de alta la nueva mascota?","Información",JOptionPane.YES_NO_OPTION);
+				if(x == JOptionPane.YES_OPTION){
+					Item item = (Item) cmbClientes.getSelectedItem();
+					Mascota mascota = new Mascota();
+	
+					mascota.setIdCliente(item.getId());
+					mascota.setNombreCientifico(txtNombreCientifico.getText());
+					mascota.setNombreVulgar(txtNombreVulgar.getText());
+					mascota.setDescripcion(txtDescripcion.getText());
+	
+					try {
+	
+						Conexion conexion = new Conexion();
+						if (conexion.conectarDB()) {
+							conexion.altaClienteMascota(mascota);
+	
+							conexion.close();
+							JOptionPane.showMessageDialog(null, "La mascota ha sido dado de alta exitosamente","Informacion",JOptionPane.INFORMATION_MESSAGE);
+	
+							dispose();
+						}
+	
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(null, e, "ERROR",
+								JOptionPane.ERROR_MESSAGE);
 					}
-
-				} catch (Exception e) {
-					JOptionPane.showMessageDialog(null, e, "ERROR",
-							JOptionPane.ERROR_MESSAGE);
 				}
-
 			}
 		});
 		btnAgregar.setBounds(43, 127, 89, 23);

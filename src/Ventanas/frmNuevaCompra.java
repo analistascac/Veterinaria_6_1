@@ -66,7 +66,7 @@ public class frmNuevaCompra extends JFrame {
 			}
 		});
 		setResizable(false);
-		setTitle("Nueva compra - Veterinaria CAC");
+		setTitle("Veterinaria Godzilla - Alta - Compra");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 359, 517);
 		contentPane = new JPanel();
@@ -131,51 +131,51 @@ public class frmNuevaCompra extends JFrame {
 		btnAgregarAlCanasto = new JButton("Agregar al canasto");
 		btnAgregarAlCanasto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-				if(!txtPrecioCompra.getText().trim().isEmpty() && !txtPrecioVenta.getText().trim().isEmpty() && !txtCantidad.getText().trim().isEmpty()){
-					Conexion cn = new Conexion();
-					cmbProveedor.setEnabled(false);
 
-					if(cn.conectarDB()){
-						btnQuitarDelCanasto.setEnabled(true);
-						btnAceptar.setEnabled(true);
-						
-						Compra com = new Compra();
-						Proveedor p = new Proveedor();
-						Empleado e = new Empleado();
-						Producto prod = new Producto();
-						boolean error = false;
-						
-						p = (Proveedor) cn.devolverProveedores().get(cmbProveedor.getSelectedIndex());
-						e = (Empleado) cn.devolverEmpleados().get(cmbEmpleado.getSelectedIndex());
-						prod = (Producto) cn.devolverProveedorProductos(p).get(cmbProducto.getSelectedIndex());
-
-						try{
-							com.setCantidad(Integer.parseInt(txtCantidad.getText()));
-							com.setPrecio_costo(Double.parseDouble(txtPrecioCompra.getText()));
-							com.setPrecio_venta(Double.parseDouble(txtPrecioVenta.getText()));
-							if(prod.getNombre() != null){
-								canasto.addElement(prod.getNombre() + " x " + txtCantidad.getText());
-							}else{
-								canasto.addElement(prod.getNombreCientifico() + " x " + txtCantidad.getText());
+							
+					if(!txtPrecioCompra.getText().trim().isEmpty() && !txtPrecioVenta.getText().trim().isEmpty() && !txtCantidad.getText().trim().isEmpty()){
+						Conexion cn = new Conexion();
+						cmbProveedor.setEnabled(false);
+	
+						if(cn.conectarDB()){
+							btnQuitarDelCanasto.setEnabled(true);
+							btnAceptar.setEnabled(true);
+							
+							Compra com = new Compra();
+							Proveedor p = new Proveedor();
+							Empleado e = new Empleado();
+							Producto prod = new Producto();
+							boolean error = false;
+							
+							p = (Proveedor) cn.devolverProveedores().get(cmbProveedor.getSelectedIndex());
+							e = (Empleado) cn.devolverEmpleados().get(cmbEmpleado.getSelectedIndex());
+							prod = (Producto) cn.devolverProveedorProductos(p).get(cmbProducto.getSelectedIndex());
+	
+							try{
+								com.setCantidad(Integer.parseInt(txtCantidad.getText()));
+								com.setPrecio_costo(Double.parseDouble(txtPrecioCompra.getText()));
+								com.setPrecio_venta(Double.parseDouble(txtPrecioVenta.getText()));
+								if(prod.getNombre() != null){
+									canasto.addElement(prod.getNombre() + " x " + txtCantidad.getText());
+								}else{
+									canasto.addElement(prod.getNombreCientifico() + " x " + txtCantidad.getText());
+								}
+								com.setIdProveedor(p.getId());
+								com.setIdProducto(prod.getId());
+								com.setIdEmpleado(e.getId());
+								com.setTipo_factura(cmbTipoFactura.getSelectedItem().toString());
+								com.setEstadoOperacion(cmbEstadoOperacion.getSelectedItem()+"");
+								txtCantidad.setText("");
+								if(!error) compra.add(com);
+							}catch (Exception e1){
+								error = true;
+								JOptionPane.showMessageDialog(null, "Error en la carga de datos.","Error",JOptionPane.ERROR_MESSAGE);
 							}
-							com.setIdProveedor(p.getId());
-							com.setIdProducto(prod.getId());
-							com.setIdEmpleado(e.getId());
-							com.setTipo_factura(cmbTipoFactura.getSelectedItem().toString());
-							com.setEstadoOperacion(cmbEstadoOperacion.getSelectedItem()+"");
-							txtCantidad.setText("");
-							if(!error) compra.add(com);
-						}catch (Exception e1){
-							error = true;
-							JOptionPane.showMessageDialog(null, "Error en la carga de datos.","Error",JOptionPane.ERROR_MESSAGE);
 						}
+					}else{
+						JOptionPane.showMessageDialog(null, "Error en la carga de datos.","Error",JOptionPane.ERROR_MESSAGE);
 					}
-				}else{
-					JOptionPane.showMessageDialog(null, "Error en la carga de datos.","Error",JOptionPane.ERROR_MESSAGE);
-				}
-				 
-				
+					 
 			}
 		});
 		btnAgregarAlCanasto.setBounds(188, 211, 153, 34);
@@ -255,20 +255,23 @@ public class frmNuevaCompra extends JFrame {
 		
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Conexion cn = new Conexion();
-				
-				if(cn.conectarDB()){
-					try {
-						cn.altaCompra(compra);
-						JOptionPane.showMessageDialog(null, "Compra cargada exitosamente","Información",JOptionPane.INFORMATION_MESSAGE);
-						dispose();
-					} catch (Exception e) {
-						JOptionPane.showMessageDialog(null, "Error en la alta de la compra.","Error",JOptionPane.ERROR_MESSAGE);
+				int x = JOptionPane.showConfirmDialog(null, "¿Confirma dar de alta la nueva compra?","Confirmación",JOptionPane.YES_NO_OPTION);
+				if(x == JOptionPane.YES_OPTION){
+					Conexion cn = new Conexion();
+					
+					if(cn.conectarDB()){
+						try {
+							cn.altaCompra(compra);
+							JOptionPane.showMessageDialog(null, "Compra cargada exitosamente","Información",JOptionPane.INFORMATION_MESSAGE);
+							dispose();
+						} catch (Exception e) {
+							JOptionPane.showMessageDialog(null, "Error en la alta de la compra.","Error",JOptionPane.ERROR_MESSAGE);
+						}
+					}else{
+						JOptionPane.showMessageDialog(null, "Error en la conexion de la base de datos","Error",JOptionPane.ERROR_MESSAGE);
 					}
-				}else{
-					JOptionPane.showMessageDialog(null, "Error en la conexion de la base de datos","Error",JOptionPane.ERROR_MESSAGE);
 				}
-			}
+				}
 		});
 	}
 	

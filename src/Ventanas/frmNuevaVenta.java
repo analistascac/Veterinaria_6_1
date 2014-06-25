@@ -62,7 +62,7 @@ public class frmNuevaVenta extends JFrame {
 				dispose();
 			}
 		});
-		setTitle("Nueva venta - Veterinaria CAC");
+		setTitle("Veterinaria Godzilla - Alta - Venta");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 477, 425);
@@ -162,17 +162,22 @@ public class frmNuevaVenta extends JFrame {
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Conexion cn = new Conexion();
-				if(cn.conectarDB()){
-					try {
-						JOptionPane.showMessageDialog(null,estoSeVende.toString());
-						
-						cn.altaVenta(estoSeVende);
-					} catch (Exception e) {
-						JOptionPane.showMessageDialog(null, "Error al tratar de dar alta a la venta","Error",JOptionPane.ERROR_MESSAGE);
+				int x = JOptionPane.showConfirmDialog(null, "¿Confirma dar de alta la nueva venta?","Confirmación",JOptionPane.YES_NO_OPTION);
+				if(x == JOptionPane.YES_OPTION){
+					Conexion cn = new Conexion();
+					if(cn.conectarDB()){
+						try {
+							JOptionPane.showMessageDialog(null,estoSeVende.toString());
+							
+							cn.altaVenta(estoSeVende);
+							JOptionPane.showMessageDialog(null,"La venta ha sido cargada exitosamente","Informacion",JOptionPane.INFORMATION_MESSAGE);
+						} catch (Exception e) {
+							JOptionPane.showMessageDialog(null, "Error al tratar de dar alta a la venta","Error",JOptionPane.ERROR_MESSAGE);
+						}
+					}else{
+						JOptionPane.showMessageDialog(null, "Error al conectar con la base de datos","Error",JOptionPane.ERROR_MESSAGE);
 					}
-				}else{
-					JOptionPane.showMessageDialog(null, "Error al conectar con la base de datos","Error",JOptionPane.ERROR_MESSAGE);
+					
 				}
 			}
 		});
@@ -185,6 +190,11 @@ public class frmNuevaVenta extends JFrame {
 		contentPane.add(lblNewLabel);
 
 		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dispose();
+			}
+		});
 		btnCancelar.setBounds(248, 363, 89, 23);
 		contentPane.add(btnCancelar);
 		

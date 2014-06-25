@@ -63,7 +63,7 @@ public class frmNuevoCliente extends JFrame {
 				dispose();
 			}
 		});
-		setTitle("Nuevo Cliente");
+		setTitle("Veterinaria Godzilla - Alta - Cliente");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 470, 420);
 		setLocationRelativeTo(null);
@@ -187,40 +187,43 @@ public class frmNuevoCliente extends JFrame {
 
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
-				ArrayList<String> errores = new ArrayList<String>();
-				if (!Auxiliar.isValidDNI(txtNumDoc.getText()))
-					errores.add("Numero de documento invalido.");
-				if (errores.size() > 0)
-					JOptionPane.showMessageDialog(null,
-							Auxiliar.contenarArrayList(errores));
-				else {
-					Cliente cliente = new Cliente();
-					cliente.setNombre(txtNombre.getText());
-					cliente.setApellido(txtApellido.getText());
-					cliente.setTipoDocumento((String) cmbTipoDoc
-							.getSelectedItem());
-					cliente.setDocumento(txtNumDoc.getText());
-					cliente.setDireccion(txtDireccion.getText());
-					cliente.setOcupacion(txtOcupacion.getText());
-					cliente.setTelefono(txtTelefono.getText());
-					cliente.setEmail(txtMail.getText());
-					cliente.setTipoPago((String) cmbTipoDePago
-							.getSelectedItem());
-
-					try {
-						Conexion conexion = new Conexion();
-
-						if (conexion.conectarDB()) {
-							conexion.altaCliente(cliente);
-							conexion.close();
-
-							dispose();
+				int x = JOptionPane.showConfirmDialog(null, "¿Confirma dar de alta el nuevo cliente?", "Confirmación",JOptionPane.YES_NO_OPTION);
+				if(x == JOptionPane.YES_OPTION){
+					ArrayList<String> errores = new ArrayList<String>();
+					if (!Auxiliar.isValidDNI(txtNumDoc.getText()))
+						errores.add("Numero de documento invalido.");
+					if (errores.size() > 0)
+						JOptionPane.showMessageDialog(null,
+								Auxiliar.contenarArrayList(errores));
+					else {
+						Cliente cliente = new Cliente();
+						cliente.setNombre(txtNombre.getText());
+						cliente.setApellido(txtApellido.getText());
+						cliente.setTipoDocumento((String) cmbTipoDoc
+								.getSelectedItem());
+						cliente.setDocumento(txtNumDoc.getText());
+						cliente.setDireccion(txtDireccion.getText());
+						cliente.setOcupacion(txtOcupacion.getText());
+						cliente.setTelefono(txtTelefono.getText());
+						cliente.setEmail(txtMail.getText());
+						cliente.setTipoPago((String) cmbTipoDePago
+								.getSelectedItem());
+	
+						try {
+							Conexion conexion = new Conexion();
+	
+							if (conexion.conectarDB()) {
+								conexion.altaCliente(cliente);
+								conexion.close();
+								
+								JOptionPane.showMessageDialog(null, "Cliente dado de alta exitosamente","Información",JOptionPane.INFORMATION_MESSAGE);
+								dispose();
+							}
+	
+						} catch (Exception e) {
+							JOptionPane.showMessageDialog(null, e, "ERROR",
+									JOptionPane.ERROR_MESSAGE);
 						}
-
-					} catch (Exception e) {
-						JOptionPane.showMessageDialog(null, e, "ERROR",
-								JOptionPane.ERROR_MESSAGE);
 					}
 				}
 			}
