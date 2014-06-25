@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.ImageIcon;
 import javax.swing.JInternalFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
@@ -36,7 +37,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+
+import java.awt.Color;
 
 
 public class Main extends JFrame {
@@ -70,15 +75,18 @@ public class Main extends JFrame {
 	private JMenu mnNuevo;
 	private JMenuItem nueVenta;
 	private JMenuItem mntmCompra;
-
+	private JLabel lblNewLabel;
 
 	public Main() {
 		setResizable(false);
-		setTitle("Centro veterinario - Godzilla");
+		setTitle("Veterinaria Godzilla");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		setLocationRelativeTo(null);
+		setIconImage(new ImageIcon(getClass().getResource("/Images/logo.jpg")).getImage());
+		
 		panelPrincipal = new JPanel();
+		panelPrincipal.setBackground(Color.WHITE);
 		panelPrincipal.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(panelPrincipal);
 		panelPrincipal.setLayout(null);
@@ -309,10 +317,14 @@ public class Main extends JFrame {
 		});
 		mnInformes.add(mntmClienteMasAtendido);
 		
-		JLabel label = new JLabel("");
-		label.setBounds(34, 86, 0, 0);
-		panelPrincipal.add(label);
-		
+		lblNewLabel = new JLabel("");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(0, 21, 444, 251);
+		ImageIcon image = new ImageIcon(getClass().getResource("/Images/image_marca_agua.png"));
+		if (image != null) {
+			lblNewLabel.setIcon(image);
+			panelPrincipal.add(lblNewLabel);
+		}
 		
 	}
 }
