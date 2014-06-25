@@ -136,10 +136,9 @@ public class frmNuevaCompra extends JFrame {
 					if(!txtPrecioCompra.getText().trim().isEmpty() && !txtPrecioVenta.getText().trim().isEmpty() && !txtCantidad.getText().trim().isEmpty()){
 						Conexion cn = new Conexion();
 						cmbProveedor.setEnabled(false);
-	
+						cmbEmpleado.setEnabled(false);
 						if(cn.conectarDB()){
-							btnQuitarDelCanasto.setEnabled(true);
-							btnAceptar.setEnabled(true);
+
 							
 							Compra com = new Compra();
 							Proveedor p = new Proveedor();
@@ -147,30 +146,46 @@ public class frmNuevaCompra extends JFrame {
 							Producto prod = new Producto();
 							boolean error = false;
 							
-							p = (Proveedor) cn.devolverProveedores().get(cmbProveedor.getSelectedIndex());
-							e = (Empleado) cn.devolverEmpleados().get(cmbEmpleado.getSelectedIndex());
-							prod = (Producto) cn.devolverProveedorProductos(p).get(cmbProducto.getSelectedIndex());
-	
-							try{
-								com.setCantidad(Integer.parseInt(txtCantidad.getText()));
-								com.setPrecio_costo(Double.parseDouble(txtPrecioCompra.getText()));
-								com.setPrecio_venta(Double.parseDouble(txtPrecioVenta.getText()));
-								if(prod.getNombre() != null){
-									canasto.addElement(prod.getNombre() + " x " + txtCantidad.getText());
-								}else{
-									canasto.addElement(prod.getNombreCientifico() + " x " + txtCantidad.getText());
+							if(Integer.parseInt(txtCantidad.getText()) < 0) error = true;
+							if(Integer.parseInt(txtPrecioCompra.getText()) < 0) error = true; 
+							if(Integer.parseInt(txtPrecioVenta.getText()) < 0) error = true;
+								
+							if(!error){
+								p = (Proveedor) cn.devolverProveedores().get(cmbProveedor.getSelectedIndex());
+								e = (Empleado) cn.devolverEmpleados().get(cmbEmpleado.getSelectedIndex());
+								prod = (Producto) cn.devolverProveedorProductos(p).get(cmbProducto.getSelectedIndex());
+		
+								try{
+									com.setCantidad(Integer.parseInt(txtCantidad.getText()));
+									com.setPrecio_costo(Double.parseDouble(txtPrecioCompra.getText()));
+									com.setPrecio_venta(Double.parseDouble(txtPrecioVenta.getText()));
+									if(prod.getNombre() != null){
+										canasto.addElement(prod.getNombre() + " x " + txtCantidad.getText());
+									}else{
+										canasto.addElement(prod.getNombreCientifico() + " x " + txtCantidad.getText());
+									}
+									com.setIdProveedor(p.getId());
+									com.setIdProducto(prod.getId());
+									com.setIdEmpleado(e.getId());
+									com.setTipo_factura(cmbTipoFactura.getSelectedItem().toString());
+									com.setEstadoOperacion(cmbEstadoOperacion.getSelectedItem()+"");
+									txtCantidad.setText("");
+									txtPrecioCompra.setText("");
+									txtPrecioVenta.setText("");
+									if(!error){
+										compra.add(com);
+										btnQuitarDelCanasto.setEnabled(true);
+										btnAceptar.setEnabled(true);
+									}
+									
+								}catch (Exception e1){
+									error = true;
+									JOptionPane.showMessageDialog(null, "Error en la carga de datos.","Error",JOptionPane.ERROR_MESSAGE);
 								}
-								com.setIdProveedor(p.getId());
-								com.setIdProducto(prod.getId());
-								com.setIdEmpleado(e.getId());
-								com.setTipo_factura(cmbTipoFactura.getSelectedItem().toString());
-								com.setEstadoOperacion(cmbEstadoOperacion.getSelectedItem()+"");
-								txtCantidad.setText("");
-								if(!error) compra.add(com);
-							}catch (Exception e1){
-								error = true;
+							}else{
 								JOptionPane.showMessageDialog(null, "Error en la carga de datos.","Error",JOptionPane.ERROR_MESSAGE);
 							}
+							
 						}
 					}else{
 						JOptionPane.showMessageDialog(null, "Error en la carga de datos.","Error",JOptionPane.ERROR_MESSAGE);

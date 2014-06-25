@@ -106,6 +106,17 @@ public class frmNuevoProducto extends JFrame {
 					agregarProducto(p);
 					
 					JOptionPane.showMessageDialog(null, "Producto correctamente agregado","Información",JOptionPane.INFORMATION_MESSAGE);
+					
+					int x2 = JOptionPane.showConfirmDialog(null, "¿Desea agregar otro producto?","Confirme",JOptionPane.YES_NO_OPTION);
+					if(x2 == JOptionPane.YES_OPTION){
+						txtNombre.setText("");
+						txtNombreCientifico.setText("");
+						txtNombreVulgar.setText("");
+						txtDescirpcion.setText("");
+						txtMedida.setText("");
+					}else{
+						dispose();
+					}
 				}
 			}
 		});
