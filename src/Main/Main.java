@@ -25,6 +25,7 @@ import Ventanas.frmNuevoProducto;
 import Ventanas.frmNuevoProveedor;
 import Ventanas.winEliminarCliente;
 import Ventanas.winEliminarEmpleado;
+import Ventanas.winEliminarMascotaCliente;
 import Ventanas.winEliminarProveedor;
 import Ventanas.winInformeAnimalesPorRaza;
 import Ventanas.winInformeAtencionesPorVeterinario;
@@ -35,10 +36,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JLabel;
 
 
 public class Main extends JFrame {
 
+
+	private static final long serialVersionUID = 1L;
 	private JPanel panelPrincipal;
 	private JMenuItem nueAtencion;
 	private JMenuItem nueCliente;
@@ -243,6 +247,13 @@ public class Main extends JFrame {
 		mnEliminar.add(supEmpleado);
 		
 		supMascota = new JMenuItem("Mascota");
+		supMascota.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				winEliminarMascotaCliente v = new winEliminarMascotaCliente();
+				v.setVisible(true);
+				dispose();
+			}
+		});
 		mnEliminar.add(supMascota);
 		
 		supProveedor = new JMenuItem("Proveedor");
@@ -297,6 +308,10 @@ public class Main extends JFrame {
 			}
 		});
 		mnInformes.add(mntmClienteMasAtendido);
+		
+		JLabel label = new JLabel("");
+		label.setBounds(34, 86, 0, 0);
+		panelPrincipal.add(label);
 		
 		
 	}

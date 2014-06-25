@@ -73,6 +73,7 @@ public class winEliminarCliente extends JFrame {
 		contentPane.add(labelNombre);
 		
 		textFieldNombre = new JTextField();
+		textFieldNombre.setEditable(false);
 		textFieldNombre.setColumns(10);
 		textFieldNombre.setBounds(110, 82, 246, 21);
 		contentPane.add(textFieldNombre);
@@ -83,6 +84,7 @@ public class winEliminarCliente extends JFrame {
 		contentPane.add(labelApellido);
 		
 		textFieldApellido = new JTextField();
+		textFieldApellido.setEditable(false);
 		textFieldApellido.setColumns(10);
 		textFieldApellido.setBounds(110, 114, 246, 21);
 		contentPane.add(textFieldApellido);
@@ -98,6 +100,7 @@ public class winEliminarCliente extends JFrame {
 		contentPane.add(labelDoc);
 		
 		textFieldDoc = new JTextField();
+		textFieldDoc.setEditable(false);
 		textFieldDoc.setColumns(10);
 		textFieldDoc.setBounds(110, 175, 246, 21);
 		contentPane.add(textFieldDoc);
@@ -108,6 +111,7 @@ public class winEliminarCliente extends JFrame {
 		contentPane.add(labelDireccion);
 		
 		textFieldDireccion = new JTextField();
+		textFieldDireccion.setEditable(false);
 		textFieldDireccion.setColumns(10);
 		textFieldDireccion.setBounds(110, 207, 246, 21);
 		contentPane.add(textFieldDireccion);
@@ -118,6 +122,7 @@ public class winEliminarCliente extends JFrame {
 		contentPane.add(labelOcupacion);
 		
 		textFieldOcupacion = new JTextField();
+		textFieldOcupacion.setEditable(false);
 		textFieldOcupacion.setColumns(10);
 		textFieldOcupacion.setBounds(110, 241, 246, 21);
 		contentPane.add(textFieldOcupacion);
@@ -128,6 +133,7 @@ public class winEliminarCliente extends JFrame {
 		contentPane.add(labelTelefono);
 		
 		textFieldTelefono = new JTextField();
+		textFieldTelefono.setEditable(false);
 		textFieldTelefono.setColumns(10);
 		textFieldTelefono.setBounds(110, 280, 246, 21);
 		contentPane.add(textFieldTelefono);
@@ -138,6 +144,7 @@ public class winEliminarCliente extends JFrame {
 		contentPane.add(labelEmail);
 		
 		textFieldEmail = new JTextField();
+		textFieldEmail.setEditable(false);
 		textFieldEmail.setColumns(10);
 		textFieldEmail.setBounds(110, 316, 246, 20);
 		contentPane.add(textFieldEmail);
@@ -180,6 +187,7 @@ public class winEliminarCliente extends JFrame {
 		contentPane.add(btnEliminar);
 		
 		textFieldTipoDoc = new JTextField();
+		textFieldTipoDoc.setEditable(false);
 		textFieldTipoDoc.setColumns(10);
 		textFieldTipoDoc.setBounds(110, 146, 246, 21);
 		contentPane.add(textFieldTipoDoc);

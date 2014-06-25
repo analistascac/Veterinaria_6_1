@@ -76,17 +76,8 @@ public class winEliminarMascotaCliente extends JFrame {
 				if(cn.conectarDB()){
 					Cliente clie = new Cliente();
 					clie = cn.devolverClientes().get(comboBoxCliente.getSelectedIndex());
-					int aux = comboBoxCliente.getSelectedIndex();
-					if(aux!=-1){
-						llenarClienteMascota(clie);
-						Mascota mas = new Mascota();
-						mas = cn.devolverClienteMascotas(clie).get(comboBoxClienteMascotas.getSelectedIndex());
-						textFieldEspecie.setText(mas.getNombreCientifico());
-						textFieldDenominacion.setText(mas.getNombreVulgar());
-						textFieldDescripcion.setText(mas.getDescripcion());
-						btnEliminar.setEnabled(true);
-					}
 					
+					llenarClienteMascota(clie);
 				} else {
 					JOptionPane.showMessageDialog(null, "Error al conectar con la base de datos","Error",JOptionPane.ERROR_MESSAGE);
 				}
@@ -103,6 +94,7 @@ public class winEliminarMascotaCliente extends JFrame {
 		contentPane.add(labelNombCientifico);
 		
 		textFieldEspecie = new JTextField();
+		textFieldEspecie.setEditable(false);
 		textFieldEspecie.setColumns(10);
 		textFieldEspecie.setBounds(112, 109, 246, 21);
 		contentPane.add(textFieldEspecie);
@@ -113,6 +105,7 @@ public class winEliminarMascotaCliente extends JFrame {
 		contentPane.add(labelNombVulgar);
 		
 		textFieldDenominacion = new JTextField();
+		textFieldDenominacion.setEditable(false);
 		textFieldDenominacion.setColumns(10);
 		textFieldDenominacion.setBounds(112, 141, 246, 21);
 		contentPane.add(textFieldDenominacion);
@@ -123,6 +116,7 @@ public class winEliminarMascotaCliente extends JFrame {
 		contentPane.add(labelDescripcion);
 		
 		textFieldDescripcion = new JTextField();
+		textFieldDescripcion.setEditable(false);
 		textFieldDescripcion.setColumns(10);
 		textFieldDescripcion.setBounds(112, 173, 246, 21);
 		contentPane.add(textFieldDescripcion);
@@ -130,31 +124,34 @@ public class winEliminarMascotaCliente extends JFrame {
 		btnEliminar = new JButton("Eliminar");
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Conexion cn = new Conexion();
-				if(cn.conectarDB()){
-					try {
-						Mascota m = new Mascota();
-						Cliente clie = new Cliente();
-						clie = cn.devolverClientes().get(comboBoxCliente.getSelectedIndex());
-						m = cn.devolverClienteMascotas(clie).get(comboBoxClienteMascotas.getSelectedIndex());
-						int i = JOptionPane.showConfirmDialog(null, "Confirma la baja ?", "Baja Mascota",JOptionPane.YES_NO_OPTION);
-						if (i == JOptionPane.YES_OPTION){
-							cn.bajaMascotaCliente(m);
-							JOptionPane.showMessageDialog(null, "La baja ha sido correcta.","Información",JOptionPane.INFORMATION_MESSAGE);
-							llenarClientes();
+				int x = JOptionPane.showConfirmDialog(null, "¿Realmente quiere dar de baja esta mascota?", "Confirmacion",JOptionPane.YES_NO_OPTION);
+				if(x == JOptionPane.YES_OPTION){
+				
+					Conexion cn = new Conexion();
+					if(cn.conectarDB()){
+						Mascota esta = new Mascota();
+						Cliente este = new Cliente();
+						este = cn.devolverClientes().get(comboBoxCliente.getSelectedIndex());
+						esta = cn.devolverClienteMascotas(este).get(comboBoxClienteMascotas.getSelectedIndex());
+						
+						try {
+							cn.bajaMascotaCliente(esta);
+							textFieldDenominacion.setText("");
+							textFieldDescripcion.setText("");
+							textFieldEspecie.setText("");
+							llenarClienteMascota(este);
+							JOptionPane.showMessageDialog(null, "La mascota ha sido dada de baja correctamente","Informacion",JOptionPane.INFORMATION_MESSAGE);
+						} catch (insertDBException e) {
+							JOptionPane.showMessageDialog(null, "Error al conectar con la base de datos","Error",JOptionPane.ERROR_MESSAGE);
 						}
-					} catch (insertDBException e) {
+					} else {
 						JOptionPane.showMessageDialog(null, "Error al conectar con la base de datos","Error",JOptionPane.ERROR_MESSAGE);
 					}
-				} else {
-					JOptionPane.showMessageDialog(null, "Error al conectar con la base de datos","Error",JOptionPane.ERROR_MESSAGE);
+					
+					cn.close();
+					
+				
 				}
-				
-				cn.close();
-				
-				textFieldDenominacion.setText("");
-				textFieldDescripcion.setText("");
-				textFieldEspecie.setText("");
 			}
 		});
 		btnEliminar.setEnabled(false);
@@ -171,12 +168,25 @@ public class winEliminarMascotaCliente extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				Conexion cn = new Conexion();
 				if(cn.conectarDB()){
-					Cliente clie = cn.devolverClientes().get(comboBoxCliente.getSelectedIndex());
-					llenarClienteMascota(clie);	
-					Mascota mas = cn.devolverClienteMascotas(clie).get(comboBoxClienteMascotas.getSelectedIndex());
-					textFieldEspecie.setText(mas.getNombreCientifico());
-					textFieldDenominacion.setText(mas.getNombreVulgar());
-					textFieldDescripcion.setText(mas.getDescripcion());
+					Cliente clie = new Cliente(); 
+					clie = cn.devolverClientes().get(comboBoxCliente.getSelectedIndex());
+					
+					Mascota mas = new Mascota();
+					int id = comboBoxClienteMascotas.getSelectedIndex();
+					
+					if(id != -1){
+						mas = cn.devolverClienteMascotas(clie).get(id);
+						textFieldEspecie.setText(mas.getNombreCientifico());
+						textFieldDenominacion.setText(mas.getNombreVulgar());
+						textFieldDescripcion.setText(mas.getDescripcion());
+						btnEliminar.setEnabled(true);
+					}else{
+						textFieldEspecie.setText("");
+						textFieldDenominacion.setText("");
+						textFieldDescripcion.setText("");
+						btnEliminar.setEnabled(false);
+					}
+					
 				} else {
 					JOptionPane.showMessageDialog(null, "Error al conectar con la base de datos","Error",JOptionPane.ERROR_MESSAGE);
 				}
@@ -216,11 +226,9 @@ public class winEliminarMascotaCliente extends JFrame {
 			aMascota = cn.devolverClienteMascotas(clie);
 			Iterator<Mascota> it = aMascota.iterator();
 			Mascota tmp = new Mascota();
-			clienteMascotas.removeAllElements(); //= new DefaultComboBoxModel();
-			//comboBoxClienteMascotas.setModel(clienteMascotas);
+			clienteMascotas.removeAllElements();
 			while(it.hasNext()){
 				tmp = it.next();
-				System.out.println(tmp.toString());
 				clienteMascotas.addElement(tmp.getNombreVulgar());
 			}
 			comboBoxClienteMascotas.setModel(clienteMascotas);

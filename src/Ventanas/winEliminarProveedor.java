@@ -85,16 +85,19 @@ public class winEliminarProveedor extends JFrame {
 		contentPane.add(labelDireccion);
 		
 		textFieldDireccion = new JTextField();
+		textFieldDireccion.setEditable(false);
 		textFieldDireccion.setBounds(116, 146, 246, 21);
 		textFieldDireccion.setColumns(10);
 		contentPane.add(textFieldDireccion);
 		
 		textFieldCuit = new JTextField();
+		textFieldCuit.setEditable(false);
 		textFieldCuit.setBounds(116, 114, 246, 21);
 		textFieldCuit.setColumns(10);
 		contentPane.add(textFieldCuit);
 		
 		textFieldRazonSocial = new JTextField();
+		textFieldRazonSocial.setEditable(false);
 		textFieldRazonSocial.setBounds(116, 82, 246, 21);
 		textFieldRazonSocial.setColumns(10);
 		contentPane.add(textFieldRazonSocial);
@@ -120,21 +123,25 @@ public class winEliminarProveedor extends JFrame {
 		contentPane.add(labelFechaUltCompra);
 		
 		textFieldUltimaCompra = new JTextField();
+		textFieldUltimaCompra.setEditable(false);
 		textFieldUltimaCompra.setBounds(116, 280, 246, 21);
 		textFieldUltimaCompra.setColumns(10);
 		contentPane.add(textFieldUltimaCompra);
 		
 		textFieldEmail = new JTextField();
+		textFieldEmail.setEditable(false);
 		textFieldEmail.setBounds(116, 241, 246, 21);
 		textFieldEmail.setColumns(10);
 		contentPane.add(textFieldEmail);
 		
 		textFieldFax = new JTextField();
+		textFieldFax.setEditable(false);
 		textFieldFax.setBounds(116, 207, 246, 21);
 		textFieldFax.setColumns(10);
 		contentPane.add(textFieldFax);
 		
 		textFieldTelefono = new JTextField();
+		textFieldTelefono.setEditable(false);
 		textFieldTelefono.setBounds(116, 175, 246, 21);
 		textFieldTelefono.setColumns(10);
 		contentPane.add(textFieldTelefono);

@@ -116,41 +116,49 @@ public class winEliminarEmpleado extends JFrame {
 		contentPane.add(labelMatricula);
 		
 		textFieldMatricula = new JTextField();
+		textFieldMatricula.setEditable(false);
 		textFieldMatricula.setColumns(10);
 		textFieldMatricula.setBounds(124, 303, 246, 20);
 		contentPane.add(textFieldMatricula);
 		
 		textFieldFechaNacimiento = new JTextField();
+		textFieldFechaNacimiento.setEditable(false);
 		textFieldFechaNacimiento.setColumns(10);
 		textFieldFechaNacimiento.setBounds(124, 267, 246, 21);
 		contentPane.add(textFieldFechaNacimiento);
 		
 		textFieldTelefono = new JTextField();
+		textFieldTelefono.setEditable(false);
 		textFieldTelefono.setColumns(10);
 		textFieldTelefono.setBounds(124, 228, 246, 21);
 		contentPane.add(textFieldTelefono);
 		
 		textFieldDireccion = new JTextField();
+		textFieldDireccion.setEditable(false);
 		textFieldDireccion.setColumns(10);
 		textFieldDireccion.setBounds(124, 194, 246, 21);
 		contentPane.add(textFieldDireccion);
 		
 		textFieldDoc = new JTextField();
+		textFieldDoc.setEditable(false);
 		textFieldDoc.setColumns(10);
 		textFieldDoc.setBounds(124, 162, 246, 21);
 		contentPane.add(textFieldDoc);
 		
 		textFieldTipoDoc = new JTextField();
+		textFieldTipoDoc.setEditable(false);
 		textFieldTipoDoc.setColumns(10);
 		textFieldTipoDoc.setBounds(124, 133, 246, 21);
 		contentPane.add(textFieldTipoDoc);
 		
 		textFieldApellido = new JTextField();
+		textFieldApellido.setEditable(false);
 		textFieldApellido.setColumns(10);
 		textFieldApellido.setBounds(124, 101, 246, 21);
 		contentPane.add(textFieldApellido);
 		
 		textFieldNombre = new JTextField();
+		textFieldNombre.setEditable(false);
 		textFieldNombre.setColumns(10);
 		textFieldNombre.setBounds(124, 69, 246, 21);
 		contentPane.add(textFieldNombre);
@@ -169,6 +177,8 @@ public class winEliminarEmpleado extends JFrame {
 					textFieldDoc.setText(emp.getDocumento());
 					textFieldDireccion.setText(emp.getDomicilio());
 					textFieldTelefono.setText(emp.getTelefono());
+					textFieldFechaNacimiento.setText(emp.getFechaNacimiento());
+					textFieldMatricula.setText(emp.getMatricula());
 					btnEliminar.setEnabled(true);
 				} else {
 					JOptionPane.showMessageDialog(null, "Error al conectar con la base de datos","Error",JOptionPane.ERROR_MESSAGE);
