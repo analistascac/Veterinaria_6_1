@@ -191,44 +191,50 @@ public class frmNuevoCliente extends JFrame {
 
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int x = JOptionPane.showConfirmDialog(null, "¿Confirma dar de alta el nuevo cliente?", "Confirmación",JOptionPane.YES_NO_OPTION);
-				if(x == JOptionPane.YES_OPTION){
-					ArrayList<String> errores = new ArrayList<String>();
-					if (!Auxiliar.isValidDNI(txtNumDoc.getText()))
-						errores.add("Numero de documento invalido.");
-					if (errores.size() > 0)
-						JOptionPane.showMessageDialog(null,
-								Auxiliar.contenarArrayList(errores));
-					else {
-						Cliente cliente = new Cliente();
-						cliente.setNombre(txtNombre.getText());
-						cliente.setApellido(txtApellido.getText());
-						cliente.setTipoDocumento((String) cmbTipoDoc
-								.getSelectedItem());
-						cliente.setDocumento(txtNumDoc.getText());
-						cliente.setDireccion(txtDireccion.getText());
-						cliente.setOcupacion(txtOcupacion.getText());
-						cliente.setTelefono(txtTelefono.getText());
-						cliente.setEmail(txtMail.getText());
-						cliente.setTipoPago((String) cmbTipoDePago
-								.getSelectedItem());
-	
-						try {
-							Conexion conexion = new Conexion();
-	
-							if (conexion.conectarDB()) {
-								conexion.altaCliente(cliente);
-								conexion.close();
-								
-								JOptionPane.showMessageDialog(null, "Cliente dado de alta exitosamente","Información",JOptionPane.INFORMATION_MESSAGE);
-								dispose();
+				if(chequearCliente()){
+					int x = JOptionPane.showConfirmDialog(null, "¿Confirma dar de alta el nuevo cliente?", "Confirmación",JOptionPane.YES_NO_OPTION);
+					if(x == JOptionPane.YES_OPTION){
+						ArrayList<String> errores = new ArrayList<String>();
+						if (!Auxiliar.isValidDNI(txtNumDoc.getText()))
+							errores.add("Numero de documento invalido.");
+						if (errores.size() > 0)
+							JOptionPane.showMessageDialog(null,
+									Auxiliar.contenarArrayList(errores));
+						else {
+							Cliente cliente = new Cliente();
+							cliente.setNombre(txtNombre.getText());
+							cliente.setApellido(txtApellido.getText());
+							cliente.setTipoDocumento((String) cmbTipoDoc
+									.getSelectedItem());
+							cliente.setDocumento(txtNumDoc.getText());
+							cliente.setDireccion(txtDireccion.getText());
+							cliente.setOcupacion(txtOcupacion.getText());
+							cliente.setTelefono(txtTelefono.getText());
+							cliente.setEmail(txtMail.getText());
+							cliente.setTipoPago((String) cmbTipoDePago
+									.getSelectedItem());
+		
+							try {
+								Conexion conexion = new Conexion();
+		
+								if (conexion.conectarDB()) {
+									conexion.altaCliente(cliente);
+									conexion.close();
+									
+									JOptionPane.showMessageDialog(null, "Cliente dado de alta exitosamente","Información",JOptionPane.INFORMATION_MESSAGE);
+									dispose();
+								}else{
+									JOptionPane.showMessageDialog(null, "Error al conectar con la base de datos.","Error",JOptionPane.ERROR_MESSAGE);
+								}
+		
+							} catch (Exception e) {
+								JOptionPane.showMessageDialog(null, e, "ERROR",
+										JOptionPane.ERROR_MESSAGE);
 							}
-	
-						} catch (Exception e) {
-							JOptionPane.showMessageDialog(null, e, "ERROR",
-									JOptionPane.ERROR_MESSAGE);
 						}
 					}
+				}else{
+					JOptionPane.showMessageDialog(null, "El cliente ya existe","Error",JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -349,5 +355,25 @@ public class frmNuevoCliente extends JFrame {
 		} else {
 			btnAceptar.setEnabled(false);
 		}
+	}
+	
+	private boolean chequearCliente(){
+		boolean estado = true;
+		Conexion cn = new Conexion();
+		if(cn.conectarDB()){
+			ArrayList<Cliente> estos = new ArrayList<Cliente>();
+			estos = cn.devolverClientes();
+			while(!estos.isEmpty()){
+				if(estos.get(0).getDocumento().compareToIgnoreCase(txtNumDoc.getText()) == 0){
+					estado = false;
+				}
+				estos.remove(0);
+			}
+			
+		}else{
+			JOptionPane.showMessageDialog(null, "Error al conectar con la base de datos","Error",JOptionPane.ERROR_MESSAGE);
+		}
+		
+		return estado;
 	}
 }
