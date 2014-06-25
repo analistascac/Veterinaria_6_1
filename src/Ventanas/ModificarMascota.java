@@ -55,6 +55,7 @@ public class ModificarMascota extends JFrame {
 		setTitle("Veterinaria Godzilla - Modificacion - Mascota");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 388, 207);
+		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

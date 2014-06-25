@@ -54,6 +54,7 @@ public class ModificarProveedor extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setTitle("Veterinaria Godzilla - Modificacion - Proveedor");
 		setBounds(100, 100, 388, 260);
+		setLocationRelativeTo(null);
 		panelPrincipal = new JPanel();
 		panelPrincipal.setBackground(Color.WHITE);
 		panelPrincipal.setBorder(new EmptyBorder(5, 5, 5, 5));

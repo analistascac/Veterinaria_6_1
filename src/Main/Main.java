@@ -1,12 +1,9 @@
 package Main;
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.ImageIcon;
-import javax.swing.JInternalFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -35,17 +32,13 @@ import Ventanas.winInformeMejorVendedor;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 import java.awt.Color;
 
-
 public class Main extends JFrame {
-
 
 	private static final long serialVersionUID = 1L;
 	private JPanel panelPrincipal;
@@ -83,21 +76,22 @@ public class Main extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		setLocationRelativeTo(null);
-		setIconImage(new ImageIcon(getClass().getResource("/Images/logo.jpg")).getImage());
-		
+		setIconImage(new ImageIcon(getClass().getResource("/Images/logo.jpg"))
+				.getImage());
+
 		panelPrincipal = new JPanel();
 		panelPrincipal.setBackground(Color.WHITE);
 		panelPrincipal.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(panelPrincipal);
 		panelPrincipal.setLayout(null);
-		
+
 		menu = new JMenuBar();
 		menu.setBounds(0, 0, 444, 21);
 		panelPrincipal.add(menu);
-		
+
 		mnNuevo = new JMenu("Nuevo");
 		menu.add(mnNuevo);
-		
+
 		nueAtencion = new JMenuItem("Atencion");
 		nueAtencion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -107,7 +101,7 @@ public class Main extends JFrame {
 			}
 		});
 		mnNuevo.add(nueAtencion);
-		
+
 		nueCliente = new JMenuItem("Cliente");
 		nueCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -117,7 +111,7 @@ public class Main extends JFrame {
 			}
 		});
 		mnNuevo.add(nueCliente);
-		
+
 		nueEmpleado = new JMenuItem("Empleado");
 		nueEmpleado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -126,7 +120,7 @@ public class Main extends JFrame {
 				dispose();
 			}
 		});
-		
+
 		mntmCompra = new JMenuItem("Compra");
 		mntmCompra.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -137,17 +131,17 @@ public class Main extends JFrame {
 		});
 		mnNuevo.add(mntmCompra);
 		mnNuevo.add(nueEmpleado);
-		
+
 		nueMascota = new JMenuItem("Mascota");
 		nueMascota.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				frmNuevaMascota ventana = new frmNuevaMascota();
 				ventana.setVisible(true);
-				dispose();				
+				dispose();
 			}
 		});
 		mnNuevo.add(nueMascota);
-		
+
 		nueProducto = new JMenuItem("Producto");
 		nueProducto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -157,7 +151,7 @@ public class Main extends JFrame {
 			}
 		});
 		mnNuevo.add(nueProducto);
-		
+
 		nueProveedor = new JMenuItem("Proveedor");
 		nueProveedor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -167,7 +161,7 @@ public class Main extends JFrame {
 			}
 		});
 		mnNuevo.add(nueProveedor);
-		
+
 		nueVenta = new JMenuItem("Venta");
 		nueVenta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -177,20 +171,20 @@ public class Main extends JFrame {
 			}
 		});
 		mnNuevo.add(nueVenta);
-		
+
 		mnModificar = new JMenu("Modificar");
 		menu.add(mnModificar);
-		
+
 		modCliente = new JMenuItem("Cliente");
 		modCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ModificarCliente ventana = new ModificarCliente();
 				ventana.setVisible(true);
-				dispose();				
+				dispose();
 			}
 		});
 		mnModificar.add(modCliente);
-		
+
 		modEmpleado = new JMenuItem("Empleado");
 		modEmpleado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -200,7 +194,7 @@ public class Main extends JFrame {
 			}
 		});
 		mnModificar.add(modEmpleado);
-		
+
 		modMascota = new JMenuItem("Mascota");
 		modMascota.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -210,7 +204,7 @@ public class Main extends JFrame {
 			}
 		});
 		mnModificar.add(modMascota);
-		
+
 		morProducto = new JMenuItem("Producto");
 		morProducto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -220,7 +214,7 @@ public class Main extends JFrame {
 			}
 		});
 		mnModificar.add(morProducto);
-		
+
 		morProveedor = new JMenuItem("Proveedor");
 		morProveedor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -230,10 +224,10 @@ public class Main extends JFrame {
 			}
 		});
 		mnModificar.add(morProveedor);
-		
+
 		mnEliminar = new JMenu("Eliminar");
 		menu.add(mnEliminar);
-		
+
 		supCliente = new JMenuItem("Cliente");
 		supCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -243,7 +237,7 @@ public class Main extends JFrame {
 			}
 		});
 		mnEliminar.add(supCliente);
-		
+
 		supEmpleado = new JMenuItem("Empleado");
 		supEmpleado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -253,7 +247,7 @@ public class Main extends JFrame {
 			}
 		});
 		mnEliminar.add(supEmpleado);
-		
+
 		supMascota = new JMenuItem("Mascota");
 		supMascota.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -263,7 +257,7 @@ public class Main extends JFrame {
 			}
 		});
 		mnEliminar.add(supMascota);
-		
+
 		supProveedor = new JMenuItem("Proveedor");
 		supProveedor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -273,10 +267,10 @@ public class Main extends JFrame {
 			}
 		});
 		mnEliminar.add(supProveedor);
-		
+
 		mnInformes = new JMenu("Informes");
 		menu.add(mnInformes);
-		
+
 		mntmAtencionesDeUn = new JMenuItem("Atenciones de un veterinario");
 		mntmAtencionesDeUn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -286,7 +280,7 @@ public class Main extends JFrame {
 			}
 		});
 		mnInformes.add(mntmAtencionesDeUn);
-		
+
 		mntmVendedorConMas = new JMenuItem("Vendedor con mas ventas realizadas");
 		mntmVendedorConMas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -296,8 +290,9 @@ public class Main extends JFrame {
 			}
 		});
 		mnInformes.add(mntmVendedorConMas);
-		
-		mntmAnimalesPorRaza = new JMenuItem("Animales por raza existentes en el centro");
+
+		mntmAnimalesPorRaza = new JMenuItem(
+				"Animales por raza existentes en el centro");
 		mntmAnimalesPorRaza.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				winInformeAnimalesPorRaza ventana = new winInformeAnimalesPorRaza();
@@ -306,8 +301,9 @@ public class Main extends JFrame {
 			}
 		});
 		mnInformes.add(mntmAnimalesPorRaza);
-		
-		mntmClienteMasAtendido = new JMenuItem("Cliente m\u00E1s atendido en la veterinaria");
+
+		mntmClienteMasAtendido = new JMenuItem(
+				"Cliente m\u00E1s atendido en la veterinaria");
 		mntmClienteMasAtendido.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				winInformeClienteMasAtendido c = new winInformeClienteMasAtendido();
@@ -316,15 +312,16 @@ public class Main extends JFrame {
 			}
 		});
 		mnInformes.add(mntmClienteMasAtendido);
-		
+
 		lblNewLabel = new JLabel("");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(0, 21, 444, 251);
-		ImageIcon image = new ImageIcon(getClass().getResource("/Images/image_marca_agua.png"));
+		ImageIcon image = new ImageIcon(getClass().getResource(
+				"/Images/image_marca_agua.png"));
 		if (image != null) {
 			lblNewLabel.setIcon(image);
 			panelPrincipal.add(lblNewLabel);
 		}
-		
+
 	}
 }

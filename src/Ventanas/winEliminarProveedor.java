@@ -57,6 +57,7 @@ public class winEliminarProveedor extends JFrame {
 		setTitle("Veterinaria Godzilla - Baja - Proveedor");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 412, 331);
+		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

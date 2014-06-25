@@ -57,6 +57,7 @@ public class winEliminarMascotaCliente extends JFrame {
 		setTitle("Veterinaria Godzilla - Baja - Mascota");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 412, 238);
+		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

@@ -65,6 +65,7 @@ public class ModificarEmpleado extends JFrame {
 		});
 		setTitle("Veterinaria Godzilla - Modificacion - Empleado");
 		setBounds(100, 100, 379, 313);
+		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

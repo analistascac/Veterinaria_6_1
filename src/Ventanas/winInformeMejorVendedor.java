@@ -42,6 +42,7 @@ public class winInformeMejorVendedor extends JFrame {
 		setTitle("Veterinaria Godzilla - Informe - Mejor vendedor");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 384, 103);
+		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
