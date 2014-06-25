@@ -143,7 +143,6 @@ public class frmNuevaCompra extends JFrame {
 		txtCantidad.setBounds(127, 124, 205, 21);
 		txtCantidad.addCaretListener(new CaretListener() {
 
-			@Override
 			public void caretUpdate(CaretEvent arg0) {
 
 				if (Auxiliar.isInteger(txtCantidad.getText())
@@ -281,7 +280,6 @@ public class frmNuevaCompra extends JFrame {
 		txtPrecioCompra.setBounds(127, 153, 205, 21);
 		txtPrecioCompra.addCaretListener(new CaretListener() {
 
-			@Override
 			public void caretUpdate(CaretEvent arg0) {
 				if (Auxiliar.isDouble(txtPrecioCompra.getText())
 						&& Double.parseDouble(txtPrecioCompra.getText()) > 0) {
@@ -308,7 +306,6 @@ public class frmNuevaCompra extends JFrame {
 		txtPrecioVenta.setBounds(127, 182, 205, 21);
 		txtPrecioVenta.addCaretListener(new CaretListener() {
 
-			@Override
 			public void caretUpdate(CaretEvent arg0) {
 
 				if (Auxiliar.isDouble(txtPrecioVenta.getText())
