@@ -41,6 +41,7 @@ public class winEliminarProveedor extends JFrame {
 	private JComboBox comboBoxProveedor = new JComboBox(); 
 	
 	public winEliminarProveedor() {
+		setResizable(false);
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosed(WindowEvent arg0) {
@@ -49,7 +50,7 @@ public class winEliminarProveedor extends JFrame {
 				 dispose();
 			}
 		});
-		setTitle("Veterinaria CAC - Baja - Proveedor");
+		setTitle("Veterinaria Godzilla - Baja - Proveedor");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 412, 383);
 		contentPane = new JPanel();

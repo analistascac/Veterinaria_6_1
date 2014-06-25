@@ -45,6 +45,7 @@ public class winEliminarCliente extends JFrame {
 	private JButton btnEliminar;
 
 	public winEliminarCliente() {
+		setResizable(false);
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosed(WindowEvent arg0) {
@@ -53,7 +54,7 @@ public class winEliminarCliente extends JFrame {
 				 dispose();
 			}
 		});
-		setTitle("Veterinaria CAC - Baja - Cliente");
+		setTitle("Veterinaria Godzilla - Baja - Cliente");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 407, 419);
 		contentPane = new JPanel();
