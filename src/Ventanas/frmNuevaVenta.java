@@ -49,9 +49,11 @@ public class frmNuevaVenta extends JFrame {
 	private DefaultListModel<String> carrito = new DefaultListModel();
 	private JButton btnAgregar;
 	private JButton btnQuitar;
-
+	
 	private ArrayList<Venta> estoSeVende = new ArrayList();
 	private JComboBox<String> cmbTipoFactura;
+	
+	ArrayList<Producto> prod = new ArrayList();
 	
 	public frmNuevaVenta() {
 		addWindowListener(new WindowAdapter() {
@@ -165,12 +167,12 @@ public class frmNuevaVenta extends JFrame {
 				int x = JOptionPane.showConfirmDialog(null, "¿Confirma dar de alta la nueva venta?","Confirmación",JOptionPane.YES_NO_OPTION);
 				if(x == JOptionPane.YES_OPTION){
 					Conexion cn = new Conexion();
+					
 					if(cn.conectarDB()){
 						try {
-							JOptionPane.showMessageDialog(null,estoSeVende.toString());
-							
 							cn.altaVenta(estoSeVende);
 							JOptionPane.showMessageDialog(null,"La venta ha sido cargada exitosamente","Informacion",JOptionPane.INFORMATION_MESSAGE);
+							dispose();
 						} catch (Exception e) {
 							JOptionPane.showMessageDialog(null, "Error al tratar de dar alta a la venta","Error",JOptionPane.ERROR_MESSAGE);
 						}
@@ -206,34 +208,44 @@ public class frmNuevaVenta extends JFrame {
 				
 				if(cn.conectarDB()){
 					Venta venta = new Venta();
+					
 					String idCliente = cn.devolverClientes().get(cmbCliente.getSelectedIndex()).getId();
-					String idProducto = cn.devolverProductos().get(lstProductos.getSelectedIndex()).getId(); 
-					String idProveedor = cn.devolverProductos().get(lstProductos.getSelectedIndex()).getIdProveedor();
-					String precio = cn.devolverProductos().get(lstProductos.getSelectedIndex()).getPrecioVenta()+"";
 					String idVendedor = cn.devolverEmpleados().get(cmbVendedor.getSelectedIndex()).getId();
-					
-					venta.setCantidad(txtCantidad.getText());
-					venta.setEstadoOperacion(cmbEstadoOperacion.getSelectedItem().toString());
-					venta.setIdCliente(idCliente);
-					venta.setIdProducto(idProducto);
-					venta.setIdProveedor(idProveedor);
-					venta.setIdVendedor(idVendedor);
-					venta.setTipoFactura(cmbTipoFactura.getSelectedItem()+"");
-					venta.setPrecio(precio);
-					
-					estoSeVende.add(venta);
-					
-					if(cn.devolverProductos().get(lstProductos.getSelectedIndex()).getNombre() != null){
-						carrito.addElement(cn.devolverProductos().get(lstProductos.getSelectedIndex()).getNombre() + " x " + txtCantidad.getText());
+					String idProducto = prod.get(lstProductos.getSelectedIndex()).getId(); 
+					String idProveedor = prod.get(lstProductos.getSelectedIndex()).getIdProveedor();
+					String precio = prod.get(lstProductos.getSelectedIndex()).getPrecioVenta()+"";
+
+					if(prod.get(lstProductos.getSelectedIndex()).getCantidad() >= Integer.parseInt(txtCantidad.getText())){
+						venta.setCantidad(txtCantidad.getText());
+						venta.setEstadoOperacion(cmbEstadoOperacion.getSelectedItem().toString());
+						venta.setIdCliente(idCliente);
+						venta.setIdProducto(idProducto);
+						venta.setIdProveedor(idProveedor);
+						venta.setIdVendedor(idVendedor);
+						venta.setTipoFactura(cmbTipoFactura.getSelectedItem()+"");
+						venta.setPrecio(precio);
+						
+						estoSeVende.add(venta);
+						
+						if(prod.get(lstProductos.getSelectedIndex()).getNombre() != null){
+							carrito.addElement(prod.get(lstProductos.getSelectedIndex()).getNombre() + " x " + txtCantidad.getText());
+							prod.get(lstProductos.getSelectedIndex()).setCantidad(prod.get(lstProductos.getSelectedIndex()).getCantidad() - Integer.parseInt(txtCantidad.getText()));
+							productos.setElementAt("x"+ prod.get(lstProductos.getSelectedIndex()).getCantidad() + " " + prod.get(lstProductos.getSelectedIndex()).getNombre() +  " ($ " + prod.get(lstProductos.getSelectedIndex()).getPrecioVenta()+")", lstProductos.getSelectedIndex());
+						}else{
+							carrito.addElement(prod.get(lstProductos.getSelectedIndex()).getNombreCientifico() + " x " + txtCantidad.getText());
+							prod.get(lstProductos.getSelectedIndex()).setCantidad(prod.get(lstProductos.getSelectedIndex()).getCantidad() - Integer.parseInt(txtCantidad.getText()));
+							productos.setElementAt("x"+ prod.get(lstProductos.getSelectedIndex()).getCantidad() + " " + prod.get(lstProductos.getSelectedIndex()).getNombreCientifico() +  " ($ " + prod.get(lstProductos.getSelectedIndex()).getPrecioVenta()+")", lstProductos.getSelectedIndex());
+						}
+						
+						float impor = Float.parseFloat(txtImporteTotal.getText());
+						impor = impor + cn.devolverProductos().get(lstProductos.getSelectedIndex()).getPrecioVenta() * Integer.parseInt(txtCantidad.getText());
+						txtImporteTotal.setText(impor+"");
+
+						btnQuitar.setEnabled(true);
 					}else{
-						carrito.addElement(cn.devolverProductos().get(lstProductos.getSelectedIndex()).getNombreCientifico() + " x " + txtCantidad.getText());
+						JOptionPane.showMessageDialog(null, "Hay menos articulos de los deseados","Error",JOptionPane.ERROR_MESSAGE);
 					}
 					
-					float impor = Float.parseFloat(txtImporteTotal.getText());
-					impor = impor + cn.devolverProductos().get(lstProductos.getSelectedIndex()).getPrecioVenta() * Integer.parseInt(txtCantidad.getText());
-					txtImporteTotal.setText(impor+"");
-					
-					btnQuitar.setEnabled(true);
 				}else{
 					JOptionPane.showMessageDialog(null, "Error al intentar conectar con la base de datos","Error",JOptionPane.ERROR_MESSAGE);
 				}
@@ -249,12 +261,26 @@ public class frmNuevaVenta extends JFrame {
 		btnQuitar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				
-				
 				float impor = Float.parseFloat(txtImporteTotal.getText());
 				impor = impor - Float.parseFloat(estoSeVende.get(lstCarrito.getSelectedIndex()).getPrecio()) * Float.parseFloat(estoSeVende.get(lstCarrito.getSelectedIndex()).getCantidad());
+				int i = 0;
+				int cantprod = 0;
 				
 				txtImporteTotal.setText(impor+"");
+				
+				String idProductoCarrito = estoSeVende.get(lstCarrito.getSelectedIndex()).getIdProducto();
+				
+				while(idProductoCarrito != prod.get(i).getId()){
+					i++;
+				}
+				prod.get(i).setCantidad(Integer.parseInt(estoSeVende.get(lstCarrito.getSelectedIndex()).getCantidad())+prod.get(i).getCantidad());
+
+				if(prod.get(i).getNombre() == null){
+					productos.setElementAt("x"+ prod.get(lstProductos.getSelectedIndex()).getCantidad() + " " + prod.get(lstProductos.getSelectedIndex()).getNombreCientifico() +  " ($ " + prod.get(lstProductos.getSelectedIndex()).getPrecioVenta()+")", lstProductos.getSelectedIndex());
+				}else{
+					productos.setElementAt("x"+ prod.get(lstProductos.getSelectedIndex()).getCantidad() + " " + prod.get(lstProductos.getSelectedIndex()).getNombre() +  " ($ " + prod.get(lstProductos.getSelectedIndex()).getPrecioVenta()+")", lstProductos.getSelectedIndex());
+				}
+				
 				
 				estoSeVende.remove(lstCarrito.getSelectedIndex());
 				carrito.removeElementAt(lstCarrito.getSelectedIndex());
@@ -292,13 +318,13 @@ public class frmNuevaVenta extends JFrame {
 			ce = cn.devolverEmpleados();
 			for(int i = 0;i<ce.size();i++) vendedores.addElement(ce.get(i).getNombre() + " " + ce.get(i).getApellido());
 			
-			ArrayList<Producto> cp = new ArrayList();
-			cp = cn.devolverProductos();
-			for(int i = 0; i < cp.size(); i++){
-				if(cp.get(i).getNombre() != null){
-					productos.addElement(cp.get(i).getId() + " - " + cp.get(i).getNombre());
+			prod = cn.devolverProductos();
+			
+			for(int i = 0; i < prod.size(); i++){
+				if(prod.get(i).getNombre() != null){
+					productos.addElement("x"+ prod.get(i).getCantidad() + " " + prod.get(i).getNombre() +  " ($ " + prod.get(i).getPrecioVenta()+")");
 				}else{
-					productos.addElement(cp.get(i).getId() + " - " + cp.get(i).getNombreCientifico());
+					productos.addElement("x"+ prod.get(i).getCantidad() + " " + prod.get(i).getNombreCientifico() + " ($ " + prod.get(i).getPrecioVenta()+")");
 				}
 				
 			}

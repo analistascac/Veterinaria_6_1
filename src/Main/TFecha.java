@@ -144,7 +144,8 @@ public class TFecha {
 	}
 
 	public String getFechaString() {
-		return annio + "/" + mees + "/" + diia;
+		//return annio + "/" + mees + "/" + diia;
+		return diia + "/" + mees + "/" + annio;
 	}
 
 	public int getDia() {
