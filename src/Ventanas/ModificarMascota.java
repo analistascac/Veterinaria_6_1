@@ -76,11 +76,18 @@ public class ModificarMascota extends JFrame {
 					Mascota esta = new Mascota();
 					Cliente este = new Cliente();
 					este = cn.devolverClientes().get(cmbDueno.getSelectedIndex());
-					esta = cn.devolverClienteMascotas(este).get(cmbId.getSelectedIndex());
 					
-					txtNombreVulgar.setText(esta.getNombreVulgar());
-					txtNombreCientifico.setText(esta.getNombreCientifico());
-					txtDescripcion.setText(esta.getDescripcion());
+					int id = cmbId.getSelectedIndex();
+					if(id != -1){
+						esta = cn.devolverClienteMascotas(este).get(id);
+						txtNombreVulgar.setText(esta.getNombreVulgar());
+						txtNombreCientifico.setText(esta.getNombreCientifico());
+						txtDescripcion.setText(esta.getDescripcion());
+					}else{
+						txtNombreVulgar.setText("");
+						txtNombreCientifico.setText("");
+						txtDescripcion.setText("");
+					}
 				}else{
 					JOptionPane.showMessageDialog(null, "Error al conectar con la base de datos","Error",JOptionPane.ERROR_MESSAGE);
 				}
@@ -218,6 +225,7 @@ public class ModificarMascota extends JFrame {
 			ArrayList<Mascota> mas = new ArrayList();
 			mas = cn.devolverClienteMascotas(deEste);
 			
+			ides.removeAllElements();
 			for(int i = 0; i < mas.size();i++) ides.addElement(mas.get(i).getId() + " - "+mas.get(i).getNombreVulgar());
 			
 		}else{
@@ -225,9 +233,4 @@ public class ModificarMascota extends JFrame {
 		}
 	}
 
-	private void llenarduenos() {
-		duenos.addElement("Dueño prueba 1");
-		duenos.addElement("Dueño prueba 2");
-		duenos.addElement("Dueño prueba 3");
-	}
 }

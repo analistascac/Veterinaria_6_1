@@ -36,8 +36,6 @@ import java.util.ArrayList;
 
 import javax.swing.JRadioButton;
 
-import com.sun.org.apache.xerces.internal.impl.dtd.models.CMBinOp;
-
 public class ModificarCliente extends JFrame {
 
 	private JPanel contentPane;
