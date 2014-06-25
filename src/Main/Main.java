@@ -10,7 +10,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
-import Ventanas.ModificarAtencion;
 import Ventanas.ModificarCliente;
 import Ventanas.ModificarEmpleado;
 import Ventanas.ModificarMascota;
@@ -24,6 +23,9 @@ import Ventanas.frmNuevoCliente;
 import Ventanas.frmNuevoEmpleado;
 import Ventanas.frmNuevoProducto;
 import Ventanas.frmNuevoProveedor;
+import Ventanas.winEliminarCliente;
+import Ventanas.winEliminarEmpleado;
+import Ventanas.winEliminarProveedor;
 import Ventanas.winInformeAnimalesPorRaza;
 import Ventanas.winInformeAtencionesPorVeterinario;
 import Ventanas.winInformeClienteMasAtendido;
@@ -54,14 +56,8 @@ public class Main extends JFrame {
 	private JMenuItem supCliente;
 	private JMenuItem supEmpleado;
 	private JMenuItem supMascota;
-	private JMenuItem supProducto;
 	private JMenuItem supProveedor;
 	private JMenu mnInformes;
-	private JMenu mnVeterinaria;
-	private JMenuItem mntmEmpleados;
-	private JMenuItem mntmClientes;
-	private JMenuItem mntmArticulosParaLa;
-	private JMenuItem mntmProveedores;
 	private JMenuItem mntmAtencionesDeUn;
 	private JMenuItem mntmVendedorConMas;
 	private JMenuItem mntmAnimalesPorRaza;
@@ -74,7 +70,7 @@ public class Main extends JFrame {
 
 	public Main() {
 		setResizable(false);
-		setTitle("Centro veterinario - CAC");
+		setTitle("Centro veterinario - Godzilla");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		setLocationRelativeTo(null);
@@ -227,37 +223,40 @@ public class Main extends JFrame {
 		menu.add(mnEliminar);
 		
 		supCliente = new JMenuItem("Cliente");
+		supCliente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				winEliminarCliente ventana = new winEliminarCliente();
+				ventana.setVisible(true);
+				dispose();
+			}
+		});
 		mnEliminar.add(supCliente);
 		
 		supEmpleado = new JMenuItem("Empleado");
+		supEmpleado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				winEliminarEmpleado v = new winEliminarEmpleado();
+				v.setVisible(true);
+				dispose();
+			}
+		});
 		mnEliminar.add(supEmpleado);
 		
 		supMascota = new JMenuItem("Mascota");
 		mnEliminar.add(supMascota);
 		
-		supProducto = new JMenuItem("Producto");
-		mnEliminar.add(supProducto);
-		
 		supProveedor = new JMenuItem("Proveedor");
+		supProveedor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				winEliminarProveedor ventana = new winEliminarProveedor();
+				ventana.setVisible(true);
+				dispose();
+			}
+		});
 		mnEliminar.add(supProveedor);
 		
 		mnInformes = new JMenu("Informes");
 		menu.add(mnInformes);
-		
-		mnVeterinaria = new JMenu("Centro veterinario");
-		mnInformes.add(mnVeterinaria);
-		
-		mntmEmpleados = new JMenuItem("Empleados");
-		mnVeterinaria.add(mntmEmpleados);
-		
-		mntmClientes = new JMenuItem("Clientes");
-		mnVeterinaria.add(mntmClientes);
-		
-		mntmArticulosParaLa = new JMenuItem("Articulos para la venta");
-		mnVeterinaria.add(mntmArticulosParaLa);
-		
-		mntmProveedores = new JMenuItem("Proveedores");
-		mnVeterinaria.add(mntmProveedores);
 		
 		mntmAtencionesDeUn = new JMenuItem("Atenciones de un veterinario");
 		mntmAtencionesDeUn.addActionListener(new ActionListener() {
