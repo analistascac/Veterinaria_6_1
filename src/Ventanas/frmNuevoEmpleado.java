@@ -30,6 +30,8 @@ import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.Toolkit;
+import javax.swing.ImageIcon;
 
 public class frmNuevoEmpleado extends JFrame {
 
@@ -63,8 +65,10 @@ public class frmNuevoEmpleado extends JFrame {
 	private JButton btnAceptar;
 
 	private TFecha fecha;
+	private JLabel lblNewLabel;
 
 	public frmNuevoEmpleado() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(frmNuevoEmpleado.class.getResource("/Images/logo.jpg")));
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosed(WindowEvent arg0) {
@@ -259,7 +263,7 @@ public class frmNuevoEmpleado extends JFrame {
 		txtMatricula.setColumns(10);
 		txtMatricula.setBounds(160, 277, 237, 21);
 		contentPane.add(txtMatricula);
-		btnAceptar.setBounds(308, 309, 89, 23);
+		btnAceptar.setBounds(209, 309, 89, 23);
 		contentPane.add(btnAceptar);
 
 		btnCancelar = new JButton("Cancelar");
@@ -268,13 +272,19 @@ public class frmNuevoEmpleado extends JFrame {
 				dispose();
 			}
 		});
-		btnCancelar.setBounds(202, 309, 89, 23);
+		btnCancelar.setBounds(308, 309, 89, 23);
 		contentPane.add(btnCancelar);
 
 		txtTelefono = new JTextField();
 		txtTelefono.setColumns(10);
 		txtTelefono.setBounds(151, 200, 246, 21);
 		contentPane.add(txtTelefono);
+		
+		lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(frmNuevoEmpleado.class.getResource("/Images/image_marca_agua.png")));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(-3, 0, 414, 351);
+		contentPane.add(lblNewLabel);
 
 		txtApellido.addCaretListener(new CaretListener() {
 			public void caretUpdate(CaretEvent arg0) {

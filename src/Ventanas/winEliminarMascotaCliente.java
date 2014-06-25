@@ -27,6 +27,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.awt.Toolkit;
+import javax.swing.ImageIcon;
+import java.awt.Color;
 
 public class winEliminarMascotaCliente extends JFrame {
 
@@ -41,6 +44,7 @@ public class winEliminarMascotaCliente extends JFrame {
 	private JButton btnEliminar;
 			
 	public winEliminarMascotaCliente() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(winEliminarMascotaCliente.class.getResource("/Images/logo.jpg")));
 		setResizable(false);
 		addWindowListener(new WindowAdapter() {
 			@Override
@@ -52,20 +56,16 @@ public class winEliminarMascotaCliente extends JFrame {
 		});
 		setTitle("Veterinaria Godzilla - Baja - Mascota");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 412, 266);
+		setBounds(100, 100, 412, 238);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Baja de Mascota");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(79, 11, 246, 14);
-		contentPane.add(lblNewLabel);
-		
 		JLabel labelCliente = new JLabel("Cliente:");
 		labelCliente.setHorizontalAlignment(SwingConstants.RIGHT);
-		labelCliente.setBounds(53, 45, 46, 14);
+		labelCliente.setBounds(60, 14, 46, 14);
 		contentPane.add(labelCliente);
 		
 		comboBoxCliente = new JComboBox();
@@ -85,40 +85,40 @@ public class winEliminarMascotaCliente extends JFrame {
 				cn.close();
 			}
 		});
-		comboBoxCliente.setBounds(112, 42, 246, 20);
+		comboBoxCliente.setBounds(119, 11, 246, 20);
 		contentPane.add(comboBoxCliente);
 		
 		JLabel labelNombCientifico = new JLabel("Especie:");
 		labelNombCientifico.setHorizontalAlignment(SwingConstants.RIGHT);
-		labelNombCientifico.setBounds(-7, 109, 106, 21);
+		labelNombCientifico.setBounds(0, 78, 106, 21);
 		contentPane.add(labelNombCientifico);
 		
 		textFieldEspecie = new JTextField();
 		textFieldEspecie.setEditable(false);
 		textFieldEspecie.setColumns(10);
-		textFieldEspecie.setBounds(112, 109, 246, 21);
+		textFieldEspecie.setBounds(119, 78, 246, 21);
 		contentPane.add(textFieldEspecie);
 		
 		JLabel labelNombVulgar = new JLabel("Denominacion:");
 		labelNombVulgar.setHorizontalAlignment(SwingConstants.RIGHT);
-		labelNombVulgar.setBounds(-7, 141, 106, 21);
+		labelNombVulgar.setBounds(0, 110, 106, 21);
 		contentPane.add(labelNombVulgar);
 		
 		textFieldDenominacion = new JTextField();
 		textFieldDenominacion.setEditable(false);
 		textFieldDenominacion.setColumns(10);
-		textFieldDenominacion.setBounds(112, 141, 246, 21);
+		textFieldDenominacion.setBounds(119, 110, 246, 21);
 		contentPane.add(textFieldDenominacion);
 		
 		JLabel labelDescripcion = new JLabel("Descripcion");
 		labelDescripcion.setHorizontalAlignment(SwingConstants.RIGHT);
-		labelDescripcion.setBounds(-7, 173, 106, 21);
+		labelDescripcion.setBounds(0, 142, 106, 21);
 		contentPane.add(labelDescripcion);
 		
 		textFieldDescripcion = new JTextField();
 		textFieldDescripcion.setEditable(false);
 		textFieldDescripcion.setColumns(10);
-		textFieldDescripcion.setBounds(112, 173, 246, 21);
+		textFieldDescripcion.setBounds(119, 142, 246, 21);
 		contentPane.add(textFieldDescripcion);
 		
 		btnEliminar = new JButton("Eliminar");
@@ -155,12 +155,12 @@ public class winEliminarMascotaCliente extends JFrame {
 			}
 		});
 		btnEliminar.setEnabled(false);
-		btnEliminar.setBounds(269, 205, 89, 23);
+		btnEliminar.setBounds(276, 174, 89, 23);
 		contentPane.add(btnEliminar);
 		
 		JLabel labelMascota = new JLabel("Mascota:");
 		labelMascota.setHorizontalAlignment(SwingConstants.RIGHT);
-		labelMascota.setBounds(20, 81, 79, 14);
+		labelMascota.setBounds(27, 50, 79, 14);
 		contentPane.add(labelMascota);
 		
 		comboBoxClienteMascotas = new JComboBox();
@@ -194,8 +194,14 @@ public class winEliminarMascotaCliente extends JFrame {
 				cn.close();
 			}
 		});
-		comboBoxClienteMascotas.setBounds(112, 78, 246, 20);
+		comboBoxClienteMascotas.setBounds(119, 47, 246, 20);
 		contentPane.add(comboBoxClienteMascotas);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(winEliminarMascotaCliente.class.getResource("/Images/image_marca_agua_small.png")));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(0, 0, 406, 210);
+		contentPane.add(lblNewLabel);
 	}
 
 	public void llenarClientes(){

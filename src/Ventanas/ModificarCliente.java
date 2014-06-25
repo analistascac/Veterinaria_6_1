@@ -1,11 +1,14 @@
 package Ventanas;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 
@@ -15,6 +18,7 @@ import javax.swing.JComboBox;
 
 import java.awt.FlowLayout;
 
+import Clases.Auxiliar;
 import Clases.Cliente;
 import Conexion.Conexion;
 import Main.Main;
@@ -36,6 +40,10 @@ import java.util.ArrayList;
 
 import javax.swing.JRadioButton;
 
+import java.awt.Toolkit;
+
+import javax.swing.ImageIcon;
+
 public class ModificarCliente extends JFrame {
 
 	private JPanel contentPane;
@@ -54,8 +62,10 @@ public class ModificarCliente extends JFrame {
 	private ButtonGroup radio = new ButtonGroup();
 	private JComboBox cmbTipoPago;
 	private DefaultComboBoxModel tipopago = new DefaultComboBoxModel();
+	private JLabel lblNewLabel;
 
 	public ModificarCliente() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(ModificarCliente.class.getResource("/Images/logo.jpg")));
 
 		llenarcombos();
 
@@ -67,10 +77,10 @@ public class ModificarCliente extends JFrame {
 				dispose();
 			}
 		});
-		setTitle("Modificar Cliente - Centro veterinario CAC");
+		setTitle("Veterinaria Godzilla - Modificacion - Cliente");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 310, 308);
+		setBounds(100, 100, 373, 350);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -83,52 +93,52 @@ public class ModificarCliente extends JFrame {
 
 		JLabel lblNombre = new JLabel("Nombre:");
 		lblNombre.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNombre.setBounds(10, 31, 119, 15);
+		lblNombre.setBounds(10, 39, 119, 15);
 		contentPane.add(lblNombre);
 
 		JLabel lblApellido = new JLabel("Apellido:");
 		lblApellido.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblApellido.setBounds(10, 51, 119, 15);
+		lblApellido.setBounds(10, 67, 119, 15);
 		contentPane.add(lblApellido);
 
 		JLabel lblTipoDocumento = new JLabel("Tipo Documento:");
 		lblTipoDocumento.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblTipoDocumento.setBounds(10, 71, 119, 15);
+		lblTipoDocumento.setBounds(10, 95, 119, 15);
 		contentPane.add(lblTipoDocumento);
 
 		JLabel lblNumDoc = new JLabel("Documento:");
 		lblNumDoc.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNumDoc.setBounds(10, 91, 119, 15);
+		lblNumDoc.setBounds(10, 123, 119, 15);
 		contentPane.add(lblNumDoc);
 
 		JLabel lblDireccion = new JLabel("Direccion:");
 		lblDireccion.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblDireccion.setBounds(10, 111, 119, 15);
+		lblDireccion.setBounds(10, 151, 119, 15);
 		contentPane.add(lblDireccion);
 
 		JLabel lblOcupacion = new JLabel("Ocupacion:");
 		lblOcupacion.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblOcupacion.setBounds(10, 131, 119, 15);
+		lblOcupacion.setBounds(10, 179, 119, 15);
 		contentPane.add(lblOcupacion);
 
 		JLabel lblTelefono = new JLabel("Telefono:");
 		lblTelefono.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblTelefono.setBounds(10, 151, 119, 15);
+		lblTelefono.setBounds(10, 207, 119, 15);
 		contentPane.add(lblTelefono);
 
 		JLabel lblEmail = new JLabel("Email:");
 		lblEmail.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblEmail.setBounds(10, 171, 119, 15);
+		lblEmail.setBounds(10, 235, 119, 15);
 		contentPane.add(lblEmail);
 
 		JLabel lblTipoDePago = new JLabel("Tipo de pago:");
 		lblTipoDePago.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblTipoDePago.setBounds(10, 191, 119, 15);
+		lblTipoDePago.setBounds(10, 263, 119, 15);
 		contentPane.add(lblTipoDePago);
 
 		cmdId = new JComboBox();
 		cmdId.setModel(id);
-		cmdId.setBounds(135, 11, 150, 17);
+		cmdId.setBounds(135, 11, 195, 17);
 		contentPane.add(cmdId);
 		cmdId.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -169,51 +179,137 @@ public class ModificarCliente extends JFrame {
 
 		txtNombre = new JTextField();
 		txtNombre.setEnabled(false);
-		txtNombre.setBounds(135, 31, 150, 17);
+		txtNombre.setBounds(135, 39, 195, 17);
 		contentPane.add(txtNombre);
 		txtNombre.setColumns(10);
+		txtNombre.addCaretListener(new CaretListener() {
+
+			public void caretUpdate(CaretEvent arg0) {
+				if (testearCamposDeTexto()) {
+					btnModificar.setEnabled(true);
+				} else {
+					btnModificar.setEnabled(false);
+				}
+
+			}
+		});
 
 		txtApellido = new JTextField();
 		txtApellido.setEnabled(false);
 		txtApellido.setColumns(10);
-		txtApellido.setBounds(135, 51, 150, 17);
+		txtApellido.setBounds(135, 67, 195, 17);
 		contentPane.add(txtApellido);
+		txtApellido.addCaretListener(new CaretListener() {
+
+			public void caretUpdate(CaretEvent arg0) {
+				if (testearCamposDeTexto()) {
+					btnModificar.setEnabled(true);
+				} else {
+					btnModificar.setEnabled(false);
+				}
+
+			}
+		});
 		
-				cmbTipoDoc = new JComboBox();
-				cmbTipoDoc.setEnabled(false);
-				cmbTipoDoc.setModel(tipodoc);
-				cmbTipoDoc.setBounds(135, 71, 150, 17);
-				contentPane.add(cmbTipoDoc);
+		cmbTipoDoc = new JComboBox();
+		cmbTipoDoc.setEnabled(false);
+		cmbTipoDoc.setModel(tipodoc);
+		cmbTipoDoc.setBounds(135, 95, 195, 17);
+		contentPane.add(cmbTipoDoc);
 
 		txtNumDoc = new JTextField();
 		txtNumDoc.setEnabled(false);
 		txtNumDoc.setColumns(10);
-		txtNumDoc.setBounds(135, 91, 150, 17);
+		txtNumDoc.setBounds(135, 123, 195, 17);
 		contentPane.add(txtNumDoc);
+		txtNumDoc.addCaretListener(new CaretListener() {
+
+			public void caretUpdate(CaretEvent arg0) {
+
+				if (Auxiliar.isValidDNI(txtNumDoc.getText())) {
+
+					txtNumDoc.setForeground(Color.black);
+					estadoDeLosBotones();
+
+				}
+
+				else {
+
+					txtNumDoc.setForeground(Color.red);
+					btnModificar.setEnabled(false);
+
+				}
+			}
+		});
 
 		txtDireccion = new JTextField();
 		txtDireccion.setEnabled(false);
 		txtDireccion.setColumns(10);
-		txtDireccion.setBounds(135, 111, 150, 17);
+		txtDireccion.setBounds(135, 151, 195, 17);
 		contentPane.add(txtDireccion);
+		txtDireccion.addCaretListener(new CaretListener() {
+
+			public void caretUpdate(CaretEvent arg0) {
+
+				testearCamposDeTexto();
+
+			}
+		});
 
 		txtOcupacion = new JTextField();
 		txtOcupacion.setEnabled(false);
 		txtOcupacion.setColumns(10);
-		txtOcupacion.setBounds(135, 131, 150, 17);
+		txtOcupacion.setBounds(135, 179, 195, 17);
 		contentPane.add(txtOcupacion);
+		txtOcupacion.addCaretListener(new CaretListener() {
+
+			public void caretUpdate(CaretEvent arg0) {
+
+				testearCamposDeTexto();
+
+			}
+		});
 
 		txtTelefono = new JTextField();
 		txtTelefono.setEnabled(false);
 		txtTelefono.setColumns(10);
-		txtTelefono.setBounds(135, 151, 150, 17);
+		txtTelefono.setBounds(135, 207, 195, 17);
 		contentPane.add(txtTelefono);
+		txtTelefono.addCaretListener(new CaretListener() {
+
+			public void caretUpdate(CaretEvent arg0) {
+
+				if (Auxiliar.isValidTelephone(txtTelefono.getText())) {
+					txtTelefono.setForeground(Color.black);
+					estadoDeLosBotones();
+				} else {
+
+					txtTelefono.setForeground(Color.red);
+					btnModificar.setEnabled(false);
+				}
+
+			}
+		});
 
 		txtEmail = new JTextField();
 		txtEmail.setEnabled(false);
 		txtEmail.setColumns(10);
-		txtEmail.setBounds(135, 171, 150, 17);
+		txtEmail.setBounds(135, 235, 195, 17);
 		contentPane.add(txtEmail);
+		txtEmail.addCaretListener(new CaretListener() {
+
+			public void caretUpdate(CaretEvent arg0) {
+
+				if (Auxiliar.isValidEmail(txtEmail.getText())) {
+					txtEmail.setForeground(Color.black);
+					estadoDeLosBotones();
+				} else {
+					txtEmail.setForeground(Color.red);
+					btnModificar.setEnabled(false);
+				}
+
+			}
+		});
 
 		btnModificar = new JButton("Modificar");
 		btnModificar.setEnabled(false);
@@ -260,10 +356,16 @@ public class ModificarCliente extends JFrame {
 		tipopago.addElement("Tarjeta de debito");
 		cmbTipoPago.setModel(tipopago);
 		cmbTipoPago.setEnabled(false);
-		cmbTipoPago.setBounds(135, 190, 150, 17);
+		cmbTipoPago.setBounds(135, 262, 195, 17);
 		contentPane.add(cmbTipoPago);
-		btnModificar.setBounds(196, 245, 89, 23);
+		btnModificar.setBounds(241, 290, 89, 23);
 		contentPane.add(btnModificar);
+		
+		lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(ModificarCliente.class.getResource("/Images/image_marca_agua.png")));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(0, 0, 367, 322);
+		contentPane.add(lblNewLabel);
 
 	}
 
@@ -285,5 +387,28 @@ public class ModificarCliente extends JFrame {
 		tipodoc.addElement("DNI");
 		tipodoc.addElement("CI");
 		tipodoc.addElement("LC");
+	}
+	
+	private boolean testearCamposDeTexto() {
+
+		return (txtNombre.getText().length() > 0)
+				&& (txtApellido.getText().length() > 0)
+				&& (txtNumDoc.getText().length() > 0)
+				&& (txtDireccion.getText().length() > 0)
+				&& (txtOcupacion.getText().length() > 0)
+				&& (txtTelefono.getText().length() > 0)
+				&& (txtEmail.getText().length() > 0)
+				&& Auxiliar.isInteger(txtNumDoc.getText())
+				&& Auxiliar.isValidTelephone(txtTelefono.getText())
+				&& Auxiliar.isValidEmail(txtEmail.getText());
+	}
+
+	private void estadoDeLosBotones() {
+
+		if (testearCamposDeTexto()) {
+			btnModificar.setEnabled(true);
+		} else {
+			btnModificar.setEnabled(false);
+		}
 	}
 }

@@ -16,6 +16,8 @@ import javax.swing.JTextField;
 import Clases.Cliente;
 import Conexion.Conexion;
 import Main.Main;
+import java.awt.Toolkit;
+import java.awt.Color;
 
 public class winInformeClienteMasAtendido extends JFrame {
 
@@ -25,6 +27,7 @@ public class winInformeClienteMasAtendido extends JFrame {
 	private JTextField txtNombre;
 
 	public winInformeClienteMasAtendido() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(winInformeClienteMasAtendido.class.getResource("/Images/logo.jpg")));
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosed(WindowEvent arg0) {
@@ -34,17 +37,18 @@ public class winInformeClienteMasAtendido extends JFrame {
 			}
 		});
 		setResizable(false);
-		setTitle("Veterinaria CAC - Informe - Cliente Frecuente");
+		setTitle("Veterinaria Godzilla - Informe - Cliente Frecuente");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 384, 103);
+		setBounds(100, 100, 395, 103);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		lblNombre = new JLabel("Cliente mas atendido");
 		lblNombre.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNombre.setBounds(10, 11, 357, 14);
+		lblNombre.setBounds(10, 11, 369, 14);
 		contentPane.add(lblNombre);
 
 		txtNombre = new JTextField();
@@ -56,7 +60,7 @@ public class winInformeClienteMasAtendido extends JFrame {
 		}else{
 			JOptionPane.showMessageDialog(null, "Error en la conexion de base de datos","Error",JOptionPane.ERROR_MESSAGE);
 		}
-		txtNombre.setBounds(10, 36, 357, 20);
+		txtNombre.setBounds(10, 36, 369, 20);
 		contentPane.add(txtNombre);
 	}
 }

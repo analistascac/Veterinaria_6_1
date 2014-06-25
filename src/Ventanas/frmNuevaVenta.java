@@ -31,6 +31,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.awt.Toolkit;
+import javax.swing.ImageIcon;
 
 public class frmNuevaVenta extends JFrame {
 
@@ -49,13 +51,14 @@ public class frmNuevaVenta extends JFrame {
 	private DefaultListModel<String> carrito = new DefaultListModel();
 	private JButton btnAgregar;
 	private JButton btnQuitar;
-	
+
 	private ArrayList<Venta> estoSeVende = new ArrayList();
 	private JComboBox<String> cmbTipoFactura;
 	
 	ArrayList<Producto> prod = new ArrayList();
 	
 	public frmNuevaVenta() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(frmNuevaVenta.class.getResource("/Images/logo.jpg")));
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosed(WindowEvent arg0) {
@@ -75,12 +78,12 @@ public class frmNuevaVenta extends JFrame {
 		contentPane.setLayout(null);
 
 		JLabel lblCliente = new JLabel("Cliente:");
-		lblCliente.setHorizontalAlignment(SwingConstants.LEFT);
+		lblCliente.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblCliente.setBounds(94, 14, 60, 14);
 		contentPane.add(lblCliente);
 
 		JLabel lblVendedor = new JLabel("Vendedor:");
-		lblVendedor.setHorizontalAlignment(SwingConstants.LEFT);
+		lblVendedor.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblVendedor.setBounds(94, 47, 60, 14);
 		contentPane.add(lblVendedor);
 
@@ -95,8 +98,8 @@ public class frmNuevaVenta extends JFrame {
 		contentPane.add(lblArticulosVendidos);
 
 		JLabel lblEstadoOperacion = new JLabel("Estado operacion:");
-		lblEstadoOperacion.setHorizontalAlignment(SwingConstants.LEFT);
-		lblEstadoOperacion.setBounds(94, 81, 119, 14);
+		lblEstadoOperacion.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblEstadoOperacion.setBounds(39, 75, 119, 14);
 		contentPane.add(lblEstadoOperacion);
 
 		JLabel lblCantidad = new JLabel("Cantidad");
@@ -158,7 +161,7 @@ public class frmNuevaVenta extends JFrame {
 		cmbEstadoOperacion.setModel(estados);
 		estados.addElement("Abonado");
 		estados.addElement("Pendiente de pago");
-		cmbEstadoOperacion.setBounds(190, 78, 171, 20);
+		cmbEstadoOperacion.setBounds(164, 72, 197, 20);
 		contentPane.add(cmbEstadoOperacion);
 
 		JButton btnAceptar = new JButton("Aceptar");
@@ -167,7 +170,6 @@ public class frmNuevaVenta extends JFrame {
 				int x = JOptionPane.showConfirmDialog(null, "¿Confirma dar de alta la nueva venta?","Confirmación",JOptionPane.YES_NO_OPTION);
 				if(x == JOptionPane.YES_OPTION){
 					Conexion cn = new Conexion();
-					
 					if(cn.conectarDB()){
 						try {
 							cn.altaVenta(estoSeVende);
@@ -296,12 +298,12 @@ public class frmNuevaVenta extends JFrame {
 		
 		cmbTipoFactura = new JComboBox<String>();
 		cmbTipoFactura.setModel(new DefaultComboBoxModel(new String[] {"A", "B", "C"}));
-		cmbTipoFactura.setBounds(200, 106, 171, 20);
+		cmbTipoFactura.setBounds(164, 104, 197, 20);
 		contentPane.add(cmbTipoFactura);
 		
 		JLabel lblTipoFactura = new JLabel("Tipo factura:");
-		lblTipoFactura.setHorizontalAlignment(SwingConstants.LEFT);
-		lblTipoFactura.setBounds(94, 107, 119, 14);
+		lblTipoFactura.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblTipoFactura.setBounds(39, 107, 119, 14);
 		contentPane.add(lblTipoFactura);
 
 		llenarCombos();

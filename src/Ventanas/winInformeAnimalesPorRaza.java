@@ -30,15 +30,20 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.swing.JList;
+import java.awt.Toolkit;
+import javax.swing.ImageIcon;
 
 public class winInformeAnimalesPorRaza extends JFrame {
 
 	private JPanel contentPane;
 	private JList lstAnimalesPorRaza;
 	private DefaultListModel animales = new DefaultListModel();
+	private JLabel lblNewLabel;
 
 
 	public winInformeAnimalesPorRaza() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(winInformeAnimalesPorRaza.class.getResource("/Images/logo.jpg")));
+		setResizable(false);
 		addWindowListener(new WindowAdapter() {
 			@Override
 			 public void windowClosed(WindowEvent arg0) {
@@ -48,10 +53,11 @@ public class winInformeAnimalesPorRaza extends JFrame {
 			   }
 		});
 		
-		setTitle("Veterinaria CAC - Informe - Animales por Raza");
+		setTitle("Veterinaria Godzilla - Informe - Animales por Raza");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -68,6 +74,11 @@ public class winInformeAnimalesPorRaza extends JFrame {
 		lstAnimalesPorRaza = new JList();
 		lstAnimalesPorRaza.setModel(animales);
 		scrollPane.setViewportView(lstAnimalesPorRaza);
+		
+		lblNewLabel = new JLabel("");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(0, 0, 444, 272);
+		contentPane.add(lblNewLabel);
 		
 		
 		Conexion cn = new Conexion();

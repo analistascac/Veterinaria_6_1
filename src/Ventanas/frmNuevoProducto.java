@@ -31,6 +31,8 @@ import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.Toolkit;
+import javax.swing.ImageIcon;
 
 public class frmNuevoProducto extends JFrame {
 
@@ -47,10 +49,13 @@ public class frmNuevoProducto extends JFrame {
 	private JComboBox cmbProveedores;
 	private DefaultComboBoxModel proveedores = new DefaultComboBoxModel();
 	private JCheckBox cbxEsMascota;
+	private JLabel lblNewLabel;
 
 	
 
 	public frmNuevoProducto() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(frmNuevoProducto.class.getResource("/Images/logo.jpg")));
+		setResizable(false);
 		
 		
 
@@ -65,7 +70,7 @@ public class frmNuevoProducto extends JFrame {
 		});
 		setTitle("Veterinaria Godzilla - Alta - Producto");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 412, 297);
+		setBounds(100, 100, 412, 332);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -120,7 +125,7 @@ public class frmNuevoProducto extends JFrame {
 				}
 			}
 		});
-		btnAceptar.setBounds(298, 227, 89, 23);
+		btnAceptar.setBounds(181, 257, 89, 23);
 		contentPane.add(btnAceptar);
 		
 		cbxEsMascota = new JCheckBox("Es mascota?");
@@ -141,40 +146,40 @@ public class frmNuevoProducto extends JFrame {
 				}
 			}
 		});
-		cbxEsMascota.setBounds(141, -2, 114, 21);
+		cbxEsMascota.setBounds(123, 13, 114, 21);
 		contentPane.add(cbxEsMascota);
 		
 		txtNombre = new JTextField();
 		txtNombre.setColumns(10);
-		txtNombre.setBounds(141, 26, 246, 21);
+		txtNombre.setBounds(123, 41, 246, 21);
 		contentPane.add(txtNombre);
 		
 		txtMedida = new JTextField();
 		txtMedida.setColumns(10);
-		txtMedida.setBounds(141, 67, 246, 23);
+		txtMedida.setBounds(123, 82, 246, 23);
 		contentPane.add(txtMedida);
 		
 		txtDescirpcion = new JTextField();
 		txtDescirpcion.setColumns(10);
-		txtDescirpcion.setBounds(141, 101, 246, 23);
+		txtDescirpcion.setBounds(123, 116, 246, 23);
 		contentPane.add(txtDescirpcion);
 		
 		cmbProveedores = new JComboBox();
 		cmbProveedores.setModel(proveedores);
 		cargarProveedores();
-		cmbProveedores.setBounds(141, 136, 246, 21);
+		cmbProveedores.setBounds(123, 151, 246, 21);
 		contentPane.add(cmbProveedores);
 		
 		txtNombreCientifico = new JTextField();
 		txtNombreCientifico.setEnabled(false);
 		txtNombreCientifico.setColumns(10);
-		txtNombreCientifico.setBounds(141, 168, 246, 21);
+		txtNombreCientifico.setBounds(123, 183, 246, 21);
 		contentPane.add(txtNombreCientifico);
 		
 		txtNombreVulgar = new JTextField();
 		txtNombreVulgar.setEnabled(false);
 		txtNombreVulgar.setColumns(10);
-		txtNombreVulgar.setBounds(141, 195, 246, 21);
+		txtNombreVulgar.setBounds(123, 215, 246, 21);
 		contentPane.add(txtNombreVulgar);
 		
 		
@@ -184,37 +189,37 @@ public class frmNuevoProducto extends JFrame {
 				dispose();
 			}
 		});
-		btnCancelar.setBounds(199, 227, 89, 23);
+		btnCancelar.setBounds(280, 257, 89, 23);
 		contentPane.add(btnCancelar);
 		
 		lblDescripcion = new JLabel("Descripcion:");
 		lblDescripcion.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblDescripcion.setBounds(55, 103, 72, 21);
+		lblDescripcion.setBounds(41, 118, 72, 21);
 		contentPane.add(lblDescripcion);
 		
 		JLabel lblProveedor = new JLabel("Proveedor:");
 		lblProveedor.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblProveedor.setBounds(24, 135, 107, 21);
+		lblProveedor.setBounds(10, 150, 107, 21);
 		contentPane.add(lblProveedor);
 		
 		lblNombre = new JLabel("Nombre");
 		lblNombre.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNombre.setBounds(24, 26, 107, 21);
+		lblNombre.setBounds(10, 41, 107, 21);
 		contentPane.add(lblNombre);
 		
 		JLabel lblNombreCientifico = new JLabel("Nombre cientifico:");
 		lblNombreCientifico.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNombreCientifico.setBounds(24, 168, 107, 21);
+		lblNombreCientifico.setBounds(10, 183, 107, 21);
 		contentPane.add(lblNombreCientifico);
 		
 		JLabel lblNombreVulgar = new JLabel("Nombre vulgar:");
 		lblNombreVulgar.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNombreVulgar.setBounds(24, 195, 107, 21);
+		lblNombreVulgar.setBounds(10, 215, 107, 21);
 		contentPane.add(lblNombreVulgar);
 		
 		JLabel lblMedida = new JLabel("Medida:");
 		lblMedida.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblMedida.setBounds(55, 69, 72, 21);
+		lblMedida.setBounds(41, 84, 72, 21);
 		contentPane.add(lblMedida);
 		
 		

@@ -24,8 +24,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
-
-import jdk.nashorn.internal.scripts.JO;
+import javax.swing.ImageIcon;
+import java.awt.Color;
+import java.awt.Toolkit;
 
 public class ModificarMascota extends JFrame {
 
@@ -38,8 +39,11 @@ public class ModificarMascota extends JFrame {
 	private DefaultComboBoxModel duenos = new DefaultComboBoxModel();
 	private JComboBox cmbId;
 	private DefaultComboBoxModel ides = new DefaultComboBoxModel();
+	private JLabel lblNewLabel;
 
 	public ModificarMascota() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(ModificarMascota.class.getResource("/Images/logo.jpg")));
+		setResizable(false);
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosed(WindowEvent arg0) {
@@ -48,10 +52,11 @@ public class ModificarMascota extends JFrame {
 				dispose();
 			}
 		});
-		setTitle("Modificar mascota - Veterinaria CAC");
+		setTitle("Veterinaria Godzilla - Modificacion - Mascota");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 330, 208);
+		setBounds(100, 100, 388, 207);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -94,7 +99,7 @@ public class ModificarMascota extends JFrame {
 
 			}
 		});
-		cmbId.setBounds(142, 36, 162, 17);
+		cmbId.setBounds(142, 36, 183, 17);
 		contentPane.add(cmbId);
 
 		JLabel lblDueno = new JLabel("Due\u00F1o:");
@@ -120,7 +125,7 @@ public class ModificarMascota extends JFrame {
 		});
 		llenarClientes();
 		cmbDueno.setModel(duenos);
-		cmbDueno.setBounds(142, 11, 162, 17);
+		cmbDueno.setBounds(142, 11, 183, 17);
 		contentPane.add(cmbDueno);
 		
 				JLabel lblNombreCientifico = new JLabel("Nombre cientifico:");
@@ -130,7 +135,7 @@ public class ModificarMascota extends JFrame {
 
 		txtNombreCientifico = new JTextField();
 		txtNombreCientifico.setEnabled(false);
-		txtNombreCientifico.setBounds(142, 58, 162, 17);
+		txtNombreCientifico.setBounds(142, 58, 183, 17);
 		contentPane.add(txtNombreCientifico);
 		txtNombreCientifico.setColumns(10);
 		
@@ -142,7 +147,7 @@ public class ModificarMascota extends JFrame {
 		txtNombreVulgar = new JTextField();
 		txtNombreVulgar.setEnabled(false);
 		txtNombreVulgar.setColumns(10);
-		txtNombreVulgar.setBounds(142, 83, 162, 17);
+		txtNombreVulgar.setBounds(142, 83, 183, 17);
 		contentPane.add(txtNombreVulgar);
 		
 				JLabel lblDescripcion = new JLabel("Descripcion:");
@@ -153,7 +158,7 @@ public class ModificarMascota extends JFrame {
 		txtDescripcion = new JTextField();
 		txtDescripcion.setEnabled(false);
 		txtDescripcion.setColumns(10);
-		txtDescripcion.setBounds(142, 108, 162, 17);
+		txtDescripcion.setBounds(142, 108, 183, 17);
 		contentPane.add(txtDescripcion);
 
 		btnModificar = new JButton("Modificar");
@@ -192,8 +197,14 @@ public class ModificarMascota extends JFrame {
 			}
 		});
 		btnModificar.setEnabled(false);
-		btnModificar.setBounds(215, 136, 89, 23);
+		btnModificar.setBounds(227, 136, 98, 23);
 		contentPane.add(btnModificar);
+		
+		lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(ModificarMascota.class.getResource("/Images/image_marca_agua_small.png")));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(0, 0, 372, 169);
+		contentPane.add(lblNewLabel);
 	}
 
 	private void llenarClientes() {

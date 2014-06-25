@@ -16,6 +16,7 @@ import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.Toolkit;
 
 public class frmNuevoProveedor extends JFrame {
 
@@ -34,8 +35,11 @@ public class frmNuevoProveedor extends JFrame {
 	private JLabel lblNombre;
 	private JTextField txtRazonSocial;
 	private JTextField txtEmail;
+	private JLabel lblNewLabel;
 
 	public frmNuevoProveedor() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(frmNuevoProveedor.class.getResource("/Images/logo.jpg")));
+		setResizable(false);
 		addWindowListener(new WindowAdapter() {
 			public void windowClosed(WindowEvent arg0) {
 				Main v = new Main();
@@ -53,67 +57,68 @@ public class frmNuevoProveedor extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		lblDireccion = new JLabel("Direccion");
+		lblDireccion = new JLabel("Direccion:");
+		lblDireccion.setBounds(35, 95, 72, 21);
 		lblDireccion.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblDireccion.setBounds(55, 78, 72, 21);
 		contentPane.add(lblDireccion);
 
-		lblTelefono = new JLabel("Telefono");
+		lblTelefono = new JLabel("Telefono:");
+		lblTelefono.setBounds(0, 127, 107, 21);
 		lblTelefono.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblTelefono.setBounds(20, 110, 107, 21);
 		contentPane.add(lblTelefono);
 
-		lblFax = new JLabel("Fax");
+		lblFax = new JLabel("Fax:");
+		lblFax.setBounds(0, 160, 107, 21);
 		lblFax.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblFax.setBounds(20, 143, 107, 21);
 		contentPane.add(lblFax);
 
-		lblCUIT = new JLabel("CUIT");
+		lblCUIT = new JLabel("CUIT:");
+		lblCUIT.setBounds(0, 61, 107, 21);
 		lblCUIT.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblCUIT.setBounds(20, 44, 107, 21);
 		contentPane.add(lblCUIT);
 
-		lblNombre = new JLabel("Razon social");
+		lblNombre = new JLabel("Razon social:");
+		lblNombre.setBounds(0, 29, 107, 21);
 		lblNombre.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNombre.setBounds(20, 12, 107, 21);
 		contentPane.add(lblNombre);
 
-		JLabel lblEmail = new JLabel("Email");
+		JLabel lblEmail = new JLabel("Email:");
+		lblEmail.setBounds(0, 192, 107, 21);
 		lblEmail.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblEmail.setBounds(20, 175, 107, 21);
 		contentPane.add(lblEmail);
 
 		txtRazonSocial = new JTextField();
+		txtRazonSocial.setBounds(117, 27, 246, 23);
 		txtRazonSocial.setColumns(10);
-		txtRazonSocial.setBounds(141, 11, 246, 23);
 		contentPane.add(txtRazonSocial);
 
 		txtCUIT = new JTextField();
+		txtCUIT.setBounds(117, 60, 246, 23);
 		txtCUIT.setColumns(10);
-		txtCUIT.setBounds(141, 44, 246, 23);
 		contentPane.add(txtCUIT);
 
 		txtDireccion = new JTextField();
+		txtDireccion.setBounds(117, 93, 246, 23);
 		txtDireccion.setColumns(10);
-		txtDireccion.setBounds(141, 77, 246, 23);
 		contentPane.add(txtDireccion);
 
 		txtTelefono = new JTextField();
+		txtTelefono.setBounds(117, 125, 246, 23);
 		txtTelefono.setColumns(10);
-		txtTelefono.setBounds(141, 109, 246, 23);
 		contentPane.add(txtTelefono);
 
 		txtFax = new JTextField();
+		txtFax.setBounds(117, 158, 246, 23);
 		txtFax.setColumns(10);
-		txtFax.setBounds(141, 142, 246, 23);
 		contentPane.add(txtFax);
 
 		txtEmail = new JTextField();
+		txtEmail.setBounds(117, 190, 246, 23);
 		txtEmail.setColumns(10);
-		txtEmail.setBounds(141, 174, 246, 23);
 		contentPane.add(txtEmail);
 
 		btnAceptar = new JButton("Aceptar");
+		btnAceptar.setBounds(176, 233, 89, 23);
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int x = JOptionPane.showConfirmDialog(null, "¿Confirma dar de alta el nuevo proveedor?", "Confirmación",JOptionPane.YES_NO_OPTION);
@@ -161,19 +166,24 @@ public class frmNuevoProveedor extends JFrame {
 				}
 			}
 		});
-		btnAceptar.setBounds(267, 233, 89, 23);
 		btnAceptar.setEnabled(false);
 		contentPane.add(btnAceptar);
 
 		btnCancelar = new JButton("Cancelar");
+		btnCancelar.setBounds(275, 233, 89, 23);
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
 				dispose();
 			}
 		});
-		btnCancelar.setBounds(153, 233, 89, 23);
 		contentPane.add(btnCancelar);
+		
+		lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(frmNuevoProveedor.class.getResource("/Images/image_marca_agua.png")));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(0, 0, 413, 277);
+		contentPane.add(lblNewLabel);
 
 		txtCUIT.addCaretListener(new CaretListener() {
 			public void caretUpdate(CaretEvent arg0) {

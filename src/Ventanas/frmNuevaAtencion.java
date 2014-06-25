@@ -19,6 +19,7 @@ import Main.TFecha;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.Toolkit;
 
 public class frmNuevaAtencion extends JFrame {
 
@@ -39,8 +40,10 @@ public class frmNuevaAtencion extends JFrame {
 			
 
 	private JTextArea txtDiagnostico;
+	private JLabel lblNewLabel;
 
 	public frmNuevaAtencion() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(frmNuevaAtencion.class.getResource("/Images/logo.jpg")));
 		addWindowListener(new WindowAdapter() {
 			public void windowClosed(WindowEvent arg0) {
 				Main v = new Main();
@@ -52,36 +55,36 @@ public class frmNuevaAtencion extends JFrame {
 		setResizable(false);
 		setTitle("Veterinaria Godzilla - Alta - Atenci\u00F3n");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 422, 263);
+		setBounds(100, 100, 422, 292);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JLabel lblCliente = new JLabel("Cliente");
+		JLabel lblCliente = new JLabel("Cliente:");
 		lblCliente.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblCliente.setBounds(80, 11, 53, 21);
+		lblCliente.setBounds(66, 29, 53, 21);
 		contentPane.add(lblCliente);
 
-		JLabel lblVeterinario = new JLabel("Veterinario");
+		JLabel lblVeterinario = new JLabel("Veterinario:");
 		lblVeterinario.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblVeterinario.setBounds(35, 43, 96, 21);
+		lblVeterinario.setBounds(21, 61, 96, 21);
 		contentPane.add(lblVeterinario);
 
-		lblTipoConsulta = new JLabel("Tipo de consulta");
+		lblTipoConsulta = new JLabel("Tipo de consulta:");
 		lblTipoConsulta.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblTipoConsulta.setBounds(10, 75, 120, 21);
+		lblTipoConsulta.setBounds(-4, 93, 120, 21);
 		contentPane.add(lblTipoConsulta);
 
-		JLabel lblMascota = new JLabel("Mascota");
+		JLabel lblMascota = new JLabel("Mascota:");
 		lblMascota.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblMascota.setBounds(13, 102, 120, 21);
+		lblMascota.setBounds(-1, 120, 120, 21);
 		contentPane.add(lblMascota);
 
-		lblDiagnostico = new JLabel("Diagnostico");
+		lblDiagnostico = new JLabel("Diagnostico:");
 		lblDiagnostico.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblDiagnostico.setBounds(-8, 134, 141, 24);
+		lblDiagnostico.setBounds(-22, 152, 141, 24);
 		contentPane.add(lblDiagnostico);
 
 		cmbCliente = new JComboBox();
@@ -108,12 +111,12 @@ public class frmNuevaAtencion extends JFrame {
 			}
 		});
 		cmbCliente.setModel(clientes);
-		cmbCliente.setBounds(150, 11, 247, 21);
+		cmbCliente.setBounds(136, 29, 247, 21);
 		contentPane.add(cmbCliente);
 
 		cmbVeterinario = new JComboBox();
 		cmbVeterinario.setModel(veterinarios);
-		cmbVeterinario.setBounds(150, 43, 247, 21);
+		cmbVeterinario.setBounds(136, 61, 247, 21);
 		contentPane.add(cmbVeterinario);
 
 		cmbTipoConsulta = new JComboBox<String>();
@@ -121,12 +124,12 @@ public class frmNuevaAtencion extends JFrame {
 				.setModel(new DefaultComboBoxModel<String>(new String[] {
 						"Consulta General", "Operacion",
 						"Aplicacion de medicamentos" }));
-		cmbTipoConsulta.setBounds(151, 75, 246, 21);
+		cmbTipoConsulta.setBounds(137, 93, 246, 21);
 		contentPane.add(cmbTipoConsulta);
 
 		cmbMascota = new JComboBox();
 		cmbMascota.setModel(mascotas);
-		cmbMascota.setBounds(151, 104, 246, 21);
+		cmbMascota.setBounds(137, 122, 246, 21);
 		contentPane.add(cmbMascota);
 
 		txtDiagnostico = new JTextArea();
@@ -142,7 +145,7 @@ public class frmNuevaAtencion extends JFrame {
 			}
 		});
 		txtDiagnostico.setLineWrap(true);
-		txtDiagnostico.setBounds(151, 134, 246, 53);
+		txtDiagnostico.setBounds(137, 152, 246, 53);
 		contentPane.add(txtDiagnostico);
 
 		btnAceptar = new JButton("Aceptar");
@@ -180,7 +183,7 @@ public class frmNuevaAtencion extends JFrame {
 				}
 			}
 		});
-		btnAceptar.setBounds(308, 198, 89, 23);
+		btnAceptar.setBounds(195, 216, 89, 23);
 		contentPane.add(btnAceptar);
 
 		btnCancelar = new JButton("Cancelar");
@@ -190,8 +193,14 @@ public class frmNuevaAtencion extends JFrame {
 				dispose();
 			}
 		});
-		btnCancelar.setBounds(209, 198, 89, 23);
+		btnCancelar.setBounds(294, 216, 89, 23);
 		contentPane.add(btnCancelar);
+		
+		lblNewLabel = new JLabel("");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setIcon(new ImageIcon(frmNuevaAtencion.class.getResource("/Images/image_marca_agua.png")));
+		lblNewLabel.setBounds(0, 0, 416, 264);
+		contentPane.add(lblNewLabel);
 
 		llenarCombos();
 

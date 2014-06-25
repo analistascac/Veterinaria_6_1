@@ -24,6 +24,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.awt.Toolkit;
+import javax.swing.ImageIcon;
+import java.awt.Color;
 
 public class ModificarProveedor extends JFrame {
 	private JPanel panelPrincipal;
@@ -36,8 +39,11 @@ public class ModificarProveedor extends JFrame {
 	private JButton btnModificar;
 	private JComboBox cmbId;
 	private DefaultComboBoxModel<String> id = new DefaultComboBoxModel();
+	private JLabel lblNewLabel_1;
 
 	public ModificarProveedor() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(ModificarProveedor.class.getResource("/Images/logo.jpg")));
+		setResizable(false);
 		addWindowListener(new WindowAdapter() {
 			public void windowClosed(WindowEvent arg0) {
 				Main v = new Main();
@@ -46,46 +52,47 @@ public class ModificarProveedor extends JFrame {
 			}
 		});
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setTitle("Modificar proveedor - Veterinaria CAC");
-		setBounds(100, 100, 315, 260);
+		setTitle("Veterinaria Godzilla - Modificacion - Proveedor");
+		setBounds(100, 100, 388, 260);
 		panelPrincipal = new JPanel();
+		panelPrincipal.setBackground(Color.WHITE);
 		panelPrincipal.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(panelPrincipal);
 		panelPrincipal.setLayout(null);
 
 		JLabel lblNewLabel = new JLabel("Identificador:");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel.setBounds(10, 11, 115, 14);
+		lblNewLabel.setBounds(38, 14, 83, 14);
 		panelPrincipal.add(lblNewLabel);
 
 		JLabel lblRazonSocial = new JLabel("Razon social:");
 		lblRazonSocial.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblRazonSocial.setBounds(10, 36, 115, 14);
+		lblRazonSocial.setBounds(38, 39, 83, 14);
 		panelPrincipal.add(lblRazonSocial);
 
 		JLabel lblCuit = new JLabel("Cuit:");
 		lblCuit.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblCuit.setBounds(10, 61, 115, 14);
+		lblCuit.setBounds(38, 64, 83, 14);
 		panelPrincipal.add(lblCuit);
 
 		JLabel lblDireccion = new JLabel("Direccion:");
 		lblDireccion.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblDireccion.setBounds(10, 86, 115, 14);
+		lblDireccion.setBounds(38, 89, 83, 14);
 		panelPrincipal.add(lblDireccion);
 
 		JLabel lblTelefono = new JLabel("Telefono:");
 		lblTelefono.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblTelefono.setBounds(10, 111, 115, 14);
+		lblTelefono.setBounds(38, 114, 83, 14);
 		panelPrincipal.add(lblTelefono);
 
 		JLabel lblFax = new JLabel("Fax:");
 		lblFax.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblFax.setBounds(10, 136, 115, 14);
+		lblFax.setBounds(38, 139, 83, 14);
 		panelPrincipal.add(lblFax);
 
 		JLabel lblEmail = new JLabel("Email:");
 		lblEmail.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblEmail.setBounds(10, 161, 115, 14);
+		lblEmail.setBounds(38, 164, 83, 14);
 		panelPrincipal.add(lblEmail);
 
 		cargarId();
@@ -103,45 +110,45 @@ public class ModificarProveedor extends JFrame {
 				cargarDatos();
 			}
 		});
-		cmbId.setBounds(135, 8, 150, 17);
+		cmbId.setBounds(131, 11, 173, 17);
 		cmbId.setModel(id);
 		panelPrincipal.add(cmbId);
 
 		txtRazonSOcial = new JTextField();
 		txtRazonSOcial.setEnabled(false);
 		txtRazonSOcial.setText("");
-		txtRazonSOcial.setBounds(135, 33, 150, 20);
+		txtRazonSOcial.setBounds(131, 36, 173, 20);
 		panelPrincipal.add(txtRazonSOcial);
 		txtRazonSOcial.setColumns(10);
 
 		txtCuit = new JTextField();
 		txtCuit.setEnabled(false);
-		txtCuit.setBounds(135, 58, 150, 20);
+		txtCuit.setBounds(131, 61, 173, 20);
 		panelPrincipal.add(txtCuit);
 		txtCuit.setColumns(10);
 
 		txtDireccion = new JTextField();
 		txtDireccion.setEnabled(false);
 		txtDireccion.setColumns(10);
-		txtDireccion.setBounds(135, 83, 150, 20);
+		txtDireccion.setBounds(131, 86, 173, 20);
 		panelPrincipal.add(txtDireccion);
 
 		txtTelefono = new JTextField();
 		txtTelefono.setEnabled(false);
 		txtTelefono.setColumns(10);
-		txtTelefono.setBounds(135, 108, 150, 20);
+		txtTelefono.setBounds(131, 111, 173, 20);
 		panelPrincipal.add(txtTelefono);
 
 		txtFax = new JTextField();
 		txtFax.setEnabled(false);
 		txtFax.setColumns(10);
-		txtFax.setBounds(135, 133, 150, 20);
+		txtFax.setBounds(131, 136, 173, 20);
 		panelPrincipal.add(txtFax);
 
 		txtEmail = new JTextField();
 		txtEmail.setEnabled(false);
 		txtEmail.setColumns(10);
-		txtEmail.setBounds(135, 158, 150, 20);
+		txtEmail.setBounds(131, 161, 173, 20);
 		panelPrincipal.add(txtEmail);
 
 		btnModificar = new JButton("Modificar");
@@ -185,8 +192,14 @@ public class ModificarProveedor extends JFrame {
 			}
 		});
 		btnModificar.setEnabled(false);
-		btnModificar.setBounds(196, 189, 89, 23);
+		btnModificar.setBounds(215, 188, 89, 23);
 		panelPrincipal.add(btnModificar);
+		
+		lblNewLabel_1 = new JLabel("");
+		lblNewLabel_1.setIcon(new ImageIcon(ModificarProveedor.class.getResource("/Images/image_marca_agua_small.png")));
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1.setBounds(0, 0, 382, 232);
+		panelPrincipal.add(lblNewLabel_1);
 	}
 
 	private void cargarId() {

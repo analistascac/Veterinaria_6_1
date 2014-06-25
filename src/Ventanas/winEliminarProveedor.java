@@ -25,6 +25,8 @@ import Clases.Proveedor;
 import Conexion.Conexion;
 import Conexion.insertDBException;
 import Main.Main;
+import java.awt.Toolkit;
+import javax.swing.ImageIcon;
 
 public class winEliminarProveedor extends JFrame {
 
@@ -39,8 +41,10 @@ public class winEliminarProveedor extends JFrame {
 	private JButton btnEliminar;
 	private DefaultComboBoxModel proveedores = new DefaultComboBoxModel();
 	private JComboBox comboBoxProveedor = new JComboBox(); 
+	private JLabel lblNewLabel;
 	
 	public winEliminarProveedor() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(winEliminarProveedor.class.getResource("/Images/logo.jpg")));
 		setResizable(false);
 		addWindowListener(new WindowAdapter() {
 			@Override
@@ -52,97 +56,91 @@ public class winEliminarProveedor extends JFrame {
 		});
 		setTitle("Veterinaria Godzilla - Baja - Proveedor");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 412, 383);
+		setBounds(100, 100, 412, 331);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblBajaProveedor = new JLabel("Baja Proveedor");
-		lblBajaProveedor.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblBajaProveedor.setBounds(106, 11, 185, 14);
-		lblBajaProveedor.setHorizontalAlignment(SwingConstants.CENTER);
-		contentPane.add(lblBajaProveedor);
-		
 		JLabel labelProveedor = new JLabel("Proveedor:");
-		labelProveedor.setBounds(37, 55, 66, 14);
+		labelProveedor.setBounds(37, 14, 66, 14);
 		labelProveedor.setHorizontalAlignment(SwingConstants.RIGHT);
 		contentPane.add(labelProveedor);
 		
 		JLabel labelRazonSocial = new JLabel("Razon Social:");
-		labelRazonSocial.setBounds(-3, 82, 106, 21);
+		labelRazonSocial.setBounds(-3, 41, 106, 21);
 		labelRazonSocial.setHorizontalAlignment(SwingConstants.RIGHT);
 		contentPane.add(labelRazonSocial);
 		
 		JLabel labelCuit = new JLabel("Cuit:");
-		labelCuit.setBounds(-3, 114, 106, 21);
+		labelCuit.setBounds(-3, 73, 106, 21);
 		labelCuit.setHorizontalAlignment(SwingConstants.RIGHT);
 		contentPane.add(labelCuit);
 		
 		JLabel labelDireccion = new JLabel("Direccion:");
-		labelDireccion.setBounds(-3, 146, 106, 21);
+		labelDireccion.setBounds(-3, 105, 106, 21);
 		labelDireccion.setHorizontalAlignment(SwingConstants.RIGHT);
 		contentPane.add(labelDireccion);
 		
 		textFieldDireccion = new JTextField();
 		textFieldDireccion.setEditable(false);
-		textFieldDireccion.setBounds(116, 146, 246, 21);
+		textFieldDireccion.setBounds(116, 105, 246, 21);
 		textFieldDireccion.setColumns(10);
 		contentPane.add(textFieldDireccion);
 		
 		textFieldCuit = new JTextField();
 		textFieldCuit.setEditable(false);
-		textFieldCuit.setBounds(116, 114, 246, 21);
+		textFieldCuit.setBounds(116, 73, 246, 21);
 		textFieldCuit.setColumns(10);
 		contentPane.add(textFieldCuit);
 		
 		textFieldRazonSocial = new JTextField();
 		textFieldRazonSocial.setEditable(false);
-		textFieldRazonSocial.setBounds(116, 82, 246, 21);
+		textFieldRazonSocial.setBounds(116, 41, 246, 21);
 		textFieldRazonSocial.setColumns(10);
 		contentPane.add(textFieldRazonSocial);
 		
 		JLabel labelTelefono = new JLabel("Telefono:");
-		labelTelefono.setBounds(-28, 178, 131, 24);
+		labelTelefono.setBounds(-28, 137, 131, 24);
 		labelTelefono.setHorizontalAlignment(SwingConstants.RIGHT);
 		contentPane.add(labelTelefono);
 		
 		JLabel labelFax = new JLabel("Fax:");
-		labelFax.setBounds(7, 207, 96, 21);
+		labelFax.setBounds(7, 166, 96, 21);
 		labelFax.setHorizontalAlignment(SwingConstants.RIGHT);
 		contentPane.add(labelFax);
 		
 		JLabel labelEmail = new JLabel("Email:");
-		labelEmail.setBounds(-3, 241, 106, 21);
+		labelEmail.setBounds(-3, 200, 106, 21);
 		labelEmail.setHorizontalAlignment(SwingConstants.RIGHT);
 		contentPane.add(labelEmail);
 		
 		JLabel labelFechaUltCompra = new JLabel("Ultima Compra:");
-		labelFechaUltCompra.setBounds(7, 280, 96, 21);
+		labelFechaUltCompra.setBounds(7, 239, 96, 21);
 		labelFechaUltCompra.setHorizontalAlignment(SwingConstants.RIGHT);
 		contentPane.add(labelFechaUltCompra);
 		
 		textFieldUltimaCompra = new JTextField();
 		textFieldUltimaCompra.setEditable(false);
-		textFieldUltimaCompra.setBounds(116, 280, 246, 21);
+		textFieldUltimaCompra.setBounds(116, 239, 246, 21);
 		textFieldUltimaCompra.setColumns(10);
 		contentPane.add(textFieldUltimaCompra);
 		
 		textFieldEmail = new JTextField();
 		textFieldEmail.setEditable(false);
-		textFieldEmail.setBounds(116, 241, 246, 21);
+		textFieldEmail.setBounds(116, 200, 246, 21);
 		textFieldEmail.setColumns(10);
 		contentPane.add(textFieldEmail);
 		
 		textFieldFax = new JTextField();
 		textFieldFax.setEditable(false);
-		textFieldFax.setBounds(116, 207, 246, 21);
+		textFieldFax.setBounds(116, 166, 246, 21);
 		textFieldFax.setColumns(10);
 		contentPane.add(textFieldFax);
 		
 		textFieldTelefono = new JTextField();
 		textFieldTelefono.setEditable(false);
-		textFieldTelefono.setBounds(116, 175, 246, 21);
+		textFieldTelefono.setBounds(116, 134, 246, 21);
 		textFieldTelefono.setColumns(10);
 		contentPane.add(textFieldTelefono);
 		
@@ -170,7 +168,7 @@ public class winEliminarProveedor extends JFrame {
 				cn.close();
 			}
 		});
-		comboBoxProveedor.setBounds(116, 52, 246, 20);
+		comboBoxProveedor.setBounds(116, 11, 246, 20);
 		contentPane.add(comboBoxProveedor);
 		
 		btnEliminar = new JButton("Eliminar");
@@ -206,8 +204,14 @@ public class winEliminarProveedor extends JFrame {
 			}
 		});
 		btnEliminar.setEnabled(false);
-		btnEliminar.setBounds(273, 312, 89, 23);
+		btnEliminar.setBounds(273, 271, 89, 23);
 		contentPane.add(btnEliminar);
+		
+		lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(winEliminarProveedor.class.getResource("/Images/image_marca_agua.png")));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(-3, 0, 409, 303);
+		contentPane.add(lblNewLabel);
 	}
 	
 	public void llenarProveedores(){

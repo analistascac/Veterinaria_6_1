@@ -30,6 +30,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.awt.Toolkit;
+import javax.swing.ImageIcon;
 
 public class winEliminarEmpleado extends JFrame {
 
@@ -45,8 +47,10 @@ public class winEliminarEmpleado extends JFrame {
 	private DefaultComboBoxModel empleados = new DefaultComboBoxModel();
 	private JButton btnEliminar;
 	private JComboBox comboBoxEmpleado;
+	private JLabel lblNewLabel;
 
 	public winEliminarEmpleado() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(winEliminarEmpleado.class.getResource("/Images/logo.jpg")));
 		setResizable(false);
 		addWindowListener(new WindowAdapter() {
 			@Override
@@ -58,109 +62,103 @@ public class winEliminarEmpleado extends JFrame {
 		});
 		setTitle("Veterinaria Godzilla - Baja - Empleado");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 418, 406);
+		setBounds(100, 100, 418, 365);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel labelBajeEmpleado = new JLabel("Baja de Empleado");
-		labelBajeEmpleado.setHorizontalAlignment(SwingConstants.CENTER);
-		labelBajeEmpleado.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		labelBajeEmpleado.setBounds(124, 11, 162, 17);
-		contentPane.add(labelBajeEmpleado);
-		
 		JLabel labelEmpleado = new JLabel("Empleado:");
 		labelEmpleado.setHorizontalAlignment(SwingConstants.RIGHT);
-		labelEmpleado.setBounds(44, 42, 67, 14);
+		labelEmpleado.setBounds(44, 14, 67, 14);
 		contentPane.add(labelEmpleado);
 		
 		JLabel labelNombre = new JLabel("Nombre:");
 		labelNombre.setHorizontalAlignment(SwingConstants.RIGHT);
-		labelNombre.setBounds(5, 69, 106, 21);
+		labelNombre.setBounds(5, 41, 106, 21);
 		contentPane.add(labelNombre);
 		
 		JLabel labelApellido = new JLabel("Apellido:");
 		labelApellido.setHorizontalAlignment(SwingConstants.RIGHT);
-		labelApellido.setBounds(5, 101, 106, 21);
+		labelApellido.setBounds(5, 73, 106, 21);
 		contentPane.add(labelApellido);
 		
 		JLabel labelTipoDoc = new JLabel("Tipo documento:");
 		labelTipoDoc.setHorizontalAlignment(SwingConstants.RIGHT);
-		labelTipoDoc.setBounds(5, 133, 106, 21);
+		labelTipoDoc.setBounds(5, 105, 106, 21);
 		contentPane.add(labelTipoDoc);
 		
 		JLabel labelDoc = new JLabel("Documento:");
 		labelDoc.setHorizontalAlignment(SwingConstants.RIGHT);
-		labelDoc.setBounds(-20, 165, 131, 24);
+		labelDoc.setBounds(-20, 137, 131, 24);
 		contentPane.add(labelDoc);
 		
 		JLabel labelDireccion = new JLabel("Direccion:");
 		labelDireccion.setHorizontalAlignment(SwingConstants.RIGHT);
-		labelDireccion.setBounds(15, 194, 96, 21);
+		labelDireccion.setBounds(15, 166, 96, 21);
 		contentPane.add(labelDireccion);
 		
 		JLabel labelTelefono = new JLabel("Telefono:");
 		labelTelefono.setHorizontalAlignment(SwingConstants.RIGHT);
-		labelTelefono.setBounds(5, 228, 106, 21);
+		labelTelefono.setBounds(5, 200, 106, 21);
 		contentPane.add(labelTelefono);
 		
 		JLabel labelFechaNacimiento = new JLabel("Fecha Nacimiento:");
 		labelFechaNacimiento.setHorizontalAlignment(SwingConstants.RIGHT);
-		labelFechaNacimiento.setBounds(5, 267, 106, 21);
+		labelFechaNacimiento.setBounds(5, 239, 106, 21);
 		contentPane.add(labelFechaNacimiento);
 		
 		JLabel labelMatricula = new JLabel("Matricula:");
 		labelMatricula.setHorizontalAlignment(SwingConstants.RIGHT);
-		labelMatricula.setBounds(44, 306, 67, 14);
+		labelMatricula.setBounds(44, 278, 67, 14);
 		contentPane.add(labelMatricula);
 		
 		textFieldMatricula = new JTextField();
 		textFieldMatricula.setEditable(false);
 		textFieldMatricula.setColumns(10);
-		textFieldMatricula.setBounds(124, 303, 246, 20);
+		textFieldMatricula.setBounds(124, 275, 246, 20);
 		contentPane.add(textFieldMatricula);
 		
 		textFieldFechaNacimiento = new JTextField();
 		textFieldFechaNacimiento.setEditable(false);
 		textFieldFechaNacimiento.setColumns(10);
-		textFieldFechaNacimiento.setBounds(124, 267, 246, 21);
+		textFieldFechaNacimiento.setBounds(124, 239, 246, 21);
 		contentPane.add(textFieldFechaNacimiento);
 		
 		textFieldTelefono = new JTextField();
 		textFieldTelefono.setEditable(false);
 		textFieldTelefono.setColumns(10);
-		textFieldTelefono.setBounds(124, 228, 246, 21);
+		textFieldTelefono.setBounds(124, 200, 246, 21);
 		contentPane.add(textFieldTelefono);
 		
 		textFieldDireccion = new JTextField();
 		textFieldDireccion.setEditable(false);
 		textFieldDireccion.setColumns(10);
-		textFieldDireccion.setBounds(124, 194, 246, 21);
+		textFieldDireccion.setBounds(124, 166, 246, 21);
 		contentPane.add(textFieldDireccion);
 		
 		textFieldDoc = new JTextField();
 		textFieldDoc.setEditable(false);
 		textFieldDoc.setColumns(10);
-		textFieldDoc.setBounds(124, 162, 246, 21);
+		textFieldDoc.setBounds(124, 134, 246, 21);
 		contentPane.add(textFieldDoc);
 		
 		textFieldTipoDoc = new JTextField();
 		textFieldTipoDoc.setEditable(false);
 		textFieldTipoDoc.setColumns(10);
-		textFieldTipoDoc.setBounds(124, 133, 246, 21);
+		textFieldTipoDoc.setBounds(124, 105, 246, 21);
 		contentPane.add(textFieldTipoDoc);
 		
 		textFieldApellido = new JTextField();
 		textFieldApellido.setEditable(false);
 		textFieldApellido.setColumns(10);
-		textFieldApellido.setBounds(124, 101, 246, 21);
+		textFieldApellido.setBounds(124, 73, 246, 21);
 		contentPane.add(textFieldApellido);
 		
 		textFieldNombre = new JTextField();
 		textFieldNombre.setEditable(false);
 		textFieldNombre.setColumns(10);
-		textFieldNombre.setBounds(124, 69, 246, 21);
+		textFieldNombre.setBounds(124, 41, 246, 21);
 		contentPane.add(textFieldNombre);
 		
 		comboBoxEmpleado = new JComboBox();
@@ -187,7 +185,7 @@ public class winEliminarEmpleado extends JFrame {
 				cn.close();
 			}
 		});
-		comboBoxEmpleado.setBounds(124, 39, 246, 20);
+		comboBoxEmpleado.setBounds(124, 11, 246, 20);
 		contentPane.add(comboBoxEmpleado);
 		
 		btnEliminar = new JButton("Eliminar");
@@ -225,8 +223,14 @@ public class winEliminarEmpleado extends JFrame {
 			}
 		});
 		btnEliminar.setEnabled(false);
-		btnEliminar.setBounds(281, 334, 89, 23);
+		btnEliminar.setBounds(281, 306, 89, 23);
 		contentPane.add(btnEliminar);
+		
+		lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(winEliminarEmpleado.class.getResource("/Images/image_marca_agua.png")));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(0, 0, 412, 337);
+		contentPane.add(lblNewLabel);
 	}
 	
 	public void llenaEmpleados(){

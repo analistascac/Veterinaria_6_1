@@ -30,6 +30,9 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import java.awt.Toolkit;
+import javax.swing.ImageIcon;
+import java.awt.Color;
 
 public class ModificarProducto extends JFrame {
 
@@ -44,8 +47,10 @@ public class ModificarProducto extends JFrame {
 	private JTextField txtNombreCientifico;
 	private JTextField txtNombreVulgar;
 	private JComboBox<String> cmbProducto;
+	private JLabel lblNewLabel;
 	
 	public ModificarProducto() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(ModificarProducto.class.getResource("/Images/logo.jpg")));
 		setResizable(false);
 		addWindowListener(new WindowAdapter() {
 			public void windowClosed(WindowEvent arg0) {
@@ -54,17 +59,18 @@ public class ModificarProducto extends JFrame {
 				dispose();
 			}
 		});
-		setTitle("Modificar Producto - Veterinaria CAC");
+		setTitle("Veterinaria Godzilla - Modificacion - Producto");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 381, 260);
+		setBounds(100, 100, 381, 224);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JLabel label = new JLabel("Productos:");
 		label.setHorizontalAlignment(SwingConstants.RIGHT);
-		label.setBounds(10, 39, 122, 14);
+		label.setBounds(10, 12, 105, 14);
 		contentPane.add(label);
 		
 		cmbProducto = new JComboBox<String>();
@@ -110,62 +116,62 @@ public class ModificarProducto extends JFrame {
 		});
 		llenarProductos();
 		cmbProducto.setModel(productos);
-		cmbProducto.setBounds(142, 38, 213, 17);
+		cmbProducto.setBounds(125, 11, 213, 17);
 		contentPane.add(cmbProducto);
 		
 		JLabel label_2 = new JLabel("Nombre:");
 		label_2.setHorizontalAlignment(SwingConstants.RIGHT);
-		label_2.setBounds(10, 64, 122, 14);
+		label_2.setBounds(10, 37, 105, 14);
 		contentPane.add(label_2);
 		
 		JLabel label_3 = new JLabel("Medida:");
 		label_3.setHorizontalAlignment(SwingConstants.RIGHT);
-		label_3.setBounds(10, 89, 122, 14);
+		label_3.setBounds(10, 62, 105, 14);
 		contentPane.add(label_3);
 		
 		JLabel label_4 = new JLabel("Descripcion:");
 		label_4.setHorizontalAlignment(SwingConstants.RIGHT);
-		label_4.setBounds(10, 114, 122, 14);
+		label_4.setBounds(10, 85, 105, 14);
 		contentPane.add(label_4);
 		
 		JLabel label_5 = new JLabel("Nombre cientifico:");
 		label_5.setHorizontalAlignment(SwingConstants.RIGHT);
-		label_5.setBounds(10, 139, 122, 14);
+		label_5.setBounds(10, 110, 105, 14);
 		contentPane.add(label_5);
 		
 		JLabel label_6 = new JLabel("Nombre vulgar:");
 		label_6.setHorizontalAlignment(SwingConstants.RIGHT);
-		label_6.setBounds(10, 164, 122, 14);
+		label_6.setBounds(10, 135, 105, 14);
 		contentPane.add(label_6);
 		
 		txtNombre = new JTextField();
 		txtNombre.setEnabled(false);
 		txtNombre.setColumns(10);
-		txtNombre.setBounds(142, 61, 213, 17);
+		txtNombre.setBounds(125, 35, 213, 17);
 		contentPane.add(txtNombre);
 		
 		txtMedida = new JTextField();
 		txtMedida.setEnabled(false);
 		txtMedida.setColumns(10);
-		txtMedida.setBounds(142, 86, 213, 17);
+		txtMedida.setBounds(125, 60, 213, 17);
 		contentPane.add(txtMedida);
 		
 		txtDescripcion = new JTextField();
 		txtDescripcion.setEnabled(false);
 		txtDescripcion.setColumns(10);
-		txtDescripcion.setBounds(142, 111, 213, 17);
+		txtDescripcion.setBounds(125, 83, 213, 17);
 		contentPane.add(txtDescripcion);
 		
 		txtNombreCientifico = new JTextField();
 		txtNombreCientifico.setEnabled(false);
 		txtNombreCientifico.setColumns(10);
-		txtNombreCientifico.setBounds(142, 137, 213, 17);
+		txtNombreCientifico.setBounds(125, 108, 213, 17);
 		contentPane.add(txtNombreCientifico);
 		
 		txtNombreVulgar = new JTextField();
 		txtNombreVulgar.setEnabled(false);
 		txtNombreVulgar.setColumns(10);
-		txtNombreVulgar.setBounds(142, 161, 213, 17);
+		txtNombreVulgar.setBounds(125, 133, 213, 17);
 		contentPane.add(txtNombreVulgar);
 		
 		JButton bynModificar = new JButton("Modificar");
@@ -209,8 +215,14 @@ public class ModificarProducto extends JFrame {
 				
 			}
 		});
-		bynModificar.setBounds(266, 189, 89, 23);
+		bynModificar.setBounds(249, 160, 89, 23);
 		contentPane.add(bynModificar);
+		
+		lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(ModificarProducto.class.getResource("/Images/image_marca_agua_small.png")));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(0, 0, 375, 196);
+		contentPane.add(lblNewLabel);
 	}
 	
 	private void llenarProductos(){

@@ -28,6 +28,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
+import java.awt.Toolkit;
+import javax.swing.ImageIcon;
 
 public class ModificarEmpleado extends JFrame {
 
@@ -48,8 +50,11 @@ public class ModificarEmpleado extends JFrame {
 	private JComboBox cmbMes;
 	private JComboBox cmbDia;
 	private TFecha fecha;
+	private JLabel lblNewLabel;
 
 	public ModificarEmpleado() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(ModificarEmpleado.class.getResource("/Images/logo.jpg")));
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {
 			public void windowClosed(WindowEvent arg0) {
@@ -58,8 +63,8 @@ public class ModificarEmpleado extends JFrame {
 				dispose();
 			}
 		});
-		setTitle("Modificar empleado - Veterinaria CAC");
-		setBounds(100, 100, 360, 311);
+		setTitle("Veterinaria Godzilla - Modificacion - Empleado");
+		setBounds(100, 100, 379, 313);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -254,6 +259,12 @@ public class ModificarEmpleado extends JFrame {
 		btnModificar.setEnabled(false);
 		btnModificar.setBounds(236, 243, 89, 23);
 		contentPane.add(btnModificar);
+		
+		lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(ModificarEmpleado.class.getResource("/Images/image_marca_agua.png")));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(0, 0, 373, 285);
+		contentPane.add(lblNewLabel);
 	}
 	
 	public void llenarCombos(){

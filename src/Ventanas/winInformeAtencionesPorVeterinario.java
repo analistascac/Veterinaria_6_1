@@ -30,6 +30,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import javax.swing.JTextField;
+import java.awt.Toolkit;
+import java.awt.Color;
 
 public class winInformeAtencionesPorVeterinario extends JFrame {
 
@@ -44,6 +46,7 @@ public class winInformeAtencionesPorVeterinario extends JFrame {
 	private JTextField textFieldCantidad;
 
 	public winInformeAtencionesPorVeterinario() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(winInformeAtencionesPorVeterinario.class.getResource("/Images/logo.jpg")));
 		addWindowListener(new WindowAdapter() {
 			public void windowClosed(WindowEvent arg0) {
 				Main ventana = new Main();
@@ -52,10 +55,11 @@ public class winInformeAtencionesPorVeterinario extends JFrame {
 			}
 		});
 		setResizable(false);
-		setTitle("Veterinaria CAC - Informe - Atenciones por veterinario");
+		setTitle("Veterinaria Godzilla - Informe - Atenciones por veterinario");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 129);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
